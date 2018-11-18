@@ -1,0 +1,67 @@
+<resources>
+    <!-- sang-->
+    <string name="app_name">DoAn</string>
+    <string name="open">Open</string>
+    <string name="close">Close</string>
+    <string name="dangnhap">Đăng Nhập</string>
+    <string name="timkiemtheotinh">Tìm Kiếm Theo Tỉnh</string>
+    <string name="timkiemnangcao">Tiềm Kiếm Nâng Cao</string>
+    <string name="ngonngu">Ngôn Ngữ</string>
+    <string name="diadiemyeuthich">Địa Điểm Yêu Thích</string>
+    <string name="huongdan">Hướng Dẫn</string>
+    <string name="dangxuat">Đăng Xuất</string>
+    <string name="vitrihientai">Vị Trí Hiện Tại</string>
+    <string name="trangchu">Trang Chủ</string>
+    <string name="noidungotimkiem">Nhập nội dung muốn tìm kiếm</string>
+    <string name="baibien">Bãi Biển</string>
+    <string name="rungnui">Rừng Núi</string>
+    <string name="lichsu">Lịch Sử</string>
+    <string name="sinhthai">Sinh Thái</string>
+    <string name="mientay">Miền Tây</string>
+    <string name="taybac">Tây Bắc</string>
+    <string name="map">Map</string>
+    <string name="xuhuong">Xu Hướng</string>
+    <string name="canhan">Cá Nhân</string>
+    <string name="dulichbien">Du Lịch Biển</string>
+    <string name="dulichnui">Du lịch Rừng Núi</string>
+    <string name="dulichlichsu">Du Lịch Lịch Sử</string>
+    <string name="dulichsinhthai">Du Lịch Sinh Thái</string>
+    <string name="dulichmientay">Du Lịch Miền Tây</string>
+    <string name="dulichtaybac">Du Lịch Tây Bắc</string>
+
+
+    <!-- quy -->
+    <string name="gioithieu"> DU LỊCH 4 PHƯƠNG </string>
+    <string name="email">Nhập địa chỉ email: </string>
+    <string name="nhancode">Nhận mã code</string>
+    <string name="tendangnhap">Tên Đăng Nhập</string>
+    <string name="matkhau">Mật Khẩu</string>
+    <string name="nhapcode">Nhập mã code: </string>
+    <string name="xacnhan">Đăng Nhập</string>
+    <string name="dangki">Đăng Kí</string>
+
+    <!-- Map api-->
+    <string name="map_api_key">AIzaSyBM0TXSbXm4VYXxFTa5pVC_mnFeA2VcL8I</string>
+
+    <!-- quan-->
+    <string name="back">Trở Lại</string>
+    <string name="Hoten">HoTen: </string>
+    <string name="NgaySinh">Ngay sinh: </string>
+    <string name="GioiTinh">Gioi Tinh</string>
+    <string name="trangcanhan">Trang Cá Nhân</string>
+
+
+    <!-- Đức -->
+    <string name="Hinhanh">Hình ảnh</string>
+    <string name="Thongtin">Một số thông tin</string>
+    <string name="Danhgia">Đánh giá và xếp hạng</string>
+    <string name="Nhanxet">Nhận xét:</string>
+    <string name="Hienthidiadiem">|Hiển thị địa điểm</string>
+    <string name="Thoitiet">Thời tiết</string>
+    <string name="Dichvu">Dịch vụ</string>
+
+    <!-- layout tim kiem -->
+    <string name="nhaptentinh">Nhập Tên Tỉnh</string>
+    <string name="timkiem">Tìm Kiếm</string>
+
+</resources>

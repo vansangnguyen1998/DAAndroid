@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#dcd4d4"
+    >
+
+    <LinearLayout
+        android:layout_margin="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="106dp"
+        android:orientation="horizontal">
+        <ImageView
+            android:id="@+id/ivPicture"
+            android:layout_marginTop="3dp"
+            android:layout_width="100dp"
+            android:layout_height="100dp" />
+
+        <LinearLayout
+            android:layout_marginTop="3dp"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_marginBottom="3dp"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txtDiaDiem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="ten tinh hoac thnah"
+                android:textSize="22sp"/>
+
+            <TextView
+                android:id="@+id/txtThongTin"
+                android:text="thong tin co ban ve noi se den."
+                android:layout_marginTop="5dp"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:textSize="22sp"/>
+
+        </LinearLayout>
+    </LinearLayout>
+</LinearLayout>

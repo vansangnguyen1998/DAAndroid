@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+    <item android:id="@+id/menudangnhap" android:icon="@drawable/ic_dangnhap"
+        android:title="@string/dangnhap"/>
+    <item android:id="@+id/menutrangchu" android:title="@string/trangchu"
+        android:icon="@drawable/ic_trangchu"/>
+    <item android:id="@+id/menutimkiemtheotinh" android:icon="@drawable/ic_timkiemtheotinh"
+        android:title="@string/timkiemtheotinh"/>
+    <item android:id="@+id/menutimkiemnangcao"
+         android:title="@string/timkiemnangcao"
+        android:icon="@drawable/ic_timkiemnangcao"/>
+
+    <item android:id="@+id/menuvitrihientai" android:icon="@drawable/ic_vitrihientai"
+        android:title="@string/vitrihientai"/>
+    <item android:id="@+id/menungonngu" android:icon="@drawable/ic_ngonngu"
+        android:title="@string/ngonngu"/>
+    <item android:id="@+id/menudiadiemyeuthich" android:icon="@drawable/ic_diadiemyeuthich"
+        android:title="@string/diadiemyeuthich"/>
+    <item android:id="@+id/menuhuongdan" android:icon="@drawable/ic_huongdan"
+        android:title="@string/huongdan"/>
+    <item android:id="@+id/menudangxuat" android:icon="@drawable/ic_dangxuat"
+        android:title="@string/dangxuat"/>
+</menu>
