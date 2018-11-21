@@ -1,6 +1,8 @@
 package com.example.pc.daandroid;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
@@ -9,22 +11,21 @@ import android.widget.TextView;
 
 import java.util.List;
 
+import static com.example.pc.daandroid.R.layout.item_listview;
+
 public class adapterListViewChiTiet extends BaseAdapter {
     private Context context;
-    private List<String> TenTinh;
-    private List<String> ThongTin;
-    private List<Integer> image;
+    private List<diadiemchitiet> data;
 
-    public adapterListViewChiTiet(Context context, List<String> tenTinh, List<String> thongTin, List<Integer> image) {
+    public adapterListViewChiTiet(Context context, List<diadiemchitiet> d) {
+        //super(context,R.layout.item_listview,data);
         this.context = context;
-        TenTinh = tenTinh;
-        ThongTin = thongTin;
-        this.image = image;
+        data=d;
     }
 
     @Override
     public int getCount() {
-        return image.size();
+        return data.size();
     }
 
     @Override
@@ -34,19 +35,27 @@ public class adapterListViewChiTiet extends BaseAdapter {
 
     @Override
     public long getItemId(int position) {
-        return position;
+        return 0;
     }
 
     @Override
-    public View getView(int position, View convertView, ViewGroup parent) {
-        View v = View.inflate(context,R.layout.item_listview,null);
+    public View getView(int position, View v, ViewGroup parent) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+
+        v = inflater.inflate(item_listview,null);
         ImageView imageView = (ImageView) v.findViewById(R.id.ivPicture);
         TextView txtTen = (TextView) v.findViewById(R.id.txtDiaDiem);
         TextView txtThongTin = (TextView) v.findViewById(R.id.txtThongTin);
 
-        txtTen.setText(TenTinh.get(position));
-        txtThongTin.setText(ThongTin.get(position));
-        imageView.setImageResource(image.get(position));
+        String mota="";
+        mota+=data.get(position).getMoTa().subSequence(0,97);
+
+        mota+="...";
+
+
+        txtTen.setText(data.get(position).getTenTinh());
+        txtThongTin.setText(mota);
+        imageView.setImageResource(R.drawable.bien);
         return v;
     }
 }

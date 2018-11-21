@@ -42,11 +42,16 @@
         android:textStyle="italic"
         android:text="@string/Thongtin"
         android:textSize="20dp"/>
+    <ScrollView
+        android:id="@+id/iconScoll"
+        android:layout_below="@+id/ttvThongTin"
+        android:layout_width="match_parent"
+        android:layout_height="110dp">
 
     <TextView
         android:id="@+id/ThongTin"
         android:layout_width="match_parent"
-        android:layout_height="110dp"
+        android:layout_height="wrap_content"
         android:layout_below="@+id/ttvThongTin"
         android:layout_alignParentStart="true"
         android:textStyle="italic"
@@ -54,12 +59,14 @@
         android:layout_marginTop="0dp"
         android:text=""
         />
+    </ScrollView>
 
     <TextView
         android:id="@+id/DanhGiaSao"
-        android:layout_width="wrap_content"
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/ThongTin"
+        android:layout_below="@+id/iconScoll"
+
         android:layout_centerHorizontal="true"
         android:text="@string/Danhgia"
         android:textStyle="italic"

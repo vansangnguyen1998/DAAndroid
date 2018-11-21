@@ -11,7 +11,9 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RatingBar;
+import android.widget.ScrollView;
 import android.widget.Spinner;
+import android.widget.TextView;
 
 public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnItemSelectedListener{
 
@@ -21,6 +23,8 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
     RatingBar ratingBar;
     Integer [] Imageview= {R.drawable.android1,R.drawable.android3,R.drawable.bien};
     Spinner spinner;
+    TextView thongTin;
+    ScrollView scrollView;
 
     String [] adapterSpinner = {"Nhà Hàng", "Khách Sạn", "ATM"};
 
@@ -29,7 +33,20 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dia_diem_chi_tiet);
 
+        Bundle bundle = this.getIntent().getExtras();
+
+        //diadiemchitiet diadiem= (diadiemchitiet) bundle.getSerializable("diadiemchitiet");
+
+
+
         AnhXa();
+
+        if(bundle!=null) {
+
+            thongTin.setText(bundle.getString("mota"));
+
+            scrollView.fullScroll(View.FOCUS_DOWN);
+        }
 
         for(int i=0;i<Imageview.length;i++){
             final View singleFrame = getLayoutInflater().inflate(
@@ -56,6 +73,8 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
 
     private void AnhXa(){
+        thongTin = (TextView) findViewById(R.id.ThongTin);
+        scrollView =(ScrollView) findViewById(R.id.iconScoll);
         HienThiDiaDiem = (Button) findViewById(R.id.HienThiDiaDiem);
         ThoiTiet = (Button) findViewById(R.id.ThoiTiet);
         viewGroup = (ViewGroup) findViewById(R.id.viewgroup);

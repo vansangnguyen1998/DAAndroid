@@ -23,6 +23,7 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
@@ -33,6 +34,7 @@ import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.OutputStream;
 import java.io.OutputStreamWriter;
+import java.lang.reflect.Array;
 import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
@@ -140,6 +142,7 @@ public class dangnhap_class extends Fragment implements FragmentCallBack {
     public void onMsgFromMainToFragment(String strValue) {
         // nhận giá trị từ main về
     }
+
     private class BackgroundTask1 extends AsyncTask<String,Void,String> {
         private Context ctx;
         private String User;
@@ -156,6 +159,7 @@ public class dangnhap_class extends Fragment implements FragmentCallBack {
         @Override
         protected String doInBackground(String... params) {
             String reg_url = "http://android1998.000webhostapp.com/php/register.php";
+            //String login_url = "http://android1998.000webhostapp.com/php/loaidulich.php";
             String login_url ="http://android1998.000webhostapp.com/php/kt_login.php";
             String method = params[0];
             User=params[1];
@@ -253,6 +257,20 @@ public class dangnhap_class extends Fragment implements FragmentCallBack {
         protected void onPostExecute(String result) {
 
             Toast.makeText(ctx,result,Toast.LENGTH_SHORT).show();
+
+//            try {
+//                JSONArray jsonArray= new JSONArray(result);
+//
+//                //String tentinh = jsonArray.get(0);
+//                JSONObject jsonObject = (JSONObject) jsonArray.get(0);
+//
+//                Toast.makeText(ctx,""+jsonObject.getString("tentinh"),Toast.LENGTH_SHORT).show();
+//
+//            } catch (JSONException e) {
+//                e.printStackTrace();
+//            }
+
+
             if(result.equals("Login Success...")){
                 //txtname.setText(result);
                 main.onMsgFromFragToMain("_User",User);

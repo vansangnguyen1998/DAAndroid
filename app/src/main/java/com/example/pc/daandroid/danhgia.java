@@ -4,6 +4,13 @@ public class danhgia {
     private String noiDung;
     private int sao;
 
+    public danhgia(){}
+
+    public danhgia(String a, int b){
+        noiDung=a;
+        sao=b;
+    }
+
     public String getNoiDung() {
         return noiDung;
     }

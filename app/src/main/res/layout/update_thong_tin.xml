@@ -1,0 +1,107 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   android:gravity="center"
+    >
+
+    <TextView
+        android:id="@+id/txtten"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Tên:"
+        android:layout_marginLeft="10dp"
+        android:textSize="33sp"/>
+
+    <EditText
+        android:id="@+id/edtten"
+        android:layout_toRightOf="@+id/txtten"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="20dp"
+        android:layout_marginRight="20dp"
+        android:hint="Nhập tên của bạn"/>
+    <TextView
+        android:id="@+id/txtgt"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Giới Tính: "
+        android:layout_below="@+id/txtten"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="20dp"
+        android:textSize="20dp"/>
+
+    <RadioGroup
+        android:id="@+id/rg"
+        android:layout_toRightOf="@+id/txtgt"
+        android:layout_below="@id/txtten"
+        android:layout_marginTop="20dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+
+        android:orientation="horizontal"
+
+        >
+
+        <RadioButton
+            android:id="@+id/radioNam"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:checked="true"
+            android:text="Nam" />
+
+        <RadioButton
+            android:id="@+id/radioNu"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nữ" />
+
+    </RadioGroup>
+
+
+    <TextView
+        android:id="@+id/textView"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/rg"
+        android:textStyle="bold"
+        android:text="Birthdate"
+        android:layout_marginTop="5dp"
+        android:textSize="22dp" />
+
+    <EditText
+
+        android:id="@+id/edtdate"
+        android:textStyle="bold"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/textView"
+        android:layout_toLeftOf="@id/btnselect"
+        android:layout_marginTop="5dp"
+        android:textSize="22dp"
+        android:text="1/1/2001"
+        />
+
+    <Button
+        android:id="@+id/btnselect"
+        android:textStyle="bold"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Select"
+        android:layout_alignParentRight="true"
+        android:layout_below="@id/textView"
+        android:padding="5dp"
+        android:textSize="30dp"
+        android:layout_margin="5dp"
+        />
+
+    <Button
+        android:layout_width="100dp"
+        android:layout_height="50dp"
+        android:text="Update"
+        android:layout_below="@+id/edtdate"
+        android:layout_centerInParent="true"/>
+
+
+</RelativeLayout>

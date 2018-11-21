@@ -25,14 +25,16 @@
             <TextView
                 android:id="@+id/txtDiaDiem"
                 android:layout_width="wrap_content"
+                android:layout_marginLeft="10dp"
                 android:layout_height="wrap_content"
-                android:text="ten tinh hoac thnah"
+                android:text="ten tinh thanh"
                 android:textSize="22sp"/>
 
             <TextView
                 android:id="@+id/txtThongTin"
                 android:text="thong tin co ban ve noi se den."
                 android:layout_marginTop="5dp"
+                android:layout_marginLeft="10dp"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:textSize="22sp"/>

@@ -182,8 +182,15 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
             nameuser.setText(strValue);
         }
         else if(sender.equals("TrangChu_CaNhan")) {
-            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main,
-                    new MainCaNhan()).commit();
+            if(nameuser.getText().toString().equals("NoName")) {
+                Toast.makeText(this,"Đăng nhập trước khi vào cá nhân",Toast.LENGTH_LONG).show();
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main,
+                        new dangnhap_class()).commit();
+
+            }else{
+                getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main,
+                        new MainCaNhan()).commit();
+            }
         }
     }
 

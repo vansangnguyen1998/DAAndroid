@@ -1,6 +1,7 @@
 package com.example.pc.daandroid;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.support.annotation.NonNull;
@@ -12,13 +13,15 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainCaNhan extends Fragment implements FragmentCallBack {
 
-    Button btnBack;
+
     TextView hTen,ngSinh,gTinh;
     ImageView anhDaiDien;
     MainActivity main;
@@ -39,11 +42,31 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
 
         final RelativeLayout canhan = (RelativeLayout) inflater.inflate(R.layout.activity_main_ca_nhan,null);
 
-        btnBack =(Button)canhan.findViewById(R.id.btnBack);
+
         hTen=(TextView) canhan.findViewById(R.id.ViewHoTen);
         ngSinh=(TextView) canhan.findViewById(R.id.ViewNgaySinh);
         gTinh=(TextView) canhan.findViewById(R.id.ViewGioiTinh);
         anhDaiDien=(ImageView) canhan.findViewById(R.id.anhDaiDien);
+
+        String hten = hTen.getText().toString();
+
+        if(hten.equals("")){
+            Toast.makeText(context,"Cập nhật thông tin.",Toast.LENGTH_SHORT).show();
+            AlertDialog.Builder builder = new AlertDialog.Builder(main);
+
+            View view = getLayoutInflater().inflate(R.layout.update_thong_tin,null);
+
+            // ddang lam den cho nay
+
+
+            EditText edtten = (EditText) view.findViewById(R.id.edtten);
+
+
+
+            builder.setView(view);
+            AlertDialog alertDialog = builder.create();
+            alertDialog.show();
+        }
 
         return canhan;
     }

@@ -21,7 +21,7 @@ public class Register extends Activity {
 
        // _Gmail =(EditText) layout_dangnhap.findViewById(R.id.editemail);
         //_Code = (EditText) layout_dangnhap.findViewById(R.id.editcode);
-        btnxacnhan = (Button) layout_dangnhap.findViewById(R.id.btnxacnhan);
+       /// btnxacnhan = (Button) layout_dangnhap.findViewById(R.id.btnxacnhan);
 
     }
 
