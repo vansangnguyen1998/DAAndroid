@@ -188,8 +188,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         new dangnhap_class()).commit();
 
             }else{
+                MainCaNhan mainCaNhan = MainCaNhan.newInstance("main");
+                mainCaNhan.onMsgFromMainToFragment(nameuser.getText().toString());
+
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main,
-                        new MainCaNhan()).commit();
+                        mainCaNhan).commit();
             }
         }
     }
