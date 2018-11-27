@@ -73,6 +73,46 @@ public class ActivityChiTiet extends AppCompatActivity {
 
 
             Toast.makeText(this,"Du lich bien",Toast.LENGTH_SHORT).show();
+        }else if(bundle.getString("LoaiDuLich").equals("LichSu")){
+            txtName.setText("Du Lich Lich Su");
+
+            BackgroundTask1 backgroundTask1 = new BackgroundTask1(this);
+            backgroundTask1.execute("LoaiDL","lichsu");
+
+
+            Toast.makeText(this,"Du lich lich su",Toast.LENGTH_SHORT).show();
+        }else if(bundle.getString("LoaiDuLich").equals("RungNui")){
+            txtName.setText("Du Lich Rung Nui");
+
+            BackgroundTask1 backgroundTask1 = new BackgroundTask1(this);
+            backgroundTask1.execute("LoaiDL","nui");
+
+
+            Toast.makeText(this,"Du lich rung nui",Toast.LENGTH_SHORT).show();
+        }else if(bundle.getString("LoaiDuLich").equals("SinhThai")){
+            txtName.setText("Du Lich Sinh Thai");
+
+            BackgroundTask1 backgroundTask1 = new BackgroundTask1(this);
+            backgroundTask1.execute("LoaiDL","sinhthai");
+
+
+            Toast.makeText(this,"Du lich sinh thai",Toast.LENGTH_SHORT).show();
+        }else if(bundle.getString("LoaiDuLich").equals("MienTay")){
+            txtName.setText("Du Lich Mien Tay");
+
+            BackgroundTask1 backgroundTask1 = new BackgroundTask1(this);
+            backgroundTask1.execute("LoaiDL","mientay");
+
+
+            Toast.makeText(this,"Du lich mien tay",Toast.LENGTH_SHORT).show();
+        }else if(bundle.getString("LoaiDuLich").equals("TayBac")){
+            txtName.setText("Du Lich Tay Bac");
+
+            BackgroundTask1 backgroundTask1 = new BackgroundTask1(this);
+            backgroundTask1.execute("LoaiDL","taybac");
+
+
+            Toast.makeText(this,"Du lich tay bac",Toast.LENGTH_SHORT).show();
         }else if(bundle.getString("LoaiDuLich").equals("TheoTinh")){
             String tentinh=bundle.getString("TenTinh");
             Toast.makeText(this,tentinh,Toast.LENGTH_SHORT).show();
@@ -85,6 +125,7 @@ public class ActivityChiTiet extends AppCompatActivity {
 
                 Intent intent =new Intent(ActivityChiTiet.this,ActivityDiaDiemChiTiet.class);
                 //Bundle bundle1 = new Bundle();
+
                 intent.putExtra("tentinh",data.get(position).getTenTinh());
                 intent.putExtra("tendiadanh",data.get(position).getTenDiaDanh());
                 intent.putExtra("mota",data.get(position).getMoTa());
@@ -112,9 +153,9 @@ public class ActivityChiTiet extends AppCompatActivity {
 
         @Override
         protected String doInBackground(String... params) {
-            //String reg_url = "http://android1998.000webhostapp.com/php/register.php";
+
             String loaidl_url = "http://android1998.000webhostapp.com/php/loaidulich.php";
-            //String login_url ="http://android1998.000webhostapp.com/php/kt_login.php";
+
             String method = params[0];
             User=params[1];
             if (method.equals("LoaiDL")){

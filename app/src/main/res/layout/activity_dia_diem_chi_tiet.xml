@@ -60,12 +60,20 @@
         android:text=""
         />
     </ScrollView>
+    <ScrollView
+        android:id="@+id/iconScoll1"
+        android:layout_width="match_parent"
+        android:layout_below="@+id/iconScoll"
+        android:layout_height="wrap_content">
+<RelativeLayout
 
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
     <TextView
         android:id="@+id/DanhGiaSao"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/iconScoll"
+
 
         android:layout_centerHorizontal="true"
         android:text="@string/Danhgia"
@@ -101,6 +109,18 @@
         android:layout_marginStart="14dp"
         android:ems="10" />
 
+    <Button
+        android:id="@+id/btnNhanXet"
+        android:layout_width="match_parent"
+        android:layout_margin="10dp"
+
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/NhanXet"
+        android:background="@color/colorbackgroundbutton"
+        android:text="Nhận xét"/>
+
+</RelativeLayout>
+    </ScrollView>
 
     <TableLayout
         android:layout_alignParentBottom="true"

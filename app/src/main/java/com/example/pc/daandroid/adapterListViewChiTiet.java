@@ -48,12 +48,12 @@ public class adapterListViewChiTiet extends BaseAdapter {
         TextView txtThongTin = (TextView) v.findViewById(R.id.txtThongTin);
 
         String mota="";
-        mota+=data.get(position).getMoTa().subSequence(0,97);
+        mota+=data.get(position).getMoTa().substring(0,97);
 
         mota+="...";
 
 
-        txtTen.setText(data.get(position).getTenTinh());
+        txtTen.setText(data.get(position).getTenDiaDanh());
         txtThongTin.setText(mota);
         imageView.setImageResource(R.drawable.bien);
         return v;
