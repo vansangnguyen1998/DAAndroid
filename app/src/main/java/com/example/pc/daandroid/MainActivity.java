@@ -130,6 +130,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         android.R.layout.simple_list_item_single_choice,TenTinh));
 
                 // tìm kiếm theo tỉnh
+
+
+                builder.setView(view);
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
                 Button timkiem = (Button) view.findViewById(R.id.btnSearchTinh);
 
                 timkiem.setOnClickListener(new View.OnClickListener() {
@@ -139,16 +144,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                         intent.putExtra("LoaiDuLich","TheoTinh");
                         intent.putExtra("TenTinh",autoCompleteTextView.getText().toString());
                         startActivity(intent);
+                        alertDialog.cancel();
                     }
                 });
-
-                builder.setView(view);
-                AlertDialog alertDialog = builder.create();
-                alertDialog.show();
                 Toast.makeText(MainActivity.this,"tim kiem theo tinh",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menutimkiemnangcao:
-                if(!(nameuser.getText().toString().equals("NoName"))) {
+                if(!(CheckLogin.User.equals("NoName"))) {
                     AlertDialog.Builder builder1 = new AlertDialog.Builder(MainActivity.this);
                     View view1 = getLayoutInflater().inflate(R.layout.dialog_tim_kiem_nang_cao, null);
                     Spinner spinner, spinner1, spinner2, spinner3;
@@ -194,6 +196,8 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(MainActivity.this,"huong dan",Toast.LENGTH_SHORT).show();
                 break;
             case R.id.menudangxuat:
+                CheckLogin.User="NoName";
+                nameuser.setText("NoName");
                 Toast.makeText(MainActivity.this,"dang xuat",Toast.LENGTH_SHORT).show();
                 break;
         }
@@ -213,9 +217,12 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     public void onMsgFromFragToMain(String sender, String strValue) {
         if(sender.equals("_User")){
             nameuser.setText(strValue);
+            CheckLogin.User=strValue;
+            getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main,
+                    new trangchu_class()).commit();
         }
         else if(sender.equals("TrangChu_CaNhan")) {
-            if(nameuser.getText().toString().equals("NoName")) {
+            if(CheckLogin.User.equals("NoName")) {
                 Toast.makeText(this,"Đăng nhập trước khi vào cá nhân",Toast.LENGTH_LONG).show();
                 getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main,
                         new dangnhap_class()).commit();
@@ -312,7 +319,7 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         @Override
         protected void onPostExecute(String result) {
 
-            Toast.makeText(ctx,result,Toast.LENGTH_SHORT).show();
+            //Toast.makeText(ctx,result,Toast.LENGTH_SHORT).show();
 
             try {
                 JSONArray jsonArray = new JSONArray(result);

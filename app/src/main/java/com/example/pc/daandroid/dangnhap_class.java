@@ -6,6 +6,7 @@ import android.os.AsyncTask;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -41,6 +42,7 @@ import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Random;
 
 public class dangnhap_class extends Fragment implements FragmentCallBack {
     private MainActivity main;
@@ -81,21 +83,20 @@ public class dangnhap_class extends Fragment implements FragmentCallBack {
              @Override
              public void onClick(View v) {
 
-                 Bundle bundle = new Bundle();
-                 Toast.makeText(context,"Click Dang nhap",Toast.LENGTH_SHORT).show();
+
+                 //Toast.makeText(context,"Click Dang nhap",Toast.LENGTH_SHORT).show();
 
                  final String User, Pass,method;
                  method="Login";
                  User=edtUser.getText().toString();
                  Pass=edtMK.getText().toString();
                  //Ma=edtMXN.getText().toString();
-                 bundle.putString("method", method);
-                 bundle.putString("User", User);
-                 bundle.putString("Pass", Pass);
-                 BackgroundTask1 backgroundTask = new BackgroundTask1(main);
-                 backgroundTask.execute("Login",User,Pass);
-
-
+                 if(User.equals("")||Pass.equals("")){
+                    Toast.makeText(context,"Bạn chưa nhập thông tin.",Toast.LENGTH_SHORT).show();
+                 }else{
+                     BackgroundTask1 backgroundTask = new BackgroundTask1(main);
+                     backgroundTask.execute("Login",User,Pass);
+                 }
              }
          });
         // nhans vao nut dang ki
@@ -105,33 +106,68 @@ public class dangnhap_class extends Fragment implements FragmentCallBack {
                  AlertDialog.Builder builder = new AlertDialog.Builder(context);
                  View view = getLayoutInflater().inflate(R.layout.dang_ki,null);
 
+                 Random random=new Random();
+                 final int code=random.nextInt(9999-1000)+1001;
+
                  // xử lí bên đăng kí.
                  final EditText edtUser,edtPass,edtGamil,edtMaXN;
-                 Button btnXacNhan,btnNhanCode;
+                 Button btnDangki;
+                 FloatingActionButton btnNhanCode;
                  edtUser = (EditText) view.findViewById(R.id.edtUser);
                  edtPass = (EditText) view.findViewById(R.id.edtmatkhau);
                  edtGamil = (EditText) view.findViewById(R.id.edtemail);
                  edtMaXN = (EditText) view.findViewById(R.id.edtcode);
-                 btnXacNhan = (Button) view.findViewById(R.id.btndangki);
-                 btnNhanCode = (Button) view.findViewById(R.id.btnnhancode);
+                 btnDangki = (Button) view.findViewById(R.id.btndangki);
+                 btnNhanCode = (FloatingActionButton) view.findViewById(R.id.btnCode);
 
-                 // Xử lí nhấn nút đăng kí
-                 btnXacNhan.setOnClickListener(new View.OnClickListener() {
+                 builder.setView(view);
+                 final AlertDialog alertDialog = builder.create();
+                 alertDialog.show();
+
+                 btnNhanCode.setOnClickListener(new View.OnClickListener() {
                      @Override
                      public void onClick(View v) {
-                         BackgroundTask1 backgroundTask1=new BackgroundTask1(main);
+                         // nhaanj code.
 
-                         backgroundTask1.execute("DangKi",edtUser.getText().toString(),
-                                 edtPass.getText().toString(),edtGamil.getText().toString());
+                         String Gmail=edtGamil.getText().toString();
+                         if(Gmail.equals("")){
+                             Toast.makeText(context,"Nhập Gmail để nhận Code.",Toast.LENGTH_SHORT).show();
+                         }else {
+                             String numCode = String.valueOf(code);
+                             BackgroundTask1 backgroundTask1 = new BackgroundTask1(main);
+                             backgroundTask1.execute("NhanCode",Gmail,numCode);
+                             Toast.makeText(context, "Nhan code", Toast.LENGTH_SHORT).show();
+                         }
+                     }
+                 });
 
+                 // Xử lí nhấn nút đăng kí
+                 btnDangki.setOnClickListener(new View.OnClickListener() {
+                     @Override
+                     public void onClick(View v) {
+                         String user,pass,gmail,numcode;
+                         user=edtUser.getText().toString();
+                         pass=edtPass.getText().toString();
+                         gmail=edtGamil.getText().toString();
+                         numcode=edtMaXN.getText().toString();
 
-                         Toast.makeText(context,"Click Dang ki",Toast.LENGTH_SHORT).show();
+                         if(user.equals("")||pass.equals("")||gmail.equals("")||numcode.equals("")){
+                                Toast.makeText(context,"Dữ liệu bạn nhập thiếu.",Toast.LENGTH_SHORT).show();
+                         }else {
+                             if(numcode.equals(String.valueOf(code))) {
+                                 BackgroundTask1 backgroundTask1 = new BackgroundTask1(main);
+                                 backgroundTask1.execute("DangKi", user, pass, gmail);
+
+                                 alertDialog.cancel();
+                                 //Toast.makeText(context, "Click Dang ki", Toast.LENGTH_SHORT).show();
+                             }else{
+                                 Toast.makeText(context,"Ma code khong dung.",Toast.LENGTH_SHORT).show();
+                             }
+                         }
                      }
                  });
                  
-                 builder.setView(view);
-                 AlertDialog alertDialog = builder.create();
-                 alertDialog.show();
+
              }
          });
 
@@ -159,7 +195,7 @@ public class dangnhap_class extends Fragment implements FragmentCallBack {
         @Override
         protected String doInBackground(String... params) {
             String reg_url = "http://android1998.000webhostapp.com/php/register.php";
-            //String login_url = "http://android1998.000webhostapp.com/php/loaidulich.php";
+            String code_url = "http://android1998.000webhostapp.com/php/sentcode.php";
             String login_url ="http://android1998.000webhostapp.com/php/kt_login.php";
             String method = params[0];
             User=params[1];
@@ -242,6 +278,45 @@ public class dangnhap_class extends Fragment implements FragmentCallBack {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }else if(method.equals("NhanCode")){
+                try {
+                    URL url = new URL(code_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream OS = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
+
+                    String data = URLEncoder.encode("_Mail", "UTF-8")  + "=" + URLEncoder.encode(params[1], "UTF-8")+"&"+
+                            URLEncoder.encode("_Code", "UTF-8")  + "=" + URLEncoder.encode(params[2], "UTF-8");//+"&"+
+//                            URLEncoder.encode("_Gmail", "UTF-8")  + "=" + URLEncoder.encode(params[3], "UTF-8");
+
+                    bufferedWriter.write(data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    OS.close();
+
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+
+
+                    String response="",line="";
+
+                    while((line=bufferedReader.readLine())!=null){
+                        response+=line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+
+                    return "Đã gữi mail.";
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             return "false...";
@@ -258,23 +333,11 @@ public class dangnhap_class extends Fragment implements FragmentCallBack {
 
             Toast.makeText(ctx,result,Toast.LENGTH_SHORT).show();
 
-//            try {
-//                JSONArray jsonArray= new JSONArray(result);
-//
-//                //String tentinh = jsonArray.get(0);
-//                JSONObject jsonObject = (JSONObject) jsonArray.get(0);
-//
-//                Toast.makeText(ctx,""+jsonObject.getString("tentinh"),Toast.LENGTH_SHORT).show();
-//
-//            } catch (JSONException e) {
-//                e.printStackTrace();
-//            }
-
-
             if(result.equals("Login Success...")){
                 //txtname.setText(result);
                 main.onMsgFromFragToMain("_User",User);
             }
+
         }
         public void GetValue(final String... param){
             RequestQueue requestQueue = Volley.newRequestQueue(ctx);

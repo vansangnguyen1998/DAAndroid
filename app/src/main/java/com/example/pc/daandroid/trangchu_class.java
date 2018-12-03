@@ -125,6 +125,17 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
      Button btnXuHuong = (Button) layout_trangchu.findViewById(R.id.btnXuHuong);
      final Button btnMap = (Button) layout_trangchu.findViewById(R.id.btnMap);
 
+
+     btnXuHuong.setOnClickListener(new View.OnClickListener() {
+         @Override
+         public void onClick(View v) {
+             Toast.makeText(context,"Xu Huong",Toast.LENGTH_SHORT).show();
+             Intent intent = new Intent(getContext(), ActivityChiTiet.class);
+             intent.putExtra("LoaiDuLich","XuHuong");
+             startActivity(intent);
+         }
+     });
+
         btnCaNhan.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {

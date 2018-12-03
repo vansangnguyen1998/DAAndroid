@@ -115,7 +115,17 @@ public class ActivityChiTiet extends AppCompatActivity {
             Toast.makeText(this,"Du lich tay bac",Toast.LENGTH_SHORT).show();
         }else if(bundle.getString("LoaiDuLich").equals("TheoTinh")){
             String tentinh=bundle.getString("TenTinh");
+            txtName.setText(tentinh);
+
+            BackgroundTask1 backgroundTask1 = new BackgroundTask1(this);
+            backgroundTask1.execute("TheoTinh",tentinh);
+
             Toast.makeText(this,tentinh,Toast.LENGTH_SHORT).show();
+        }else if(bundle.getString("LoaiDuLich").equals("XuHuong")){
+
+            BackgroundTask1 backgroundTask1 = new BackgroundTask1(this);
+            backgroundTask1.execute("XuHuong");
+            Toast.makeText(this,"Xu hướng",Toast.LENGTH_SHORT).show();
         }
 
 
@@ -155,9 +165,11 @@ public class ActivityChiTiet extends AppCompatActivity {
         protected String doInBackground(String... params) {
 
             String loaidl_url = "http://android1998.000webhostapp.com/php/loaidulich.php";
+            String theotinh_url="http://android1998.000webhostapp.com/php/dulichtinh.php";
+            String XuHuong_url="http://android1998.000webhostapp.com/php/xuhuong.php";
 
             String method = params[0];
-            User=params[1];
+            //User=params[1];
             if (method.equals("LoaiDL")){
 
                 try {
@@ -198,7 +210,86 @@ public class ActivityChiTiet extends AppCompatActivity {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }else if(method.equals("TheoTinh")){
 
+                try {
+                    URL url = new URL(theotinh_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream OS = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
+
+                    String data = URLEncoder.encode("_TenTinh", "UTF-8")  + "=" + URLEncoder.encode(params[1], "UTF-8");
+//                            URLEncoder.encode("_Pass", "UTF-8")  + "=" + URLEncoder.encode(params[2], "UTF-8")+"&"+
+//                            URLEncoder.encode("_Gmail", "UTF-8")  + "=" + URLEncoder.encode(params[3], "UTF-8");
+
+                    bufferedWriter.write(data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    OS.close();
+
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+
+
+                    String response="",line="";
+
+                    while((line=bufferedReader.readLine())!=null){
+                        response+=line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+
+                    return response;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+            }else if(method.equals("XuHuong")){
+
+                try {
+                    URL url = new URL(XuHuong_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+//                    OutputStream OS = httpURLConnection.getOutputStream();
+//                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
+//
+//                    String data = URLEncoder.encode("_TenTinh", "UTF-8")  + "=" + URLEncoder.encode(params[1], "UTF-8");
+////                            URLEncoder.encode("_Pass", "UTF-8")  + "=" + URLEncoder.encode(params[2], "UTF-8")+"&"+
+////                            URLEncoder.encode("_Gmail", "UTF-8")  + "=" + URLEncoder.encode(params[3], "UTF-8");
+//
+//                    bufferedWriter.write(data);
+//                    bufferedWriter.flush();
+//                    bufferedWriter.close();
+//                    OS.close();
+
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+
+
+                    String response="",line="";
+
+                    while((line=bufferedReader.readLine())!=null){
+                        response+=line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+
+                    return response;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             return "false...";
@@ -215,46 +306,8 @@ public class ActivityChiTiet extends AppCompatActivity {
 
 //            Toast.makeText(ctx,result,Toast.LENGTH_SHORT).show();
 
-            setData(data,result);
+            setData(data, result);
 
-        }
-        public void GetValue(final String... param){
-            RequestQueue requestQueue = Volley.newRequestQueue(ctx);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, param[0],
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Toast.makeText(ctx,response,Toast.LENGTH_SHORT).show();
-
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                            Toast.makeText(ctx,""+error+"",Toast.LENGTH_SHORT).show();
-                        }
-                    }){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-
-                    Map<String,String> params = new HashMap<String, String>();
-                    if(param[1].equals("DangKi")){
-                        params.put("_User",param[2]);
-                        params.put("_Pass",param[3]);
-                        params.put("_Gmail",param[4]);
-                    }
-                    else if(param[1].equals("Login")){
-                        params.put("_User",param[2]);
-                        params.put("_Pass",param[3]);
-                    }
-
-
-                    return params;
-                }
-            };
-
-            requestQueue.add(stringRequest);
         }
     }
 

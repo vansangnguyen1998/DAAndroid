@@ -1,166 +1,171 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical"
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    android:layout_height="match_parent"
-    android:layout_width="match_parent">
+    <RelativeLayout xmlns:app="http://schemas.android.com/apk/res-auto"
+        android:orientation="vertical"
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_height="match_parent"
+        android:layout_width="match_parent">
 
-    <TextView
-        android:id="@+id/ttvHinhanh"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:text="@string/Hinhanh"
-        android:textStyle="italic"
-        android:textSize="20dp"/>
-
-    <HorizontalScrollView
-        android:id="@+id/Scroll"
-        android:layout_below="@+id/ttvHinhanh"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@color/backgroundimageview">
-        <LinearLayout
-            android:id="@+id/viewgroup"
+        <TextView
+            android:id="@+id/ttvHinhanh"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
-            android:padding="10dip" >
-        </LinearLayout>
+            android:layout_alignParentStart="true"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:text="@string/Hinhanh"
+            android:textStyle="italic"
+            android:textSize="20dp"/>
+
+        <HorizontalScrollView
+            android:id="@+id/Scroll"
+            android:layout_below="@+id/ttvHinhanh"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/backgroundimageview">
+            <LinearLayout
+                android:id="@+id/viewgroup"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dip" >
+            </LinearLayout>
 
 
-    </HorizontalScrollView>
+        </HorizontalScrollView>
 
-    <TextView
-        android:id="@+id/ttvThongTin"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/Scroll"
-        android:textStyle="italic"
-        android:text="@string/Thongtin"
-        android:textSize="20dp"/>
-    <ScrollView
-        android:id="@+id/iconScoll"
-        android:layout_below="@+id/ttvThongTin"
+        <TextView
+            android:id="@+id/ttvThongTin"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/Scroll"
+            android:textStyle="italic"
+            android:text="@string/Thongtin"
+            android:textSize="20dp"/>
+        <ScrollView
+            android:id="@+id/iconScoll"
+            android:layout_below="@+id/ttvThongTin"
+            android:layout_width="match_parent"
+            android:layout_height="110dp">
+
+        <TextView
+            android:id="@+id/ThongTin"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ttvThongTin"
+            android:layout_alignParentStart="true"
+            android:textStyle="italic"
+            android:layout_marginStart="0dp"
+            android:layout_marginTop="0dp"
+            android:text=""
+            />
+        </ScrollView>
+        <ScrollView
+            android:id="@+id/iconScoll1"
+            android:layout_width="match_parent"
+            android:layout_below="@+id/iconScoll"
+            android:layout_above="@+id/table"
+            android:layout_height="wrap_content">
+    <RelativeLayout
+
         android:layout_width="match_parent"
-        android:layout_height="110dp">
-
-    <TextView
-        android:id="@+id/ThongTin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ttvThongTin"
-        android:layout_alignParentStart="true"
-        android:textStyle="italic"
-        android:layout_marginStart="0dp"
-        android:layout_marginTop="0dp"
-        android:text=""
-        />
-    </ScrollView>
-    <ScrollView
-        android:id="@+id/iconScoll1"
-        android:layout_width="match_parent"
-        android:layout_below="@+id/iconScoll"
         android:layout_height="wrap_content">
-<RelativeLayout
-
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content">
-    <TextView
-        android:id="@+id/DanhGiaSao"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        <TextView
+            android:id="@+id/DanhGiaSao"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
 
 
-        android:layout_centerHorizontal="true"
-        android:text="@string/Danhgia"
-        android:textStyle="italic"
-        android:textSize="20dp"/>
+            android:layout_centerHorizontal="true"
+            android:text="@string/Danhgia"
+            android:textStyle="italic"
+            android:textSize="20dp"/>
 
-    <RatingBar
-        android:id="@+id/ratingBar1"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/DanhGiaSao"
-        android:theme="@style/RatingBar"
-        android:numStars="5"
-        android:stepSize="1.0"
-        android:rating="1.0"
-        android:layout_centerHorizontal="true" />
+        <RatingBar
+            android:id="@+id/ratingBar1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/DanhGiaSao"
+            android:theme="@style/RatingBar"
+            android:numStars="5"
+            android:stepSize="1.0"
+            android:rating="1.0"
+            android:layout_centerHorizontal="true" />
 
-    <TextView
-        android:id="@+id/ttvNhanXet"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ratingBar1"
-        android:text="@string/Nhanxet"
-        android:textStyle="italic"
-        android:textSize="20sp" />
+        <TextView
+            android:id="@+id/ttvNhanXet"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ratingBar1"
+            android:text="@string/Nhanxet"
+            android:textStyle="italic"
+            android:textSize="20sp" />
 
-    <EditText
-        android:id="@+id/NhanXet"
-        android:layout_width="295dp"
-        android:layout_height="33dp"
-        android:layout_below="@+id/ratingBar1"
-        android:layout_alignStart="@+id/ratingBar1"
-        android:layout_marginStart="14dp"
-        android:ems="10" />
+        <EditText
+            android:id="@+id/NhanXet"
+            android:layout_width="295dp"
+            android:layout_height="33dp"
+            android:layout_below="@+id/ratingBar1"
+            android:layout_alignStart="@+id/ratingBar1"
+            android:layout_marginStart="14dp"
+            android:ems="10" />
 
-    <Button
-        android:id="@+id/btnNhanXet"
-        android:layout_width="match_parent"
-        android:layout_margin="10dp"
+        <Button
+            android:id="@+id/btnNhanXet"
+            android:layout_width="match_parent"
+            android:layout_margin="10dp"
 
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/NhanXet"
-        android:background="@color/colorbackgroundbutton"
-        android:text="Nhận xét"/>
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/NhanXet"
+            android:background="@color/colorbackgroundbutton"
+            android:text="Nhận xét"/>
 
-</RelativeLayout>
-    </ScrollView>
+        <ListView
+            android:id="@+id/lvNhanXet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/btnNhanXet"></ListView>
+    </RelativeLayout>
+        </ScrollView>
+        <TableLayout
+            android:id="@+id/table"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="30dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center"
+            android:stretchColumns="0,1,2">
+            <TableRow>
+                <Button
+                    android:id="@+id/HienThiDiaDiem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentBottom="true"
+                    android:layout_margin="10dp"
+                    android:text="@string/Hienthidiadiem" />
 
-    <TableLayout
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="30dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:stretchColumns="0,1,2">
-        <TableRow>
-            <Button
-                android:id="@+id/HienThiDiaDiem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentBottom="true"
-                android:layout_margin="10dp"
-                android:text="@string/Hienthidiadiem" />
+                <Button
+                    android:id="@+id/ThoiTiet"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_margin="10dp"
+                    android:layout_alignTop="@+id/HienThiDiaDiem"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/Thoitiet" />
 
-            <Button
-                android:id="@+id/ThoiTiet"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_margin="10dp"
-                android:layout_alignTop="@+id/HienThiDiaDiem"
-                android:layout_alignParentEnd="true"
-                android:text="@string/Thoitiet" />
-
-            <Spinner
-                android:id="@+id/DichVu"
-                android:layout_toLeftOf="@id/ThoiTiet"
-                android:layout_margin="10dp"
-                android:layout_width="wrap_content"
-                android:layout_height="42dp"
-                android:layout_alignTop="@+id/ThoiTiet"
-                android:layout_alignParentEnd="true"
-                android:text="@string/Dichvu" />
-        </TableRow>
-    </TableLayout>
+                <Spinner
+                    android:id="@+id/DichVu"
+                    android:layout_toLeftOf="@id/ThoiTiet"
+                    android:layout_margin="10dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="42dp"
+                    android:layout_alignTop="@+id/ThoiTiet"
+                    android:layout_alignParentEnd="true"
+                    android:text="@string/Dichvu" />
+            </TableRow>
+        </TableLayout>
 
 
+    </RelativeLayout>
 
-
-</RelativeLayout>

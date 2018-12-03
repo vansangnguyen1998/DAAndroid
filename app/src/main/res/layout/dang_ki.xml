@@ -19,97 +19,78 @@
     <TableLayout
         android:id="@+id/i"
         android:gravity="center"
+        android:layout_margin="15dp"
         android:layout_below="@+id/txtgioithieu"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:stretchColumns="1">
+        android:stretchColumns="0">
 
-        <TableRow>
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/tendangnhap"
-                android:textSize="22sp"
-                />
+        <TableRow
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="5dp">
 
             <EditText
                 android:id="@+id/edtUser"
+                android:hint="@string/tendangnhap"
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="22sp" />
         </TableRow>
 
-        <TableRow>
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/matkhau"
-                android:textSize="22sp"
-                />
-
-            <EditText
+        <TableRow
+            android:layout_marginTop="2dp"
+            android:layout_marginLeft="5dp">
+                <EditText
                 android:id="@+id/edtmatkhau"
                 android:layout_marginTop="5dp"
+                android:hint="@string/matkhau"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:inputType="textPassword"
                 android:textSize="22sp" />
         </TableRow>
 
-        <TableRow>
-            <TextView
-                android:layout_marginTop="5dp"
-                android:layout_marginLeft="30dp"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="@string/email"
-                android:textSize="22sp"
-                />
+        <TableRow
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp">
+
 
             <EditText
                 android:id="@+id/edtemail"
+                android:hint="@string/email"
                 android:layout_marginTop="5dp"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:textSize="22sp" />
         </TableRow>
 
-        <TableRow>
-            <TextView
-                android:layout_marginLeft="30dp"
-                android:layout_marginTop="5dp"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/nhapcode"
-                android:textSize="22sp" />
-
+        <TableRow
+            android:layout_marginLeft="5dp"
+            android:layout_marginTop="2dp">
             <EditText
                 android:id="@+id/edtcode"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:inputType="number"
+                android:hint="@string/nhapcode"
                 android:layout_marginTop="5dp"
                 android:textSize="22sp" />
 
         </TableRow>
-        <TableRow>
-            <Button
-                android:textAllCaps="false"
-                android:id="@+id/btnnhancode"
+        <TableRow
+            android:layout_marginLeft="10dp"
+            android:layout_marginRight="10dp">
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnCode"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_alignParentEnd="true"
-                android:duplicateParentState="true"
-                android:layout_marginEnd="24dp"
-                android:background="@color/colorbackgroundbutton"
-                android:text="@string/nhancode"
-                android:layout_column="1"
+                android:padding="5dp"
+                android:layout_gravity="center"
+                android:layout_margin="7dp"
+                android:src="@android:drawable/ic_dialog_email"
                 />
+
         </TableRow>
 
     </TableLayout>

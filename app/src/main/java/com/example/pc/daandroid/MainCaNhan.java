@@ -32,6 +32,10 @@ import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
 import java.io.IOException;
@@ -49,13 +53,12 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainCaNhan extends Fragment implements FragmentCallBack {
-
-
     TextView hTen,ngSinh,gTinh;
     ImageView anhDaiDien;
     MainActivity main;
     Context context;
     String User="";
+    boolean thongtin=false;
     private int mYear=1998,mMonth=1,mDay=1;
 
 
@@ -74,22 +77,23 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
 
         final RelativeLayout canhan = (RelativeLayout) inflater.inflate(R.layout.activity_main_ca_nhan,null);
 
-
+// loi~
         hTen=(TextView) canhan.findViewById(R.id.ViewHoTen);
         ngSinh=(TextView) canhan.findViewById(R.id.ViewNgaySinh);
         gTinh=(TextView) canhan.findViewById(R.id.ViewGioiTinh);
         anhDaiDien=(ImageView) canhan.findViewById(R.id.anhDaiDien);
 
-        String hten = hTen.getText().toString();
+        BackgroundTask1 backgroundTask1 = new BackgroundTask1(context);
+        backgroundTask1.execute("kt_thongtin",CheckLogin.User);
 
-        if(hten.equals("")){
+        //String hten = hTen.getText().toString();
+
+        if(thongtin==false){
+            thongtin=true;
             Toast.makeText(context,"Cập nhật thông tin.",Toast.LENGTH_SHORT).show();
             AlertDialog.Builder builder = new AlertDialog.Builder(main);
 
             View view = getLayoutInflater().inflate(R.layout.update_thong_tin,null);
-
-            // ddang lam den cho nay
-
 
             final Button btnSelect=(Button) view.findViewById(R.id.btnselect);
             Button btnUpdate = (Button) view.findViewById(R.id.btnUpdate);
@@ -182,7 +186,7 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
 
     private class BackgroundTask1 extends AsyncTask<String,Void,String> {
         private Context ctx;
-        private String User;
+        //private String User;
 
         public BackgroundTask1(Context ctx) {
             this.ctx = ctx;
@@ -197,9 +201,10 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
         protected String doInBackground(String... params) {
 
             String url_update="http://android1998.000webhostapp.com/php/update.php";
+            String url_kt="http://android1998.000webhostapp.com/php/kt_thongtincanhan.php";
 
             String method = params[0];
-            User=params[1];
+            //User=params[1];
             if (method.equals("Update")){
 
                 try {
@@ -242,6 +247,43 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
                     e.printStackTrace();
                 }
 
+            }else if(method.equals("kt_thongtin")){
+                try {
+                    URL url = new URL(url_kt);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream OS = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
+
+                    String data = URLEncoder.encode("_User", "UTF-8")  + "=" + URLEncoder.encode(params[1], "UTF-8");
+
+                    bufferedWriter.write(data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    OS.close();
+
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+
+
+                    String response="",line="";
+
+                    while((line=bufferedReader.readLine())!=null){
+                        response+=line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+
+                    return response;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
 
             return "false...";
@@ -257,6 +299,19 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
         protected void onPostExecute(String result) {
 
             Toast.makeText(ctx,result,Toast.LENGTH_SHORT).show();
+            if(thongtin==false){
+                try {
+                    JSONArray jsonArray = new JSONArray(result);
+                    JSONObject jsonObject = (JSONObject) jsonArray.get(0);
+                    hTen.setText(jsonObject.getString("ten"));
+                    gTinh.setText(jsonObject.getString("gioitinh"));
+                    ngSinh.setText(jsonObject.getString("ngaysinh"));
+                    thongtin=true;
+
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
 
         }
         public void GetValue(final String... param){

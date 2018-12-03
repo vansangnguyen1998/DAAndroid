@@ -12,6 +12,7 @@ import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -51,8 +52,9 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
     TextView thongTin;
     ScrollView scrollView;
     float numberStar;
+    ListView lvNhanXet;
 
-    String [] adapterSpinner = {"Nhà Hàng", "Khách Sạn", "ATM"};
+    String [] adapterSpinner = {"Dịch Vụ","Nhà Hàng", "Khách Sạn", "ATM"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -121,6 +123,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
 
     private void AnhXa(){
+
         btnNhanXet = (Button) findViewById(R.id.btnNhanXet);
         thongTin = (TextView) findViewById(R.id.ThongTin);
         scrollView =(ScrollView) findViewById(R.id.iconScoll);
@@ -130,6 +133,8 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         editText = (EditText) findViewById(R.id.NhanXet);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar1);
         spinner = (Spinner) findViewById(R.id.DichVu);
+        lvNhanXet = (ListView) findViewById(R.id.lvNhanXet);
+
     }
 
     @Override
