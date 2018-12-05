@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
+import android.support.design.widget.FloatingActionButton;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
@@ -86,12 +87,18 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
         BackgroundTask1 backgroundTask1 = new BackgroundTask1(context);
         backgroundTask1.execute("kt_thongtin",CheckLogin.User);
 
-        //String hten = hTen.getText().toString();
+        String hten = hTen.getText().toString();
 
-        if(thongtin==false){
-            thongtin=true;
+        FloatingActionButton btnupdate = (FloatingActionButton) canhan.findViewById(R.id.update);
+
+        btnupdate.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+
+
             Toast.makeText(context,"Cập nhật thông tin.",Toast.LENGTH_SHORT).show();
-            AlertDialog.Builder builder = new AlertDialog.Builder(main);
+
+            final AlertDialog.Builder builder = new AlertDialog.Builder(main);
 
             View view = getLayoutInflater().inflate(R.layout.update_thong_tin,null);
 
@@ -105,6 +112,9 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
             RadioButton radioNu = (RadioButton) view.findViewById(R.id.radioNu);
 
             final EditText Ten = (EditText) view.findViewById(R.id.edtten);
+                builder.setView(view);
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
 
             btnSelect.setOnClickListener(new View.OnClickListener() {
                 @Override
@@ -148,18 +158,19 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
 
                         BackgroundTask1 backgroundTask1 = new BackgroundTask1(context);
                         backgroundTask1.execute("Update",ten,GT,NS,User);
+                        hTen.setText(ten);
+                        gTinh.setText(GT);
+                        ngSinh.setText(NS);
+                        alertDialog.cancel();
                     }
                 }
             });
 
 
-           // EditText edtten = (EditText) view.findViewById(R.id.edtten);
-
-
-            builder.setView(view);
-            AlertDialog alertDialog = builder.create();
-            alertDialog.show();
         }
+
+        }
+        );
 
         return canhan;
     }
@@ -313,44 +324,6 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
                 }
             }
 
-        }
-        public void GetValue(final String... param){
-            RequestQueue requestQueue = Volley.newRequestQueue(ctx);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, param[0],
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Toast.makeText(ctx,response,Toast.LENGTH_SHORT).show();
-
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                            Toast.makeText(ctx,""+error+"",Toast.LENGTH_SHORT).show();
-                        }
-                    }){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-
-                    Map<String,String> params = new HashMap<String, String>();
-                    if(param[1].equals("DangKi")){
-                        params.put("_User",param[2]);
-                        params.put("_Pass",param[3]);
-                        params.put("_Gmail",param[4]);
-                    }
-                    else if(param[1].equals("Login")){
-                        params.put("_User",param[2]);
-                        params.put("_Pass",param[3]);
-                    }
-
-
-                    return params;
-                }
-            };
-
-            requestQueue.add(stringRequest);
         }
     }
 }

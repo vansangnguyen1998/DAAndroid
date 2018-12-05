@@ -11,7 +11,6 @@ import android.widget.TextView;
 
 import java.util.List;
 
-import static com.example.pc.daandroid.R.layout.item_listview;
 
 public class adapterListViewChiTiet extends BaseAdapter {
     private Context context;
@@ -42,7 +41,7 @@ public class adapterListViewChiTiet extends BaseAdapter {
     public View getView(int position, View v, ViewGroup parent) {
         LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
 
-        v = inflater.inflate(item_listview,null);
+        v = inflater.inflate(R.layout.item_listview,null);
         ImageView imageView = (ImageView) v.findViewById(R.id.ivPicture);
         TextView txtTen = (TextView) v.findViewById(R.id.txtDiaDiem);
         TextView txtThongTin = (TextView) v.findViewById(R.id.txtThongTin);

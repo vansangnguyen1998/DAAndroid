@@ -60,22 +60,12 @@
             android:text=""
             />
         </ScrollView>
-        <ScrollView
-            android:id="@+id/iconScoll1"
-            android:layout_width="match_parent"
-            android:layout_below="@+id/iconScoll"
-            android:layout_above="@+id/table"
-            android:layout_height="wrap_content">
-    <RelativeLayout
 
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
         <TextView
             android:id="@+id/DanhGiaSao"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-
-
+            android:layout_below="@+id/iconScoll"
             android:layout_centerHorizontal="true"
             android:text="@string/Danhgia"
             android:textStyle="italic"
@@ -110,23 +100,24 @@
             android:layout_marginStart="14dp"
             android:ems="10" />
 
-        <Button
-            android:id="@+id/btnNhanXet"
-            android:layout_width="match_parent"
-            android:layout_margin="10dp"
 
+        <android.support.design.widget.FloatingActionButton
+            android:id="@+id/btnNhanXet"
+            android:layout_centerInParent="true"
+            android:layout_width="100dp"
+            android:layout_marginTop="5dp"
+            android:clickable="true"
             android:layout_height="wrap_content"
             android:layout_below="@+id/NhanXet"
-            android:background="@color/colorbackgroundbutton"
-            android:text="Nhận xét"/>
+            android:src="@android:drawable/ic_menu_upload"/>
 
         <ListView
             android:id="@+id/lvNhanXet"
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_above="@+id/table"
             android:layout_below="@+id/btnNhanXet"></ListView>
-    </RelativeLayout>
-        </ScrollView>
+
         <TableLayout
             android:id="@+id/table"
             android:layout_alignParentBottom="true"

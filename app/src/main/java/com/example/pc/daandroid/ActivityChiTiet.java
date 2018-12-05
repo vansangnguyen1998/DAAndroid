@@ -258,17 +258,6 @@ public class ActivityChiTiet extends AppCompatActivity {
                     httpURLConnection.setRequestMethod("POST");
                     httpURLConnection.setDoOutput(true);
                     httpURLConnection.setDoInput(true);
-//                    OutputStream OS = httpURLConnection.getOutputStream();
-//                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
-//
-//                    String data = URLEncoder.encode("_TenTinh", "UTF-8")  + "=" + URLEncoder.encode(params[1], "UTF-8");
-////                            URLEncoder.encode("_Pass", "UTF-8")  + "=" + URLEncoder.encode(params[2], "UTF-8")+"&"+
-////                            URLEncoder.encode("_Gmail", "UTF-8")  + "=" + URLEncoder.encode(params[3], "UTF-8");
-//
-//                    bufferedWriter.write(data);
-//                    bufferedWriter.flush();
-//                    bufferedWriter.close();
-//                    OS.close();
 
                     InputStream inputStream = httpURLConnection.getInputStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
@@ -319,13 +308,15 @@ public class ActivityChiTiet extends AppCompatActivity {
             for(int i=0;i<n;i++) {
 
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                String urlImage=jsonObject.getString("hinhanh");
-                String mota=jsonObject.getString("mota");
-                danhgia cmt=new danhgia("",5);
-                String tendiadanh=jsonObject.getString("tendiadanh");
-                String tentinh = jsonObject.getString("tentinh");
 
-                diadiemchitiet temp=new diadiemchitiet(urlImage,mota,cmt,tendiadanh,tentinh);
+
+                String tentinh = jsonObject.getString("tentinh");
+                String tendiadanh=jsonObject.getString("tendiadanh");
+
+                String mota=jsonObject.getString("mota");
+                String urlImage=jsonObject.getString("hinhanh");
+
+                diadiemchitiet temp=new diadiemchitiet(urlImage,mota,tendiadanh,tentinh);
 
                 data.add(temp);
 

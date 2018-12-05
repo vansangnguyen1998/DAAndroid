@@ -5,16 +5,16 @@ import java.util.ArrayList;
 public class diadiemchitiet {
     private String urlImage;
     private String moTa;
-    private danhgia comment;
+
     private String TenDiaDanh;
     private String TenTinh;
 
     public diadiemchitiet(){}
 
-    public  diadiemchitiet(String url, String mota, danhgia cmt, String tendiadanh, String tentinh){
+    public  diadiemchitiet(String url, String mota,  String tendiadanh, String tentinh){
         urlImage=url;
         moTa=mota;
-        comment=cmt;
+
         TenDiaDanh=tendiadanh;
         TenTinh=tentinh;
     }
@@ -24,9 +24,6 @@ public class diadiemchitiet {
 
     public String getMoTa() { return moTa; }
     public void setMoTa(String moTa) { this.moTa = moTa; }
-
-    public danhgia getComment() { return comment; }
-    public void setComment(danhgia comment) { this.comment = comment; }
 
     public void setTenDiaDanh(String ten){ TenDiaDanh=ten; }
     public String getTenDiaDanh(){return TenDiaDanh;}

@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:clickable="true"
+        android:layout_margin="5dp"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="#d4c9d2"
+            android:orientation="vertical">
+            <TextView
+                android:id="@+id/txtUser"
+                android:layout_marginLeft="3dp"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="user"
+                android:textSize="22sp"/>
+            <RatingBar
+                android:id="@+id/ratingNX"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@+id/txtUser"
+                android:layout_marginLeft="10dp"
+                android:layout_marginTop="6dp"
+                android:numStars="5"
+                android:rating="3"
+                style="?android:attr/ratingBarStyleSmall" />
+            <TextView
+                android:id="@+id/txtNgayThang"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textSize="22sp"
+                android:layout_marginLeft="4dp"
+                android:layout_toRightOf="@id/ratingNX"
+                android:text="ngaythang"/>
+            <TextView
+                android:id="@+id/txtNoiDung"
+                android:layout_marginLeft="3dp"
+                android:layout_below="@+id/txtUser"
+                android:layout_margin="4dp"
+                android:textSize="16sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="noidung"/>
+
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+
+</LinearLayout>
