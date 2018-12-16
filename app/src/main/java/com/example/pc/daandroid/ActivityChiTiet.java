@@ -139,7 +139,7 @@ public class ActivityChiTiet extends AppCompatActivity {
                 intent.putExtra("tentinh",data.get(position).getTenTinh());
                 intent.putExtra("tendiadanh",data.get(position).getTenDiaDanh());
                 intent.putExtra("mota",data.get(position).getMoTa());
-
+                intent.putExtra("tentinh_KD", data.get(position).getTenTinhKD());
                 startActivity(intent);
             }
         });
@@ -315,8 +315,9 @@ public class ActivityChiTiet extends AppCompatActivity {
 
                 String mota=jsonObject.getString("mota");
                 String urlImage=jsonObject.getString("hinhanh");
+                String tentinhkd=jsonObject.getString("tentinh_KD");
 
-                diadiemchitiet temp=new diadiemchitiet(urlImage,mota,tendiadanh,tentinh);
+                diadiemchitiet temp=new diadiemchitiet(urlImage,mota,tendiadanh,tentinh,tentinhkd);
 
                 data.add(temp);
 

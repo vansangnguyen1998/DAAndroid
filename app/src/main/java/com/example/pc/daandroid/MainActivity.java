@@ -20,6 +20,8 @@ import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
+import android.view.Window;
+import android.view.WindowManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -66,13 +68,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
     private String[] Loai={"Biển", "Núi", "Tây Bắc", "Chùa Chiền", "Cao Nguyên","Nơi mát mẻ"};
     private String[] Tua={"Không có"};
 
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
+        // set full mnag hinh
+        this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
+
+        //loai do tieu de
+        this.requestWindowFeature(Window.FEATURE_NO_TITLE);
+
         setContentView(R.layout.activity_main);
-        //txtview=(TextView) findViewById(R.id.txtView);
+
+
+
         mDraw = (DrawerLayout) findViewById(R.id.drawer);
         navView= (NavigationView) findViewById(R.id.navView);
 
@@ -82,13 +91,13 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         View header = navView.getHeaderView(0);
 
         nameuser = (TextView) header.findViewById(R.id.nameuser);
+        nameuser.setText(CheckLogin.User);
 
         navView.setNavigationItemSelectedListener(this);
         mItem= new ActionBarDrawerToggle(this,mDraw,R.string.open,R.string.close);
         mDraw.addDrawerListener(mItem);
         mItem.syncState();
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
-
 
         getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main,
                 new trangchu_class()).commit();

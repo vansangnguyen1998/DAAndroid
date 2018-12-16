@@ -1,7 +1,10 @@
 package com.example.pc.daandroid;
 
 import android.app.Activity;
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.v7.app.AppCompatActivity;
@@ -27,10 +30,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -50,9 +55,9 @@ import java.util.Map;
 
 public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnItemSelectedListener{
 
-    Button HienThiDiaDiem,ThoiTiet;
+    Button HienThiDiaDiem;
     FloatingActionButton btnNhanXet;
-    ViewGroup viewGroup;
+    ViewGroup viewGroup,viewWeather;
     EditText editText;
     RatingBar ratingBar;
     Integer [] Imageview= {R.drawable.android1,R.drawable.android3,R.drawable.bien};
@@ -112,6 +117,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
             }
         });
 
+        SetWeather(bundle);
         // build adapter spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item, adapterSpinner);
@@ -150,24 +156,176 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         backgroundTask.execute("LVNhanXet",bundle.getString("tentinh"),bundle.getString("tendiadanh"));
 
     }
+// hàm set weather HorizontalScollView
+    private void SetWeather(Bundle bundle){
+            // den ngay nay dang bí
+            String url_location="http://dataservice.accuweather.com/locations/v1/cities/search?apikey=epiju3Mnk6o7MNoT7b6ZAcY7AMgu6RyJ&q="+
+                    bundle.getString("tentinh_KD");
+            String key="";
+            String url_weather_5day="http://dataservice.accuweather.com/forecasts/v1/daily/5day/"+key+"?apikey=epiju3Mnk6o7MNoT7b6ZAcY7AMgu6RyJ";
+
+            RequestQueue requestQueue = Volley.newRequestQueue(ActivityDiaDiemChiTiet.this);
+            StringRequest stringRequest = new StringRequest(Request.Method.GET, url_location,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+                            //Toast.makeText(ActivityDiaDiemChiTiet.this,response,Toast.LENGTH_SHORT).show();
+                            try {
+                                JSONArray jsonArray = new JSONArray(response);
+                                JSONObject jsonObject = (JSONObject) jsonArray.get(0);
 
 
+                                String key=jsonObject.getString("Key");
+                                String url_weather_5day="http://dataservice.accuweather.com/forecasts/v1/daily/5day/"+key+"?apikey=epiju3Mnk6o7MNoT7b6ZAcY7AMgu6RyJ";
+
+                                RequestQueue requestQueue1 = Volley.newRequestQueue(ActivityDiaDiemChiTiet.this);
+                                StringRequest str = new StringRequest(Request.Method.GET, url_weather_5day,
+                                        new Response.Listener<String>() {
+                                            @Override
+                                            public void onResponse(String res) {
+
+                                                try {
+
+                                                    //String image_icon="https://developer.accuweather.com/sites/default/files/";//05-s.png
+                                                    // json array gom co 5 phan tu moi phan tu la mot ngay
+                                                    JSONObject json=new JSONObject(res);
+                                                    // jcon array chua 5 ngay
+                                                    JSONArray arrJson = json.getJSONArray("DailyForecasts");
+
+                                                    final ArrayList<weather> data = new ArrayList<weather>();
+
+                                                    int len=arrJson.length();
+
+                                                    for(int i=0; i<len;i++){
+                                                        String date, url;
+                                                        int minValue;
+                                                        int maxValue;
+                                                        int iconNgay;
+                                                        int iconDem;
+                                                        JSONObject jsonobj= (JSONObject) arrJson.get(i);
+                                                        date = jsonobj.getString("Date").substring(0,10);
+                                                        JSONObject jsonTemperature=jsonobj.getJSONObject("Temperature");
+                                                        JSONObject jsonDay=jsonobj.getJSONObject("Day");
+                                                        JSONObject jsonNight=jsonobj.getJSONObject("Night");
+
+                                                        JSONObject jsonMin = jsonTemperature.getJSONObject("Minimum");
+                                                        JSONObject jsonMax = jsonTemperature.getJSONObject("Maximum");
+
+                                                        minValue = jsonMin.getInt("Value");
+                                                        maxValue = jsonMax.getInt("Value");
+
+                                                        iconNgay=jsonDay.getInt("Icon");
+                                                        iconDem=jsonNight.getInt("Icon");
+
+                                                        url=jsonobj.getString("MobileLink");
+
+                                                        weather wea=new weather(date,minValue,maxValue,iconNgay,iconDem,url);
+                                                        data.add(wea);
+                                                    }
+                                                    // den cho nay la data da có dữ liệu weather. công việc tiếp theo là set data vào
+                                                    // horizontalScollView.
+
+                                                    // thực hiện add dữ liệu vào horizontalScollView
+                                                    String image_icon="http://android1998.000webhostapp.com/Image/"; // link ảnh
+                                                    if(data!=null) {
+                                                        for (int i = 0; i < 5; i++){
+                                                            final View singleFrame = getLayoutInflater().inflate(
+                                                                    R.layout.item_weather, null);
+
+                                                            singleFrame.setId(i);
+
+                                                            TextView date= (TextView) singleFrame.findViewById(R.id.txt_date);
+                                                            TextView nhietdo = (TextView) singleFrame.findViewById(R.id.txt_nhietdo);
+                                                            ImageView iconDay = (ImageView) singleFrame.findViewById(R.id.iconDay_weather);
+                                                            ImageView iconNight = (ImageView) singleFrame.findViewById(R.id.iconNight_weather);
+
+                                                            // set data cho từng cái nhớ.
+                                                            date.setText(data.get(i).getDate().substring(0,10));
+                                                            nhietdo.setText(String.valueOf((int)((data.get(i).getMaxValue()-32)/1.8))+"~"+
+                                                                    String.valueOf((int)((data.get(i).getMinValue()-32)/1.8)));
+                                                            Picasso.get().load(image_icon+String.valueOf(data.get(i).getIcon_Ngay())+".png")
+                                                                    .into(iconDay);
+                                                            Picasso.get().load(image_icon+String.valueOf(data.get(i).getIcon_Dem())+".png")
+                                                                    .into(iconNight);
+
+                                                            //ImageView image = (ImageView) singleFrame.findViewById(R.id.iconScoll);
+                                                            //image.setImageResource(Imageview[i]);
+
+                                                            viewWeather.addView(singleFrame);
+
+                                                            // click vào item weathere thì nó sẽ chạy đến web để hiển thị chi tiết cho nguwiof dùng
+
+                                                            final int finalI = i;
+                                                            singleFrame.setOnClickListener(new View.OnClickListener() {
+                                                                @Override
+                                                                public void onClick(View v) {
+                                                                    final Uri linkMobile = Uri.parse(data.get(finalI).getUrl());
+
+                                                                    Intent browser = new Intent(Intent.ACTION_VIEW,linkMobile);
+                                                                    startActivity( browser);
+                                                                }
+                                                            });
+                                                        }
+                                                    }
+                                                    //AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDiaDiemChiTiet.this);
+//                                                    View view = getLayoutInflater().inflate(R.layout.listview_weather,null);
+//
+//                                                    ListView listView = (ListView) view.findViewById(R.id.lv_weather);
+//                                                    adapter_lv_weather adapter=
+//                                                            new adapter_lv_weather(ActivityDiaDiemChiTiet.this,data);
+//                                                    listView.setAdapter(adapter);
+
+                                                    //builder.setView(view);
+                                                    //final AlertDialog alertDialog = builder.create();
+                                                    //alertDialog.show();
+
+                                                } catch (JSONException e) {
+                                                    e.printStackTrace();
+                                                }
+
+                                            }
+                                        }, new Response.ErrorListener() {
+                                    @Override
+                                    public void onErrorResponse(VolleyError error) {
+
+                                    }
+                                });
+                                requestQueue1.add(str);
+
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                            Toast.makeText(ActivityDiaDiemChiTiet.this,""+error+"",Toast.LENGTH_SHORT).show();
+                        }
+                    });
+            requestQueue.add(stringRequest);
+
+
+    }
+// hàm ánh xạ các thông tin bên xml qua java
     private void AnhXa(){
 
         btnNhanXet = (FloatingActionButton) findViewById(R.id.btnNhanXet);
         thongTin = (TextView) findViewById(R.id.ThongTin);
 
         HienThiDiaDiem = (Button) findViewById(R.id.HienThiDiaDiem);
-        ThoiTiet = (Button) findViewById(R.id.ThoiTiet);
-        viewGroup = (ViewGroup) findViewById(R.id.viewgroup);
+
         editText = (EditText) findViewById(R.id.NhanXet);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar1);
         spinner = (Spinner) findViewById(R.id.DichVu);
 
         scrollView =(ScrollView) findViewById(R.id.iconScoll);
-
-
         lvNhanXet = (ListView) findViewById(R.id.lvNhanXet);
+
+        viewGroup = (ViewGroup) findViewById(R.id.viewgroup);
+        viewWeather = (ViewGroup) findViewById(R.id.viewWeather);
 
     }
 
@@ -301,7 +459,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         @Override
         protected void onPostExecute(String result) {
 
-           Toast.makeText(ctx,result,Toast.LENGTH_SHORT).show();
+           //Toast.makeText(ctx,result,Toast.LENGTH_SHORT).show();
 
            if(method.equals("LVNhanXet")){
                try {

@@ -32,6 +32,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -61,6 +62,9 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
     String User="";
     boolean thongtin=false;
     private int mYear=1998,mMonth=1,mDay=1;
+    String url_male="https://st3.depositphotos.com/8440746/17646/v/1600/depositphotos_176466004-stock-illustration-user-icon-vector-male-person.jpg";
+    String url_female="https://cdn4.vectorstock.com/i/1000x1000/35/53/person-icon-female-user-profile-avatar-vector-18833553.jpg";
+    String url_noGender="https://maxcdn.icons8.com/app/uploads/2016/10/person_1.png";
 
 
     public static MainCaNhan newInstance(String strArg) {
@@ -78,16 +82,21 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
 
         final RelativeLayout canhan = (RelativeLayout) inflater.inflate(R.layout.activity_main_ca_nhan,null);
 
-// loi~
+
         hTen=(TextView) canhan.findViewById(R.id.ViewHoTen);
         ngSinh=(TextView) canhan.findViewById(R.id.ViewNgaySinh);
         gTinh=(TextView) canhan.findViewById(R.id.ViewGioiTinh);
         anhDaiDien=(ImageView) canhan.findViewById(R.id.anhDaiDien);
 
+        Picasso.get().load(url_noGender).into(anhDaiDien);
+
+
         BackgroundTask1 backgroundTask1 = new BackgroundTask1(context);
         backgroundTask1.execute("kt_thongtin",CheckLogin.User);
 
         String hten = hTen.getText().toString();
+
+
 
         FloatingActionButton btnupdate = (FloatingActionButton) canhan.findViewById(R.id.update);
 
@@ -152,7 +161,7 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
                         if(radioNam.isChecked()){
                             GT="Nam";
                         }else{
-                            GT="Nu";
+                            GT="Nữ";
                         }
                         String NS=eddate.getText().toString();
 
@@ -317,6 +326,13 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
                     hTen.setText(jsonObject.getString("ten"));
                     gTinh.setText(jsonObject.getString("gioitinh"));
                     ngSinh.setText(jsonObject.getString("ngaysinh"));
+                    if(gTinh.getText().toString().equals("Nam")){
+                        Picasso.get().load(url_male).into(anhDaiDien);
+                    }else if(gTinh.getText().toString().equals("")){
+
+                    }else{
+                        Picasso.get().load(url_female).into(anhDaiDien);
+                    }
                     thongtin=true;
 
                 } catch (JSONException e) {
