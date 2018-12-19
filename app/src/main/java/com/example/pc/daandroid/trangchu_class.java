@@ -2,6 +2,7 @@ package com.example.pc.daandroid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Parcelable;
@@ -13,6 +14,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -24,6 +26,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.squareup.picasso.Picasso;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.BufferedReader;
 import java.io.BufferedWriter;
@@ -37,6 +44,7 @@ import java.net.HttpURLConnection;
 import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -44,12 +52,20 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
 
     MainActivity main;
     Context context=null;
+    ViewGroup horizontalXuHuong;
+    ArrayList<diadiemchitiet> diadiemXuHuong=new ArrayList<diadiemchitiet>();
+
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
         final RelativeLayout layout_trangchu = (RelativeLayout) inflater.inflate(R.layout.fragment_trangchu,null);
+
+        horizontalXuHuong = (ViewGroup) layout_trangchu.findViewById(R.id.horizontal_XuHuong);
+
+        SetHorizontalXuHuong();
+
         // click Bien
         CardView btnBaiBien = (CardView) layout_trangchu.findViewById(R.id.btnBaiBien);
         btnBaiBien.setOnClickListener(new View.OnClickListener() {
@@ -178,6 +194,90 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
     }
 
 
+    private void SetHorizontalXuHuong() {
+        // den ngay nay dang bí
+            String XuHuong_url = "http://android1998.000webhostapp.com/php/xuhuong.php";
+//            URL url = new URL(XuHuong_url);
+//            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+//            httpURLConnection.setRequestMethod("POST");
+//            httpURLConnection.setDoOutput(true);
+//            httpURLConnection.setDoInput(true);
+//
+//            InputStream inputStream = httpURLConnection.getInputStream();
+//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
+//
+//
+//            String response = "", line = "";
+//
+//            while ((line = bufferedReader.readLine()) != null) {
+//                response += line;
+//            }
+//
+//            bufferedReader.close();
+//            inputStream.close();
+//            httpURLConnection.disconnect();
 
+            // response là giá trị trả về các địa điểm th.:D
+
+            RequestQueue requestQueue = Volley.newRequestQueue(context);
+            StringRequest str= new StringRequest(Request.Method.POST, XuHuong_url,
+                    new Response.Listener<String>() {
+                        @Override
+                        public void onResponse(String response) {
+
+                            try {
+                                JSONArray jsonArray= new JSONArray(response);
+                                int n=jsonArray.length();
+                                for(int i=0;i<n;i++) {
+
+                                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+
+
+                                    String tentinh = jsonObject.getString("tentinh");
+                                    String tendiadanh=jsonObject.getString("tendiadanh");
+
+                                    String mota=jsonObject.getString("mota");
+                                    String urlImage=jsonObject.getString("hinhanh");
+                                    String tentinhkd=jsonObject.getString("tentinh_KD");
+
+                                    diadiemchitiet temp=new diadiemchitiet(urlImage,mota,tendiadanh,tentinh,tentinhkd);
+
+                                    diadiemXuHuong.add(temp);
+                                    //Toast.makeText(ctx, "" + jsonObject.getString("tentinh") + jsonArray.length(), Toast.LENGTH_SHORT).show();
+                                }
+
+                                int lenXuHuong=diadiemXuHuong.size();
+
+                                for(int i=0;i<lenXuHuong;i++){
+                                    final View singleFrame = getLayoutInflater().inflate(
+                                            R.layout.itemhorizontal_xuhuong, null);
+
+                                    singleFrame.setId(i);
+
+                                    ImageView imageView = (ImageView) singleFrame.findViewById(R.id.imageview_anh);
+                                    TextView txtTen = (TextView) singleFrame.findViewById(R.id.textview_tendiadiem);
+                                    //TextView txtThongTin = (TextView) singleFrame.findViewById(R.id.textview_loaidulich);
+
+                                    imageView.setImageResource(R.drawable.bien);
+                                    txtTen.setText(diadiemXuHuong.get(i).getTenDiaDanh());
+
+                                    horizontalXuHuong.addView(singleFrame);
+                                }
+                            } catch (JSONException e) {
+                                e.printStackTrace();
+                            }
+
+                        }
+                    },
+                    new Response.ErrorListener() {
+                        @Override
+                        public void onErrorResponse(VolleyError error) {
+
+                        }
+                    });
+
+            requestQueue.add(str);
+
+    }
 
 }
