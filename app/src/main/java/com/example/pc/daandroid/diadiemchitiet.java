@@ -1,9 +1,11 @@
 package com.example.pc.daandroid;
 
+import java.io.Serializable;
 import java.util.ArrayList;
+import java.util.List;
 
-public class diadiemchitiet {
-    private String urlImage;
+public class diadiemchitiet implements Serializable {
+    private List<String> urlImage;
     private String moTa;
     private String TenTinhKD;
     private String TenDiaDanh;
@@ -11,7 +13,15 @@ public class diadiemchitiet {
 
     public diadiemchitiet(){}
 
-    public  diadiemchitiet(String url, String mota,  String tendiadanh, String tentinh, String tentinhkd){
+    public diadiemchitiet( diadiemchitiet a){
+        urlImage=a.getUrlImage();
+        moTa=a.getMoTa();
+        TenTinhKD=a.getTenTinhKD();
+        TenDiaDanh=a.getTenDiaDanh();
+        TenTinh=a.getTenTinh();
+    }
+
+    public  diadiemchitiet(List<String> url, String mota,  String tendiadanh, String tentinh, String tentinhkd){
         urlImage=url;
         moTa=mota;
         TenTinhKD=tentinhkd;
@@ -19,12 +29,20 @@ public class diadiemchitiet {
         TenTinh=tentinh;
     }
 
-    public String getUrlImage() {
+    public List<String> getUrlImage() {
         return urlImage;
     }
 
-    public void setUrlImage(String urlImage) {
+    public void setUrlImage(List<String> urlImage) {
         this.urlImage = urlImage;
+    }
+
+    public String getMoTa() {
+        return moTa;
+    }
+
+    public void setMoTa(String moTa) {
+        this.moTa = moTa;
     }
 
     public String getTenTinhKD() {
@@ -35,16 +53,19 @@ public class diadiemchitiet {
         TenTinhKD = tenTinhKD;
     }
 
-    public String getURL() { return urlImage; }
-    public void setURL(String URL) { this.urlImage = URL; }
+    public String getTenDiaDanh() {
+        return TenDiaDanh;
+    }
 
-    public String getMoTa() { return moTa; }
-    public void setMoTa(String moTa) { this.moTa = moTa; }
+    public void setTenDiaDanh(String tenDiaDanh) {
+        TenDiaDanh = tenDiaDanh;
+    }
 
-    public void setTenDiaDanh(String ten){ TenDiaDanh=ten; }
-    public String getTenDiaDanh(){return TenDiaDanh;}
+    public String getTenTinh() {
+        return TenTinh;
+    }
 
-    public  void setTenTinh(String Ten){TenTinh=Ten;}
-    public String getTenTinh(){return TenTinh;}
-
+    public void setTenTinh(String tenTinh) {
+        TenTinh = tenTinh;
+    }
 }

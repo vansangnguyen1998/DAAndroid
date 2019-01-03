@@ -13,6 +13,7 @@ import android.support.v7.widget.CardView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RelativeLayout;
@@ -53,14 +54,16 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
     MainActivity main;
     Context context=null;
     ViewGroup horizontalXuHuong;
-    ArrayList<diadiemchitiet> diadiemXuHuong=new ArrayList<diadiemchitiet>();
+    ArrayList<diadiemchitiet> diadiemXuHuong;
 
 
     @Nullable
     @Override
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
 
-        final RelativeLayout layout_trangchu = (RelativeLayout) inflater.inflate(R.layout.fragment_trangchu,null);
+        RelativeLayout layout_trangchu = (RelativeLayout) inflater.inflate(R.layout.fragment_trangchu,null);
+
+        diadiemXuHuong=new ArrayList<diadiemchitiet>();
 
         horizontalXuHuong = (ViewGroup) layout_trangchu.findViewById(R.id.horizontal_XuHuong);
 
@@ -173,6 +176,8 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
             }
         });
 
+        main.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+
         return layout_trangchu;
     }
 
@@ -197,27 +202,6 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
     private void SetHorizontalXuHuong() {
         // den ngay nay dang bí
             String XuHuong_url = "http://android1998.000webhostapp.com/php/xuhuong.php";
-//            URL url = new URL(XuHuong_url);
-//            HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
-//            httpURLConnection.setRequestMethod("POST");
-//            httpURLConnection.setDoOutput(true);
-//            httpURLConnection.setDoInput(true);
-//
-//            InputStream inputStream = httpURLConnection.getInputStream();
-//            BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream, "iso-8859-1"));
-//
-//
-//            String response = "", line = "";
-//
-//            while ((line = bufferedReader.readLine()) != null) {
-//                response += line;
-//            }
-//
-//            bufferedReader.close();
-//            inputStream.close();
-//            httpURLConnection.disconnect();
-
-            // response là giá trị trả về các địa điểm th.:D
 
             RequestQueue requestQueue = Volley.newRequestQueue(context);
             StringRequest str= new StringRequest(Request.Method.POST, XuHuong_url,
@@ -237,7 +221,15 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
                                     String tendiadanh=jsonObject.getString("tendiadanh");
 
                                     String mota=jsonObject.getString("mota");
-                                    String urlImage=jsonObject.getString("hinhanh");
+
+                                    ArrayList<String> urlImage = new ArrayList<String>();
+
+                                    JSONArray image = new JSONArray(jsonObject.getString("hinhanh"));
+
+                                    for(int j=0;j<image.length();j++){
+                                        urlImage.add((String) image.get(j));
+                                    }
+
                                     String tentinhkd=jsonObject.getString("tentinh_KD");
 
                                     diadiemchitiet temp=new diadiemchitiet(urlImage,mota,tendiadanh,tentinh,tentinhkd);
@@ -258,7 +250,10 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
                                     TextView txtTen = (TextView) singleFrame.findViewById(R.id.textview_tendiadiem);
                                     //TextView txtThongTin = (TextView) singleFrame.findViewById(R.id.textview_loaidulich);
 
-                                    imageView.setImageResource(R.drawable.bien);
+                                    //imageView.setImageResource(R.drawable.bien);
+                                    Picasso.get().load("http://android1998.000webhostapp.com/DiaDanh/"+
+                                            diadiemXuHuong.get(i).getUrlImage().get(0)+"/"+
+                                            diadiemXuHuong.get(i).getUrlImage().get(1)).into(imageView);
                                     txtTen.setText(diadiemXuHuong.get(i).getTenDiaDanh());
 
                                     horizontalXuHuong.addView(singleFrame);

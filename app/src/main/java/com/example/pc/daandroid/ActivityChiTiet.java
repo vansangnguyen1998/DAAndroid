@@ -135,11 +135,7 @@ public class ActivityChiTiet extends AppCompatActivity {
 
                 Intent intent =new Intent(ActivityChiTiet.this,ActivityDiaDiemChiTiet.class);
                 //Bundle bundle1 = new Bundle();
-
-                intent.putExtra("tentinh",data.get(position).getTenTinh());
-                intent.putExtra("tendiadanh",data.get(position).getTenDiaDanh());
-                intent.putExtra("mota",data.get(position).getMoTa());
-                intent.putExtra("tentinh_KD", data.get(position).getTenTinhKD());
+                intent.putExtra("diadiem", data.get(position));
                 startActivity(intent);
             }
         });
@@ -314,7 +310,15 @@ public class ActivityChiTiet extends AppCompatActivity {
                 String tendiadanh=jsonObject.getString("tendiadanh");
 
                 String mota=jsonObject.getString("mota");
-                String urlImage=jsonObject.getString("hinhanh");
+
+                ArrayList<String> urlImage = new ArrayList<String>();
+
+                JSONArray arrImage= new JSONArray(jsonObject.getString("hinhanh"));
+                for(int j=0;j<arrImage.length();j++){
+                    urlImage.add((String) arrImage.get(j));
+                }
+
+                //String urlImage=jsonObject.getString("hinhanh");
                 String tentinhkd=jsonObject.getString("tentinh_KD");
 
                 diadiemchitiet temp=new diadiemchitiet(urlImage,mota,tendiadanh,tentinh,tentinhkd);

@@ -4,6 +4,8 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.location.Address;
+import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
@@ -11,6 +13,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -30,6 +33,12 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.MapFragment;
+import com.google.android.gms.maps.OnMapReadyCallback;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -51,22 +60,33 @@ import java.net.URLEncoder;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnItemSelectedListener{
+public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnItemSelectedListener,OnMapReadyCallback {
 
-    Button HienThiDiaDiem;
-    FloatingActionButton btnNhanXet;
-    ViewGroup viewGroup,viewWeather;
-    EditText editText;
-    RatingBar ratingBar;
-    Integer [] Imageview= {R.drawable.android1,R.drawable.android3,R.drawable.bien};
-    Spinner spinner;
-    TextView thongTin;
-    ScrollView scrollView;
-    float numberStar;
-    ListView lvNhanXet;
+
+    @Override
+    public void onMapReady(GoogleMap googleMap) {
+
+        myMap=googleMap;
+
+        Search(DiaDiem.getTenDiaDanh());
+
+    }
+
+    private GoogleMap myMap;
+    private Button HienThiDiaDiem;
+    private FloatingActionButton btnNhanXet;
+    private ViewGroup viewGroup,viewWeather;
+    private EditText editText;
+    private RatingBar ratingBar;
+    private Spinner spinner;
+    private TextView thongTin;
+    private float numberStar;
+    private ListView lvNhanXet;
     private ArrayList<danhgia> lvNX;
+    private diadiemchitiet DiaDiem = new diadiemchitiet();
 
     String [] adapterSpinner = {"Dịch Vụ","Nhà Hàng", "Khách Sạn", "ATM"};
 
@@ -75,10 +95,9 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dia_diem_chi_tiet);
 
-        final Bundle bundle = this.getIntent().getExtras();
-
-        //diadiemchitiet diadiem= (diadiemchitiet) bundle.getSerializable("diadiemchitiet");
-
+        final Intent bundle = this.getIntent();
+        // set data cho DiaDiem;
+        DiaDiem = new diadiemchitiet ((diadiemchitiet) bundle.getSerializableExtra("diadiem"));
 
         lvNX=new ArrayList<danhgia>();
 
@@ -89,15 +108,13 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
         if(bundle!=null) {
 
-            thongTin.setText(bundle.getString("mota"));
+            thongTin.setText(DiaDiem.getMoTa());
 
-            scrollView.fullScroll(View.FOCUS_DOWN);
+            //scrollView.fullScroll(View.FOCUS_DOWN);
         }
 
-
-
         // set picture horiontalImage.
-        for(int i=0;i<Imageview.length;i++){
+        for(int i=1;i<DiaDiem.getUrlImage().size();i++){
             final View singleFrame = getLayoutInflater().inflate(
                     R.layout.icon_trang_thong_tin, null);
 
@@ -105,7 +122,11 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
             ImageView image = (ImageView) singleFrame.findViewById(R.id.iconScoll);
 
-            image.setImageResource(Imageview[i]);
+            //image.setImageResource(Imageview[i]);
+
+            Picasso.get().load("http://android1998.000webhostapp.com/DiaDanh/"+
+                    DiaDiem.getUrlImage().get(0)+"/"+
+                    DiaDiem.getUrlImage().get(i)).into(image);
 
             viewGroup.addView(singleFrame);
         }
@@ -117,7 +138,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
             }
         });
 
-        SetWeather(bundle);
+        SetWeather();
         // build adapter spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
                 android.R.layout.simple_spinner_dropdown_item, adapterSpinner);
@@ -145,22 +166,66 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                             String.valueOf(newCalendar.get(Calendar.YEAR));
 
                     BackgroundTask1 backgroundTask1 = new BackgroundTask1(ActivityDiaDiemChiTiet.this);
-                    backgroundTask1.execute("NhanXet", sosao, txtNhanXet,bundle.getString("tentinh"),CheckLogin.User,
-                            bundle.getString("tendiadanh"),date);
+                    backgroundTask1.execute("NhanXet", sosao, txtNhanXet,DiaDiem.getTenTinh(),CheckLogin.User,
+                            DiaDiem.getTenDiaDanh(),date);
                     editText.setText("");
                 }
             }
         });
 
         BackgroundTask1 backgroundTask = new BackgroundTask1(ActivityDiaDiemChiTiet.this);
-        backgroundTask.execute("LVNhanXet",bundle.getString("tentinh"),bundle.getString("tendiadanh"));
+        backgroundTask.execute("LVNhanXet",DiaDiem.getTenTinh(),DiaDiem.getTenDiaDanh());
+
+        // set cac du lieu hien thi cho map
+        MapFragment mapFragment=(MapFragment) getFragmentManager().findFragmentById(R.id.myMap_DiaDiem);
+        mapFragment.getMapAsync(this);
+
+        hintKeybroard();
 
     }
+
+    // ham search thong tin dia diem can dua len map.
+
+    private void Search(String ten){
+        Geocoder geocoder = new Geocoder(ActivityDiaDiemChiTiet.this);
+        List<Address> list = new ArrayList<>();
+        try {
+            list = geocoder.getFromLocationName(ten,1);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        if(list.size()>0){
+            Address address = list.get(0);
+            // lay duoc dia diem
+            moveCamera(new LatLng(address.getLatitude(),address.getLongitude()),15f,address.getAddressLine(0));
+
+        }
+    }
+
+    // ham moveCamera co chuc nang dua den dia diem da set LatLng
+    private void moveCamera(LatLng latLng,float zoom,String title){
+
+        myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
+        if(!title.equals("My Location")) {
+            MarkerOptions options = new MarkerOptions().
+                    position(latLng).
+                    title(title);
+
+            myMap.addMarker(options);
+        }
+        hintKeybroard();
+    }
+
+
+    private void hintKeybroard(){
+        this.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+    }
+
 // hàm set weather HorizontalScollView
-    private void SetWeather(Bundle bundle){
+    private void SetWeather(){
             // den ngay nay dang bí
             String url_location="http://dataservice.accuweather.com/locations/v1/cities/search?apikey=epiju3Mnk6o7MNoT7b6ZAcY7AMgu6RyJ&q="+
-                    bundle.getString("tentinh_KD");
+                    DiaDiem.getTenTinhKD();
             String key="";
             String url_weather_5day="http://dataservice.accuweather.com/forecasts/v1/daily/5day/"+key+"?apikey=epiju3Mnk6o7MNoT7b6ZAcY7AMgu6RyJ";
 
@@ -321,7 +386,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         ratingBar = (RatingBar) findViewById(R.id.ratingBar1);
         spinner = (Spinner) findViewById(R.id.DichVu);
 
-        scrollView =(ScrollView) findViewById(R.id.iconScoll);
+       // scrollView =(ScrollView) findViewById(R.id.iconScoll);
         lvNhanXet = (ListView) findViewById(R.id.lvNhanXet);
 
         viewGroup = (ViewGroup) findViewById(R.id.viewgroup);
@@ -338,6 +403,8 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
     public void onNothingSelected(AdapterView<?> parent) {
 
     }
+
+
 
     private class BackgroundTask1 extends AsyncTask<String,Void,String> {
         private Context ctx;

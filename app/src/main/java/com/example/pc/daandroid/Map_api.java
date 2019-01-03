@@ -107,10 +107,8 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        //mgeodataclient = Places.getGeoDataClient(Map_api.this,null);
         setContentView(R.layout.activity_map_api);
         // anh xa cac xu kien cua 2 ben voi nhau
-        //buttonSearchMap = (Button) findViewById(R.id.buttonSearchMap);
         edittextSearch = (AutoCompleteTextView) findViewById(R.id.edittextSearch);
         imageviewGPS = (ImageView) findViewById(R.id.imageviewGPS);
 
@@ -185,7 +183,9 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
                     public void onComplete(@NonNull Task task) {
                         if(task.isSuccessful()){
                             Location curLocation=(Location) task.getResult();
-                            moveCamera(new LatLng(curLocation.getLatitude(),curLocation.getLongitude()),ZOOM,"My Location");
+                            // set location bi loi o 1 so thiet bi nen chuyen sang set co dinh 1 dia diem
+                            //moveCamera(new LatLng(curLocation.getLatitude(),curLocation.getLongitude()),ZOOM,"My Location");
+                            moveCamera(new LatLng(106.779,10.8241),ZOOM,"My Location");
                         }else{
                             Toast.makeText(Map_api.this,"not reponse...",Toast.LENGTH_SHORT).show();
                         }
@@ -289,8 +289,6 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
             }
 
             LatLng latLng = new LatLng(place.getViewport().getCenter().latitude, place.getViewport().getCenter().longitude);
-
-            //myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,ZOOM));
             moveCamera(latLng, ZOOM,mPlace.getName());
         }
     };

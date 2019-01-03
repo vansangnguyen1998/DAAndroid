@@ -9,6 +9,8 @@ import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.squareup.picasso.Picasso;
+
 import java.util.List;
 
 
@@ -54,7 +56,9 @@ public class adapterListViewChiTiet extends BaseAdapter {
 
         txtTen.setText(data.get(position).getTenDiaDanh());
         txtThongTin.setText(mota);
-        imageView.setImageResource(R.drawable.bien);
+        //imageView.setImageResource(R.drawable.bien);
+        Picasso.get().load("http://android1998.000webhostapp.com/DiaDanh/"+
+                data.get(position).getUrlImage().get(0)+"/"+data.get(position).getUrlImage().get(1)).into(imageView);
         return v;
     }
 }
