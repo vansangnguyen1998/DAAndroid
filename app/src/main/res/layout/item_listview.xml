@@ -1,20 +1,23 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout
-    xmlns:android="http://schemas.android.com/apk/res/android" android:layout_width="match_parent"
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#dcd4d4"
+    android:background="#ffff"
     >
 
     <LinearLayout
         android:layout_margin="20dp"
+        android:background="@drawable/border_item_listview"
         android:layout_width="match_parent"
-        android:layout_height="106dp"
-        android:orientation="horizontal">
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
         <ImageView
             android:id="@+id/ivPicture"
             android:layout_marginTop="3dp"
             android:layout_width="100dp"
-            android:layout_height="100dp" />
+            android:layout_height="100dp"
+            android:layout_gravity="center"/>
 
         <LinearLayout
             android:layout_marginTop="3dp"
@@ -22,6 +25,7 @@
             android:layout_height="match_parent"
             android:layout_marginBottom="3dp"
             android:orientation="vertical">
+
             <TextView
                 android:id="@+id/txtDiaDiem"
                 android:layout_width="wrap_content"
@@ -29,6 +33,7 @@
                 android:layout_height="wrap_content"
                 android:text="ten tinh thanh"
                 android:textSize="22sp"/>
+
 
             <TextView
                 android:id="@+id/txtThongTin"

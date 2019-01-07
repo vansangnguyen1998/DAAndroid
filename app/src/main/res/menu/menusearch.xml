@@ -1,9 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <menu xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto">
-    <item android:id="@+id/edtSearch" android:title="search"
-        app:showAsAction="ifRoom"
-        android:icon="@drawable/tiemkiem"
-        />
+    <item android:id="@+id/dangnhap_chitiet"
+        android:icon="@drawable/ic_dangnhap"
+        android:title="@string/dangnhap"/>
+    <item android:id="@+id/Map_chitiet"
+        android:icon="@drawable/ic_dangnhap"
+        android:title="map"/>
 
 </menu>

@@ -2,6 +2,7 @@ package com.example.pc.daandroid;
 
 import android.content.Context;
 import android.content.Intent;
+import android.media.Rating;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.os.Bundle;
@@ -16,6 +17,7 @@ import android.view.ViewGroup;
 import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageView;
+import android.widget.RatingBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -232,6 +234,8 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
 
                                     String tentinhkd=jsonObject.getString("tentinh_KD");
 
+                                    //int star = jsonObject.get
+
                                     diadiemchitiet temp=new diadiemchitiet(urlImage,mota,tendiadanh,tentinh,tentinhkd);
 
                                     diadiemXuHuong.add(temp);
@@ -249,6 +253,8 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
                                     ImageView imageView = (ImageView) singleFrame.findViewById(R.id.imageview_anh);
                                     TextView txtTen = (TextView) singleFrame.findViewById(R.id.textview_tendiadiem);
                                     //TextView txtThongTin = (TextView) singleFrame.findViewById(R.id.textview_loaidulich);
+
+                                    RatingBar numStar = (RatingBar) singleFrame.findViewById(R.id.numStar);
 
                                     //imageView.setImageResource(R.drawable.bien);
                                     Picasso.get().load("http://android1998.000webhostapp.com/DiaDanh/"+

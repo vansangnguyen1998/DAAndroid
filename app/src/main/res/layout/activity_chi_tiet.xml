@@ -6,27 +6,33 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".ActivityChiTiet"
-    android:orientation="vertical">
-
-    <TextView
-        android:id="@+id/Name"
-        android:layout_width="wrap_content"
+    android:orientation="vertical"
+    android:background="#ffff">
+    <LinearLayout
+        android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Ten dia diem"
-        android:textSize="22sp"
-        android:layout_margin="20dp"
-        android:layout_gravity="center"
-        android:textStyle="bold"
-        android:textColor="@color/colortextdialog"
-        android:padding="3dp"/>
+        android:background="@drawable/boder_title"
+        android:orientation="vertical">
 
+        <TextView
+            android:id="@+id/Name"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:layout_margin="20dp"
+            android:padding="3dp"
+            android:text="Ten dia diem"
+            android:textColor="#ef0909"
+            android:textSize="22sp"
+            android:textStyle="bold" />
+    </LinearLayout>
     <ListView
         android:id="@+id/lv"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
 
         android:layout_marginTop="10dp"
-        android:layout_margin="20dp"
+        android:background="#ffff"
         android:padding="5dp">
 
     </ListView>

@@ -20,6 +20,7 @@ import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.ListView;
+import android.widget.PopupMenu;
 import android.widget.RatingBar;
 import android.widget.ScrollView;
 import android.widget.Spinner;
@@ -76,8 +77,8 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
     }
 
     private GoogleMap myMap;
-    private Button HienThiDiaDiem;
     private FloatingActionButton btnNhanXet;
+    private FloatingActionButton floatingactionbuttonDangNhap,floatingactionbuttonMap;
     private ViewGroup viewGroup,viewWeather;
     private EditText editText;
     private RatingBar ratingBar;
@@ -102,6 +103,13 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         lvNX=new ArrayList<danhgia>();
 
         AnhXa();
+
+//        buttonHienThiThem.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                ShowMenu();
+//            }
+//        });
 
 
         ratingBar.setRating(4);
@@ -179,9 +187,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         // set cac du lieu hien thi cho map
         MapFragment mapFragment=(MapFragment) getFragmentManager().findFragmentById(R.id.myMap_DiaDiem);
         mapFragment.getMapAsync(this);
-
         hintKeybroard();
-
     }
 
     // ham search thong tin dia diem can dua len map.
@@ -378,9 +384,8 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
     private void AnhXa(){
 
         btnNhanXet = (FloatingActionButton) findViewById(R.id.btnNhanXet);
+        //buttonHienThiThem=(FloatingActionButton) findViewById(R.id.buttonHienThiThem);
         thongTin = (TextView) findViewById(R.id.ThongTin);
-
-        HienThiDiaDiem = (Button) findViewById(R.id.HienThiDiaDiem);
 
         editText = (EditText) findViewById(R.id.NhanXet);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar1);
@@ -393,6 +398,13 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         viewWeather = (ViewGroup) findViewById(R.id.viewWeather);
 
     }
+
+//    private void ShowMenu(){
+//
+//        PopupMenu popupMenu = new PopupMenu(this,buttonHienThiThem);
+//        popupMenu.getMenuInflater().inflate(R.menu.menusearch,popupMenu.getMenu());
+//        popupMenu.show();
+//    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {

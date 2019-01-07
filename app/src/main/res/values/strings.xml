@@ -41,7 +41,9 @@
     <string name="dangki">Đăng Kí</string>
 
     <!-- Map api-->
-    <string name="map_api_key">AIzaSyA7aU_L9o9l632XuuAgl9XyMiOTqfrOC80</string>
+    <string name="map_api_key">AIzaSyCh3CmZEPelOnt4i_Ra4Rr3Ya2Bow1CgF8</string>
+
+    <!--<string name="map_api_key">AIzaSyA7aU_L9o9l632XuuAgl9XyMiOTqfrOC80</string>-->
 
     <!-- quan-->
     <string name="back">Trở Lại</string>
