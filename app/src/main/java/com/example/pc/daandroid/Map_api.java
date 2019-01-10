@@ -9,12 +9,14 @@ import android.location.Geocoder;
 import android.location.Location;
 import android.media.Image;
 import android.support.annotation.NonNull;
+import android.support.design.widget.BottomNavigationView;
 import android.support.v4.app.ActivityCompat;
 import android.support.v4.content.ContextCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.KeyEvent;
+import android.view.MenuItem;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.inputmethod.EditorInfo;
@@ -27,6 +29,12 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.StringRequest;
+import com.android.volley.toolbox.Volley;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -52,6 +60,10 @@ import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.RuntimeRemoteException;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
+
+import org.json.JSONArray;
+import org.json.JSONException;
+import org.json.JSONObject;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -101,6 +113,7 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
     private PlaceAutocompleteAdapter adapter;
     private GoogleApiClient mGoogleClient;
     private PlaceInfor mPlace;
+    private BottomNavigationView bottomNavigationViewNearby;
 
 
 
@@ -111,6 +124,17 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
         // anh xa cac xu kien cua 2 ben voi nhau
         edittextSearch = (AutoCompleteTextView) findViewById(R.id.edittextSearch);
         imageviewGPS = (ImageView) findViewById(R.id.imageviewGPS);
+
+        bottomNavigationViewNearby = (BottomNavigationView) findViewById(R.id.bottomNavigationViewNearby);
+        bottomNavigationViewNearby.setOnNavigationItemReselectedListener(new BottomNavigationView.OnNavigationItemReselectedListener() {
+            @Override
+            public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
+                switch (menuItem.getItemId()){
+                    case R.id.atm:
+                        ShowNearby(new LatLng(10.865971, 106.788353),"ATM");
+                }
+            }
+        });
 
         getLoacationPermission();
 
@@ -272,8 +296,8 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
                 places.release();
                 return;
             }
-
             final Place place = places.get(0);
+
             try{
                 mPlace= new PlaceInfor();
                 mPlace.setName(place.getName().toString());
@@ -301,9 +325,138 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
                     position(latLng).
                     title(title);
 
+
             myMap.addMarker(options);
         }
         hintKeybroard();
+    }
+
+
+    private void ShowNearby(LatLng latLng, String typePlace){
+
+        moveCamera(latLng,15f,"");
+
+        String LocationPlace = String.valueOf(latLng.latitude)+ "," +String.valueOf(latLng.longitude);
+        String url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location="+LocationPlace+"&radius=5000&type="+typePlace+"&sensor=true&key=AIzaSyAxbKrTQ39T9eoq_YWrlyTkTwN0Dp1M--A";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        // du lieu nhan ve dang string
+                        // cac du lieu lan can nam trong nay
+                        ArrayList<NearbyPlace> data = (ArrayList<NearbyPlace>) DataParse(response);
+                        DisplayNearbtPlace(data);
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        //Toast.makeText(ActivityDiaDiemChiTiet.this,""+error+"",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        requestQueue.add(stringRequest);
+    }
+
+    private List<NearbyPlace> DataParse(String response){
+        ArrayList<NearbyPlace> data=new ArrayList<>();
+        try {
+
+            JSONObject jsonObject = new JSONObject(response);
+
+            JSONArray result = jsonObject.getJSONArray("results");
+            int len = result.length();
+            for(int i=0;i<len;i++){
+                JSONObject json = (JSONObject) result.get(i);
+                String Name= json.getString("name");
+                String Vicinity=json.getString("vicinity");
+                String reference = json.getString("reference");
+
+                Double lat=json.getJSONObject("geometry").getJSONObject("location").getDouble("lat");
+                Double lng =json.getJSONObject("geometry").getJSONObject("location").getDouble("lng");
+
+                NearbyPlace nearbyPlace = new NearbyPlace(Name,Vicinity,reference,lat,lng);
+                data.add(nearbyPlace);
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+        return data;
+    }
+
+    private void DisplayNearbtPlace(List<NearbyPlace> data){
+        for(int i=0;i<data.size();i++){
+            ///MarkerOptions markerOptions = new MarkerOptions();
+
+            String Name = data.get(i).getName();
+            String Vicinity = data.get(i).getVicinity();
+            String Reference = data.get(i).getReference();
+
+            Double lat=data.get(i).getLat();
+            Double lng=data.get(i).getLng();
+
+            moveCamera(new LatLng(lat,lng),ZOOM,Name+Vicinity);
+
+        }
+
+    }
+
+    private class NearbyPlace{
+        String Name;
+        String Vicinity;
+        String Reference;
+        Double lat,lng;
+
+        public NearbyPlace(String name, String vicinity, String reference, Double lat, Double lng) {
+            Name = name;
+            Vicinity = vicinity;
+            Reference = reference;
+            this.lat = lat;
+            this.lng = lng;
+        }
+
+        public String getName() {
+            return Name;
+        }
+
+        public void setName(String name) {
+            Name = name;
+        }
+
+        public String getVicinity() {
+            return Vicinity;
+        }
+
+        public void setVicinity(String vicinity) {
+            Vicinity = vicinity;
+        }
+
+        public String getReference() {
+            return Reference;
+        }
+
+        public void setReference(String reference) {
+            Reference = reference;
+        }
+
+        public Double getLat() {
+            return lat;
+        }
+
+        public void setLat(Double lat) {
+            this.lat = lat;
+        }
+
+        public Double getLng() {
+            return lng;
+        }
+
+        public void setLng(Double lng) {
+            this.lng = lng;
+        }
     }
 
 }

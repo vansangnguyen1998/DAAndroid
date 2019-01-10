@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+ <item
+     android:id="@+id/atm"
+     android:enabled="true"
+     android:icon="@drawable/ic_atm"
+     app:showAsAction="ifRoom"
+     android:title="ATM" />
+    <item
+        android:id="@+id/restaurant"
+        android:enabled="true"
+        android:icon="@drawable/ic_restaurant"
+
+        android:title="restaurant" />
+</menu>

@@ -14,8 +14,21 @@
         android:layout_width="match_parent"
         tools:context=".Map_api"
         android:layout_height="match_parent">
-
     </fragment>
+
+    <android.support.design.widget.BottomNavigationView
+        android:id="@+id/bottomNavigationViewNearby"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        app:menu="@menu/bottom_menu"
+        app:itemIconTint="@drawable/nav_selectorr"
+        app:itemTextColor="@drawable/nav_selectorr"
+        app:itemBackground="@color/colorPrimary"
+        >
+
+    </android.support.design.widget.BottomNavigationView>
+
     <RelativeLayout
         android:id="@+id/relative1"
         android:layout_width="match_parent"
@@ -46,7 +59,6 @@
             android:hint="Nhập địa điểm"
             android:imeOptions="actionSearch"/>
     </RelativeLayout>
-
     <ImageView
         android:id="@+id/imageviewGPS"
         android:layout_width="40dp"

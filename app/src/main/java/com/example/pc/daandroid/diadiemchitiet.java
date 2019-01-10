@@ -10,7 +10,7 @@ public class diadiemchitiet implements Serializable {
     private String TenTinhKD;
     private String TenDiaDanh;
     private String TenTinh;
-    private int numStar;
+    private String numStar;
 
     public diadiemchitiet(){}
 
@@ -20,23 +20,21 @@ public class diadiemchitiet implements Serializable {
         TenTinhKD=a.getTenTinhKD();
         TenDiaDanh=a.getTenDiaDanh();
         TenTinh=a.getTenTinh();
-        numStar=a.getNumStar();
     }
 
-    public  diadiemchitiet(List<String> url, String mota,  String tendiadanh, String tentinh, String tentinhkd){//, int star){
+    public  diadiemchitiet(List<String> url, String mota,  String tendiadanh, String tentinh, String tentinhkd){
         urlImage=url;
         moTa=mota;
         TenTinhKD=tentinhkd;
         TenDiaDanh=tendiadanh;
         TenTinh=tentinh;
-        //numStar=star;
     }
 
-    public int getNumStar() {
+    public String getNumStar() {
         return numStar;
     }
 
-    public void setNumStar(int numStar) {
+    public void setNumStar(String numStar) {
         this.numStar = numStar;
     }
 

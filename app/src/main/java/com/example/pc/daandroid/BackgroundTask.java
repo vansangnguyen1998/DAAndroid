@@ -167,25 +167,7 @@ public class BackgroundTask extends AsyncTask<String,Void,String>   {
 
                         Toast.makeText(ctx,""+error+"",Toast.LENGTH_SHORT).show();
                     }
-                }){
-            @Override
-            protected Map<String, String> getParams() throws AuthFailureError {
-
-                Map<String,String> params = new HashMap<String, String>();
-                if(param[1].equals("DangKi")){
-                    params.put("_User",param[2]);
-                    params.put("_Pass",param[3]);
-                    params.put("_Gmail",param[4]);
-                }
-                else if(param[1].equals("Login")){
-                    params.put("_User",param[2]);
-                    params.put("_Pass",param[3]);
-                }
-
-
-                return params;
-            }
-        };
+                });
 
         requestQueue.add(stringRequest);
     }

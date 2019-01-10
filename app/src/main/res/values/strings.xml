@@ -28,8 +28,6 @@
     <string name="dulichsinhthai">Du Lịch Sinh Thái</string>
     <string name="dulichmientay">Du Lịch Miền Tây</string>
     <string name="dulichtaybac">Du Lịch Tây Bắc</string>
-
-
     <!-- quy -->
     <string name="gioithieu"> DU LỊCH 4 PHƯƠNG </string>
     <string name="email">Nhập địa chỉ email: </string>
@@ -39,20 +37,16 @@
     <string name="nhapcode">Nhập mã code: </string>
     <string name="xacnhan">Đăng Nhập</string>
     <string name="dangki">Đăng Kí</string>
-
     <!-- Map api-->
+
     <string name="map_api_key">AIzaSyCh3CmZEPelOnt4i_Ra4Rr3Ya2Bow1CgF8</string>
-
     <!--<string name="map_api_key">AIzaSyA7aU_L9o9l632XuuAgl9XyMiOTqfrOC80</string>-->
-
     <!-- quan-->
     <string name="back">Trở Lại</string>
     <string name="Hoten">HoTen: </string>
     <string name="NgaySinh">Ngay sinh: </string>
     <string name="GioiTinh">Gioi Tinh</string>
     <string name="trangcanhan">Trang Cá Nhân</string>
-
-
     <!-- Đức -->
     <string name="Hinhanh">Hình ảnh</string>
     <string name="Thongtin">Một số thông tin</string>
@@ -61,7 +55,6 @@
     <string name="Hienthidiadiem">|Hiển thị địa điểm</string>
     <string name="Thoitiet">Thời tiết</string>
     <string name="Dichvu">Dịch vụ</string>
-
     <!-- layout tim kiem -->
     <string name="nhaptentinh">Nhập Tên Tỉnh</string>
     <string name="timkiem">Tìm Kiếm</string>

@@ -105,12 +105,13 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         AnhXa();
 
 //        buttonHienThiThem.setOnClickListener(new View.OnClickListener() {
-//            @Override
+//            @Overrides
 //            public void onClick(View v) {
 //                ShowMenu();
 //            }
 //        });
 
+        getNearby();
 
         ratingBar.setRating(4);
 
@@ -187,6 +188,16 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         // set cac du lieu hien thi cho map
         MapFragment mapFragment=(MapFragment) getFragmentManager().findFragmentById(R.id.myMap_DiaDiem);
         mapFragment.getMapAsync(this);
+
+        // xu lí sự kiện click vào các button action.
+//        floatingactionbuttonDangNhap.setOnClickListener(new View.OnClickListener() {
+//            @Override
+//            public void onClick(View v) {
+//                //Intent intent = new Intent(ActivityDiaDiemChiTiet.this,dangnhap_class.class);
+//                //startActivity(intent);
+//            }
+//        });
+
         hintKeybroard();
     }
 
@@ -338,17 +349,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                                                             });
                                                         }
                                                     }
-                                                    //AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDiaDiemChiTiet.this);
-//                                                    View view = getLayoutInflater().inflate(R.layout.listview_weather,null);
-//
-//                                                    ListView listView = (ListView) view.findViewById(R.id.lv_weather);
-//                                                    adapter_lv_weather adapter=
-//                                                            new adapter_lv_weather(ActivityDiaDiemChiTiet.this,data);
-//                                                    listView.setAdapter(adapter);
 
-                                                    //builder.setView(view);
-                                                    //final AlertDialog alertDialog = builder.create();
-                                                    //alertDialog.show();
 
                                                 } catch (JSONException e) {
                                                     e.printStackTrace();
@@ -384,27 +385,20 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
     private void AnhXa(){
 
         btnNhanXet = (FloatingActionButton) findViewById(R.id.btnNhanXet);
-        //buttonHienThiThem=(FloatingActionButton) findViewById(R.id.buttonHienThiThem);
         thongTin = (TextView) findViewById(R.id.ThongTin);
 
         editText = (EditText) findViewById(R.id.NhanXet);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar1);
         spinner = (Spinner) findViewById(R.id.DichVu);
 
-       // scrollView =(ScrollView) findViewById(R.id.iconScoll);
         lvNhanXet = (ListView) findViewById(R.id.lvNhanXet);
 
         viewGroup = (ViewGroup) findViewById(R.id.viewgroup);
         viewWeather = (ViewGroup) findViewById(R.id.viewWeather);
 
+        //floatingactionbuttonDangNhap = (FloatingActionButton) findViewById(R.id.floatingactionbuttonDangNhap);
+        //floatingactionbuttonMap = (FloatingActionButton) findViewById(R.id.floatingactionbuttonMap);
     }
-
-//    private void ShowMenu(){
-//
-//        PopupMenu popupMenu = new PopupMenu(this,buttonHienThiThem);
-//        popupMenu.getMenuInflater().inflate(R.menu.menusearch,popupMenu.getMenu());
-//        popupMenu.show();
-//    }
 
     @Override
     public void onItemSelected(AdapterView<?> parent, View view, int position, long id) {
@@ -416,7 +410,27 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
     }
 
+    private void getNearby(){
+        String url="https://maps.googleapis.com/maps/api/place/nearbysearch/json?location=-33.8670522,151.1957362&radius=5000&type=market&sensor=true&key=AIzaSyAxbKrTQ39T9eoq_YWrlyTkTwN0Dp1M--A";
+        RequestQueue requestQueue = Volley.newRequestQueue(this);
+        StringRequest stringRequest = new StringRequest(Request.Method.POST, url,
+                new Response.Listener<String>() {
+                    @Override
+                    public void onResponse(String response) {
+                        Toast.makeText(ActivityDiaDiemChiTiet.this,response,Toast.LENGTH_SHORT).show();
 
+                    }
+                },
+                new Response.ErrorListener() {
+                    @Override
+                    public void onErrorResponse(VolleyError error) {
+
+                        Toast.makeText(ActivityDiaDiemChiTiet.this,""+error+"",Toast.LENGTH_SHORT).show();
+                    }
+                });
+
+        requestQueue.add(stringRequest);
+    }
 
     private class BackgroundTask1 extends AsyncTask<String,Void,String> {
         private Context ctx;

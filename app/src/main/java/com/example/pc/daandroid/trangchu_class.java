@@ -234,9 +234,10 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
 
                                     String tentinhkd=jsonObject.getString("tentinh_KD");
 
-                                    //int star = jsonObject.get
+                                    String star = jsonObject.getString("sosao");
 
                                     diadiemchitiet temp=new diadiemchitiet(urlImage,mota,tendiadanh,tentinh,tentinhkd);
+                                    temp.setNumStar(star);
 
                                     diadiemXuHuong.add(temp);
                                     //Toast.makeText(ctx, "" + jsonObject.getString("tentinh") + jsonArray.length(), Toast.LENGTH_SHORT).show();
@@ -255,6 +256,7 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
                                     //TextView txtThongTin = (TextView) singleFrame.findViewById(R.id.textview_loaidulich);
 
                                     RatingBar numStar = (RatingBar) singleFrame.findViewById(R.id.numStar);
+                                    numStar.setRating(Integer.parseInt(diadiemXuHuong.get(i).getNumStar()));
 
                                     //imageView.setImageResource(R.drawable.bien);
                                     Picasso.get().load("http://android1998.000webhostapp.com/DiaDanh/"+
@@ -263,6 +265,17 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
                                     txtTen.setText(diadiemXuHuong.get(i).getTenDiaDanh());
 
                                     horizontalXuHuong.addView(singleFrame);
+
+                                    final int finalI = i;
+                                    singleFrame.setOnClickListener(new View.OnClickListener() {
+                                        @Override
+                                        public void onClick(View v) {
+                                            Intent intent =new Intent(getContext(),ActivityDiaDiemChiTiet.class);
+                                            //Bundle bundle1 = new Bundle();
+                                            intent.putExtra("diadiem", diadiemXuHuong.get(finalI));
+                                            startActivity(intent);
+                                        }
+                                    });
                                 }
                             } catch (JSONException e) {
                                 e.printStackTrace();
