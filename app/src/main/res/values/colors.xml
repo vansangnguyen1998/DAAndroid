@@ -12,6 +12,8 @@
     <color name="colortextdialog">#0445f5</color>
     <color name="colorbackgroundbutton">#fc0298</color>
 
+    <!-- color button -->
+    <color name="background_buton">#4CAF50</color>
 
 
 </resources>

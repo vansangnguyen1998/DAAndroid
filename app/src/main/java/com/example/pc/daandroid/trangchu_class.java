@@ -179,7 +179,6 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
         });
 
         main.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
         return layout_trangchu;
     }
 
@@ -193,6 +192,7 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
             throw new IllegalStateException(
                     "MainActivity must implement callbacks");
         }
+
     }
 
     @Override

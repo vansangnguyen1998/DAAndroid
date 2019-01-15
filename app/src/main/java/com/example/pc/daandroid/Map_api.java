@@ -4,6 +4,7 @@ import android.Manifest;
 import android.annotation.SuppressLint;
 import android.app.Dialog;
 import android.content.pm.PackageManager;
+import android.graphics.drawable.Icon;
 import android.location.Address;
 import android.location.Geocoder;
 import android.location.Location;
@@ -35,6 +36,8 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.clans.fab.FloatingActionButton;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.common.ConnectionResult;
 import com.google.android.gms.common.GoogleApiAvailability;
 import com.google.android.gms.common.api.GoogleApiClient;
@@ -56,6 +59,7 @@ import com.google.android.gms.maps.OnMapReadyCallback;
 import com.google.android.gms.maps.SupportMapFragment;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.LatLngBounds;
+import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.google.android.gms.maps.model.RuntimeRemoteException;
 import com.google.android.gms.tasks.OnCompleteListener;
@@ -114,7 +118,7 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
     private GoogleApiClient mGoogleClient;
     private PlaceInfor mPlace;
     private BottomNavigationView bottomNavigationViewNearby;
-
+    private Marker makerSeter=null;
 
 
     @Override
@@ -131,7 +135,7 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
             public void onNavigationItemReselected(@NonNull MenuItem menuItem) {
                 switch (menuItem.getItemId()){
                     case R.id.atm:
-                        ShowNearby(new LatLng(10.865971, 106.788353),"ATM");
+                        ShowNearby(new LatLng(10.865971, 106.788353),"atm"); // truyen vao chữ thường tiếng anh
                 }
             }
         });
@@ -160,7 +164,8 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
                         event.getAction()==KeyEvent.ACTION_DOWN||
                         event.getAction()==KeyEvent.KEYCODE_ENTER){
                     // bat dau tiem kiem thong qua api
-                    search();
+                    String txtSearch= edittextSearch.getText().toString();
+                    search(txtSearch);
                 }
                 return false;
             }
@@ -176,8 +181,7 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
         hintKeybroard();
     }
 
-    private void search(){
-        String txtSearch= edittextSearch.getText().toString();
+    private void search(String txtSearch){
         Geocoder geocoder = new Geocoder(Map_api.this);
         List<Address> list = new ArrayList<>();
         try {
@@ -209,7 +213,7 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
                             Location curLocation=(Location) task.getResult();
                             // set location bi loi o 1 so thiet bi nen chuyen sang set co dinh 1 dia diem
                             //moveCamera(new LatLng(curLocation.getLatitude(),curLocation.getLongitude()),ZOOM,"My Location");
-                            moveCamera(new LatLng(106.779,10.8241),ZOOM,"My Location");
+                            moveCamera(new LatLng(10.865985,106.788356),ZOOM,"My Location");
                         }else{
                             Toast.makeText(Map_api.this,"not reponse...",Toast.LENGTH_SHORT).show();
                         }
@@ -221,8 +225,6 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
             Log.e("Map_api",""+e.getMessage());
         }
     }
-
-
 
     private void iniMap(){
         final MapFragment mapFragment =(MapFragment) getFragmentManager().findFragmentById(R.id.myMap);
@@ -317,6 +319,12 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
         }
     };
 
+
+    private void clearCamera()
+    {
+        myMap.clear();
+    }
+
     private void moveCamera(LatLng latLng,float zoom,String title){
 
         myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
@@ -324,8 +332,6 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
             MarkerOptions options = new MarkerOptions().
                     position(latLng).
                     title(title);
-
-
             myMap.addMarker(options);
         }
         hintKeybroard();
@@ -388,9 +394,8 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
     }
 
     private void DisplayNearbtPlace(List<NearbyPlace> data){
-        for(int i=0;i<data.size();i++){
+        for(int i=1;i<data.size();i++){
             ///MarkerOptions markerOptions = new MarkerOptions();
-
             String Name = data.get(i).getName();
             String Vicinity = data.get(i).getVicinity();
             String Reference = data.get(i).getReference();
@@ -401,9 +406,22 @@ public class Map_api extends AppCompatActivity implements OnMapReadyCallback,Goo
             moveCamera(new LatLng(lat,lng),ZOOM,Name+Vicinity);
 
         }
+        myMap.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
+            @Override
+            public boolean onMarkerClick(Marker marker) {
+                 //xoa het cac vi tri khac
+                clearCamera();
+                String locationClick = marker.getTitle();
 
+                search(locationClick);
+
+                //moveCamera();
+
+                return true;
+            }
+        });
     }
-
+    // class luu du lieu
     private class NearbyPlace{
         String Name;
         String Vicinity;

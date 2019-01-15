@@ -7,12 +7,15 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -48,7 +51,9 @@ public class dangnhap_class extends Fragment implements FragmentCallBack {
     private MainActivity main;
     private Context context;
     private Button btnXacNhan, btnDangKi;
-    private EditText edtUser,edtMK;
+    //private EditText edtUser,edtMK;
+    private AppCompatEditText edtUser,edtMK;
+    private TextInputLayout userLayout, passLayout;
     //private TextView txtname;
     public static dangnhap_class newInstance(String strArg){
         dangnhap_class tc=new dangnhap_class();
@@ -71,12 +76,49 @@ public class dangnhap_class extends Fragment implements FragmentCallBack {
     public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
          View view = inflater.inflate(R.layout.fragment_dangnhap,container,false);
 
+         RelativeLayout layout = view.findViewById(R.id.layoutMain);
+         layout.setOnClickListener(null);
          btnDangKi = (Button) view.findViewById(R.id.btndangki);
          btnXacNhan = (Button) view.findViewById(R.id.btndangnhap);
 
-         edtUser = (EditText) view.findViewById(R.id.edtUser);
-         edtMK = (EditText) view.findViewById(R.id.edtmatkhau);
+         edtUser = (AppCompatEditText) view.findViewById(R.id.edtUser);
+         edtMK = (AppCompatEditText) view.findViewById(R.id.edtmatkhau);
+         userLayout = (TextInputLayout) view.findViewById(R.id.userLayout);
+         passLayout = (TextInputLayout) view.findViewById(R.id.passLayout);
 
+         userLayout.setCounterEnabled(true);
+         userLayout.setCounterMaxLength(12);
+
+        passLayout.setCounterEnabled(true);
+        passLayout.setCounterMaxLength(12);
+
+        edtUser.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(edtUser.getText().toString().isEmpty())
+                {
+                    userLayout.setErrorEnabled(true);
+                    userLayout.setError("Vui lòng nhập User");
+                }
+                else{
+                    userLayout.setErrorEnabled(false);
+                }
+            }
+        });
+
+        edtMK.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+            @Override
+            public void onFocusChange(View v, boolean hasFocus) {
+                if(edtMK.getText().toString().isEmpty())
+                {
+                    passLayout.setErrorEnabled(true);
+                    passLayout.setError("Vui lòng nhập Password");
+                }
+                else{
+                    userLayout.setErrorEnabled(false);
+                }
+            }
+        });
 
          // click btn Dang Nhap
          btnXacNhan.setOnClickListener(new View.OnClickListener() {

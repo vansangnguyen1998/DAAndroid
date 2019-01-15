@@ -12,11 +12,11 @@
         <item name="colorControlNormal">@color/colorstar</item>
         <item name="colorControlActivated">#fffefe</item>
     </style>
-
+<!-- style ratingstar -->
     <style name="styleStar" parent="@android:style/Widget.RatingBar">
         <item name="android:progressDrawable">@drawable/my_star</item>
         <item name="android:minHeight">24dip</item>
         <item name="android:maxHeight">24dip</item>
     </style>
-
+<!-- style button -->
 </resources>

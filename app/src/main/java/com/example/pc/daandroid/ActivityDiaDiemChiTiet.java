@@ -2,6 +2,7 @@ package com.example.pc.daandroid;
 
 import android.app.Activity;
 import android.app.AlertDialog;
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.location.Address;
@@ -9,8 +10,10 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.View;
 import android.view.ViewGroup;
 import android.view.WindowManager;
@@ -22,6 +25,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.PopupMenu;
 import android.widget.RatingBar;
+import android.widget.RelativeLayout;
 import android.widget.ScrollView;
 import android.widget.Spinner;
 import android.widget.TextView;
@@ -34,6 +38,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.github.clans.fab.FloatingActionMenu;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
@@ -63,22 +68,21 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Random;
 
 public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnItemSelectedListener,OnMapReadyCallback {
 
 
     @Override
     public void onMapReady(GoogleMap googleMap) {
-
         myMap=googleMap;
-
         Search(DiaDiem.getTenDiaDanh());
-
     }
 
     private GoogleMap myMap;
     private FloatingActionButton btnNhanXet;
-    private FloatingActionButton floatingactionbuttonDangNhap,floatingactionbuttonMap;
+    private FloatingActionMenu floatingActionMenu;
+    private com.github.clans.fab.FloatingActionButton floatingactionbuttonDangNhap,floatingactionbuttonMap;
     private ViewGroup viewGroup,viewWeather;
     private EditText editText;
     private RatingBar ratingBar;
@@ -88,38 +92,96 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
     private ListView lvNhanXet;
     private ArrayList<danhgia> lvNX;
     private diadiemchitiet DiaDiem = new diadiemchitiet();
+    private ProgressDialog progress;
+    private RelativeLayout layoutMain;
 
-    String [] adapterSpinner = {"Dịch Vụ","Nhà Hàng", "Khách Sạn", "ATM"};
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_dia_diem_chi_tiet);
-
         final Intent bundle = this.getIntent();
         // set data cho DiaDiem;
         DiaDiem = new diadiemchitiet ((diadiemchitiet) bundle.getSerializableExtra("diadiem"));
-
+        progress=new ProgressDialog(ActivityDiaDiemChiTiet.this);
+        progress.setMessage(" Đang Load Dữ Liệu ");
+        progress.show();
         lvNX=new ArrayList<danhgia>();
-
         AnhXa();
 
-//        buttonHienThiThem.setOnClickListener(new View.OnClickListener() {
-//            @Overrides
-//            public void onClick(View v) {
-//                ShowMenu();
-//            }
-//        });
+
+        floatingactionbuttonDangNhap.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Toast.makeText(ActivityDiaDiemChiTiet.this,"vao ne`",Toast.LENGTH_SHORT).show();
+                AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDiaDiemChiTiet.this);
+                View view = getLayoutInflater().inflate(R.layout.dialog_login,null);
+
+                final AppCompatEditText edtUser,edtMK;
+                final TextInputLayout userLayout, passLayout;
+                Button buttonDangNhap;
+                edtUser = (AppCompatEditText) view.findViewById(R.id.edtUser);
+                edtMK = (AppCompatEditText) view.findViewById(R.id.edtmatkhau);
+                userLayout = (TextInputLayout) view.findViewById(R.id.userLayout);
+                passLayout = (TextInputLayout) view.findViewById(R.id.passLayout);
+                buttonDangNhap = (Button) view.findViewById(R.id.btndangnhap);
+
+                userLayout.setCounterEnabled(true);
+                userLayout.setCounterMaxLength(12);
+
+                passLayout.setCounterEnabled(true);
+                passLayout.setCounterMaxLength(12);
+
+                edtUser.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if(edtUser.getText().toString().isEmpty())
+                        {
+                            userLayout.setErrorEnabled(true);
+                            userLayout.setError("Vui lòng nhập User");
+                        }
+                        else{
+                            userLayout.setErrorEnabled(false);
+                        }
+                    }
+                });
+
+                edtMK.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+                    @Override
+                    public void onFocusChange(View v, boolean hasFocus) {
+                        if(edtMK.getText().toString().isEmpty())
+                        {
+                            passLayout.setErrorEnabled(true);
+                            passLayout.setError("Vui lòng nhập Password");
+                        }
+                        else{
+                            userLayout.setErrorEnabled(false);
+                        }
+                    }
+                });
+                buttonDangNhap.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+
+                        String User, Pass;
+                        User=edtUser.getText().toString();
+                        Pass=edtMK.getText().toString();
+                        BackgroundTask1 backgroundTask = new  BackgroundTask1(ActivityDiaDiemChiTiet.this);
+                        backgroundTask.execute("Login",User,Pass);
+                    }
+                });
+
+                builder.setView(view);
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
+            }
+        });
 
         getNearby();
-
         ratingBar.setRating(4);
 
         if(bundle!=null) {
-
             thongTin.setText(DiaDiem.getMoTa());
-
-            //scrollView.fullScroll(View.FOCUS_DOWN);
         }
 
         // set picture horiontalImage.
@@ -131,12 +193,9 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
             ImageView image = (ImageView) singleFrame.findViewById(R.id.iconScoll);
 
-            //image.setImageResource(Imageview[i]);
-
             Picasso.get().load("http://android1998.000webhostapp.com/DiaDanh/"+
                     DiaDiem.getUrlImage().get(0)+"/"+
                     DiaDiem.getUrlImage().get(i)).into(image);
-
             viewGroup.addView(singleFrame);
         }
 
@@ -148,14 +207,6 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         });
 
         SetWeather();
-        // build adapter spinner
-        ArrayAdapter<String> adapter = new ArrayAdapter<String>(this,
-                android.R.layout.simple_spinner_dropdown_item, adapterSpinner);
-
-        adapter.setDropDownViewResource
-                (android.R.layout.simple_list_item_single_choice);
-
-        spinner.setAdapter(adapter);
 
         // nhấn vào nút nhận xet để cập nhật lên database.
         btnNhanXet.setOnClickListener(new View.OnClickListener() {
@@ -185,19 +236,10 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         BackgroundTask1 backgroundTask = new BackgroundTask1(ActivityDiaDiemChiTiet.this);
         backgroundTask.execute("LVNhanXet",DiaDiem.getTenTinh(),DiaDiem.getTenDiaDanh());
 
+
         // set cac du lieu hien thi cho map
         MapFragment mapFragment=(MapFragment) getFragmentManager().findFragmentById(R.id.myMap_DiaDiem);
         mapFragment.getMapAsync(this);
-
-        // xu lí sự kiện click vào các button action.
-//        floatingactionbuttonDangNhap.setOnClickListener(new View.OnClickListener() {
-//            @Override
-//            public void onClick(View v) {
-//                //Intent intent = new Intent(ActivityDiaDiemChiTiet.this,dangnhap_class.class);
-//                //startActivity(intent);
-//            }
-//        });
-
         hintKeybroard();
     }
 
@@ -389,15 +431,17 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
         editText = (EditText) findViewById(R.id.NhanXet);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar1);
-        spinner = (Spinner) findViewById(R.id.DichVu);
+        //spinner = (Spinner) findViewById(R.id.DichVu);
 
         lvNhanXet = (ListView) findViewById(R.id.lvNhanXet);
 
         viewGroup = (ViewGroup) findViewById(R.id.viewgroup);
         viewWeather = (ViewGroup) findViewById(R.id.viewWeather);
 
-        //floatingactionbuttonDangNhap = (FloatingActionButton) findViewById(R.id.floatingactionbuttonDangNhap);
-        //floatingactionbuttonMap = (FloatingActionButton) findViewById(R.id.floatingactionbuttonMap);
+        floatingActionMenu = (FloatingActionMenu) findViewById(R.id.floattinhacctionMenu);
+        floatingactionbuttonDangNhap = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.floatingactionbuttonDangNhap);
+        floatingactionbuttonMap = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.floatingactionbuttonMap);
+
     }
 
     @Override
@@ -417,7 +461,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                 new Response.Listener<String>() {
                     @Override
                     public void onResponse(String response) {
-                        Toast.makeText(ActivityDiaDiemChiTiet.this,response,Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ActivityDiaDiemChiTiet.this,response,Toast.LENGTH_SHORT).show();
 
                     }
                 },
@@ -425,7 +469,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                     @Override
                     public void onErrorResponse(VolleyError error) {
 
-                        Toast.makeText(ActivityDiaDiemChiTiet.this,""+error+"",Toast.LENGTH_SHORT).show();
+                        //Toast.makeText(ActivityDiaDiemChiTiet.this,""+error+"",Toast.LENGTH_SHORT).show();
                     }
                 });
 
@@ -435,22 +479,18 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
     private class BackgroundTask1 extends AsyncTask<String,Void,String> {
         private Context ctx;
         private String method;
-
-
         public BackgroundTask1(Context ctx) {
             this.ctx = ctx;
         }
-
         @Override
         protected void onPreExecute() {
             super.onPreExecute();
         }
-
         @Override
         protected String doInBackground(String... params) {
-
             String insertNV_url = "http://android1998.000webhostapp.com/php/insertNhanXet.php";
             String lvNV_url = "http://android1998.000webhostapp.com/php/getNhanXet.php";
+            String login_url ="http://android1998.000webhostapp.com/php/kt_login.php";
 
             method = params[0];
 
@@ -537,9 +577,45 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
+            }else if(method.equals("Login")){
+                try {
+                    URL url = new URL(login_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+                    httpURLConnection.setRequestMethod("POST");
+                    httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+                    OutputStream OS = httpURLConnection.getOutputStream();
+                    BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
+
+                    String data = URLEncoder.encode("_User", "UTF-8")  + "=" + URLEncoder.encode(params[1], "UTF-8")+"&"+
+                            URLEncoder.encode("_Pass", "UTF-8")  + "=" + URLEncoder.encode(params[2], "UTF-8");
+
+                    bufferedWriter.write(data);
+                    bufferedWriter.flush();
+                    bufferedWriter.close();
+                    OS.close();
+
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+
+
+                    String response="",line="";
+
+                    while((line=bufferedReader.readLine())!=null){
+                        response+=line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+
+                    return response;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-
-
             return "false...";
         }
 
@@ -551,9 +627,6 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
         @Override
         protected void onPostExecute(String result) {
-
-           //Toast.makeText(ctx,result,Toast.LENGTH_SHORT).show();
-
            if(method.equals("LVNhanXet")){
                try {
                    JSONArray jsonArray = new JSONArray(result);
@@ -570,9 +643,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                        int sosao=Integer.parseInt(jsonObject.getString("sosao"));
                        String user= jsonObject.getString("user");
                        String ngaythang=jsonObject.getString("ngaythang");
-
                        danhgia DanhGia = new danhgia(noidung,sosao,user,ngaythang);
-
                        lvNX.add(DanhGia);
                    }
 
@@ -583,9 +654,8 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                    e.printStackTrace();
                }
 
+               progress.dismiss();
            }
-
         }
-
     }
 }

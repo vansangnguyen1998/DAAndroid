@@ -5,7 +5,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-
+<!-- map -->
     <fragment
         xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
@@ -15,7 +15,7 @@
         tools:context=".Map_api"
         android:layout_height="match_parent">
     </fragment>
-
+<!-- thanh menu ben duoi -->
     <android.support.design.widget.BottomNavigationView
         android:id="@+id/bottomNavigationViewNearby"
         android:layout_width="match_parent"
@@ -26,9 +26,8 @@
         app:itemTextColor="@drawable/nav_selectorr"
         app:itemBackground="@color/colorPrimary"
         >
-
     </android.support.design.widget.BottomNavigationView>
-
+<!-- thanh search -->
     <RelativeLayout
         android:id="@+id/relative1"
         android:layout_width="match_parent"
@@ -38,7 +37,7 @@
         android:layout_marginRight="10dp"
         android:elevation="10dp"
         android:background="@drawable/white_border">
-        
+
         <ImageView
             android:layout_width="15dp"
             android:layout_height="15dp"
@@ -46,7 +45,7 @@
             android:layout_centerVertical="true"
             android:layout_marginLeft="10dp"
             android:src="@drawable/ic_search"/>
-        
+
         <AutoCompleteTextView
             android:layout_width="match_parent"
             android:layout_height="match_parent"
@@ -59,6 +58,7 @@
             android:hint="Nhập địa điểm"
             android:imeOptions="actionSearch"/>
     </RelativeLayout>
+<!-- nut tim kiem vi tri hien tai -->
     <ImageView
         android:id="@+id/imageviewGPS"
         android:layout_width="40dp"
@@ -67,10 +67,7 @@
         android:layout_alignParentRight="true"
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
-        android:backgroundTint="@android:color/transparent"
         android:scaleType="centerCrop"
         android:src="@drawable/ic_gps"/>
-    
-
 
 </RelativeLayout>

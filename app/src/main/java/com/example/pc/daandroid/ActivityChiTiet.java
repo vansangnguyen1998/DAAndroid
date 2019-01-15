@@ -1,5 +1,6 @@
 package com.example.pc.daandroid;
 
+import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.os.AsyncTask;
@@ -46,6 +47,7 @@ public class ActivityChiTiet extends AppCompatActivity {
     private TextView txtName;
     private ListView listView;
     private ArrayList<diadiemchitiet> data;
+    private ProgressDialog progress;
 
 
     @Override
@@ -53,8 +55,11 @@ public class ActivityChiTiet extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chi_tiet);
 
-        data=new ArrayList<diadiemchitiet>();
 
+        progress=new ProgressDialog(ActivityChiTiet.this);
+        progress.setMessage("Đang load Dữ liệu");
+        progress.show();
+        data=new ArrayList<diadiemchitiet>();
         listView = (ListView) findViewById(R.id.lv) ;
         txtName = (TextView) findViewById(R.id.Name);
 
@@ -292,7 +297,7 @@ public class ActivityChiTiet extends AppCompatActivity {
 //            Toast.makeText(ctx,result,Toast.LENGTH_SHORT).show();
 
             setData(data, result);
-
+            progress.dismiss();
         }
     }
 
