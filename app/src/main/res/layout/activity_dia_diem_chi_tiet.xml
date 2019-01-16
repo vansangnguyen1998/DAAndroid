@@ -20,33 +20,29 @@
             android:layout_height="match_parent"
             android:layout_width="match_parent">
 
-            <TextView
-                android:id="@+id/tenDiaDiem"
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:id="@+id/linearLayout"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_centerHorizontal="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:text="@string/tendiadiem"
-                android:textStyle="italic"
-                android:textColor="#010F02"
-                android:textSize="25dp"/>
-            <TextView
-                android:id="@+id/ttvHinhanh"
-                android:layout_below="@+id/tenDiaDiem"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_alignParentStart="true"
-                android:layout_marginStart="0dp"
-                android:layout_marginTop="0dp"
-                android:text="@string/Hinhanh"
-                android:textStyle="italic"
-                android:textColor="#011601"
-                android:textSize="20dp"/>
+                android:background="@drawable/boder_title"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tenDiaDiem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="center"
+                    android:layout_margin="20dp"
+                    android:padding="3dp"
+                    android:text="@string/tendiadiem"
+                    android:textColor="@color/white"
+                    android:textSize="22sp"
+                    android:textStyle="bold" />
+            </LinearLayout>
 
             <HorizontalScrollView
                 android:id="@+id/Scroll"
-                android:layout_below="@+id/ttvHinhanh"
+                android:layout_below="@+id/linearLayout"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:background="@color/white">
@@ -66,7 +62,7 @@
                 android:layout_below="@+id/relativeMap"
                 android:textStyle="italic"
                 android:text="@string/Thongtin"
-                android:textColor="#011601"
+                android:textColor="@color/lightblue"
                 android:textSize="20dp"/>
 
             <TextView
@@ -89,7 +85,7 @@
                 android:layout_centerHorizontal="true"
                 android:text="@string/Danhgia"
                 android:textStyle="italic"
-                android:textColor="#011601"
+                android:textColor="@color/lightblue"
                 android:textSize="20dp"/>
 
             <RatingBar
@@ -112,14 +108,13 @@
                 android:layout_below="@+id/ratingBar1"
                 android:text="@string/Nhanxet"
                 android:textStyle="italic"
-                android:textColor="#011601"
+                android:textColor="@color/lightblue"
                 android:textSize="20sp" />
 
             <EditText
                 android:id="@+id/NhanXet"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-
                 android:layout_marginTop="15dp"
                 android:layout_toRightOf="@+id/ttvNhanXet"
                 android:layout_below="@+id/ratingBar1"

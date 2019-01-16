@@ -9,9 +9,11 @@ import android.os.AsyncTask;
 import android.support.annotation.NonNull;
 import android.support.annotation.Nullable;
 import android.support.design.widget.FloatingActionButton;
+import android.support.design.widget.TextInputLayout;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.support.v7.widget.AppCompatEditText;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -55,6 +57,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MainCaNhan extends Fragment implements FragmentCallBack {
+    //TextInputLayout hotenLayout,gioitinhLayout,ngaysinhLayout;
     TextView hTen,ngSinh,gTinh;
     ImageView anhDaiDien;
     MainActivity main;
@@ -82,15 +85,67 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
 
         final RelativeLayout canhan = (RelativeLayout) inflater.inflate(R.layout.activity_main_ca_nhan,null);
 
+        //hotenLayout = (TextInputLayout) canhan.findViewById(R.id.hotenLayout);
+        //gioitinhLayout = (TextInputLayout) canhan.findViewById(R.id.gioitinhLayout);
+        //ngaysinhLayout = (TextInputLayout) canhan.findViewById(R.id.gioitinhLayout);
 
-        hTen=(TextView) canhan.findViewById(R.id.ViewHoTen);
-        ngSinh=(TextView) canhan.findViewById(R.id.ViewNgaySinh);
-        gTinh=(TextView) canhan.findViewById(R.id.ViewGioiTinh);
+        hTen= (TextView) canhan.findViewById(R.id.ViewHoTen);
+        ngSinh= (TextView) canhan.findViewById(R.id.ViewNgaySinh);
+        gTinh= (TextView) canhan.findViewById(R.id.ViewGioiTinh);
         anhDaiDien=(ImageView) canhan.findViewById(R.id.anhDaiDien);
 
+        //hotenLayout.setCounterEnabled(true);
+        //hotenLayout.setCounterMaxLength(12);
+
+        //gioitinhLayout.setCounterEnabled(true);
+        //gioitinhLayout.setCounterMaxLength(12);
+
+        //ngaysinhLayout.setCounterEnabled(true);
+        //ngaysinhLayout.setCounterMaxLength(12);
+
+//        hTen.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(hTen.getText().toString().isEmpty())
+//                {
+//                    hotenLayout.setErrorEnabled(true);
+//                    hotenLayout.setError("Vui lòng nhập User");
+//                }
+//                else{
+//                    hotenLayout.setErrorEnabled(false);
+//                }
+//            }
+//        });
+//
+//        ngSinh.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(ngSinh.getText().toString().isEmpty())
+//                {
+//                    ngaysinhLayout.setErrorEnabled(true);
+//                    ngaysinhLayout.setError("Vui lòng nhập Password");
+//                }
+//                else{
+//                    ngaysinhLayout.setErrorEnabled(false);
+//                }
+//            }
+//        });
+//
+//        gTinh.setOnFocusChangeListener(new View.OnFocusChangeListener() {
+//            @Override
+//            public void onFocusChange(View v, boolean hasFocus) {
+//                if(gTinh.getText().toString().isEmpty())
+//                {
+//                    gioitinhLayout.setErrorEnabled(true);
+//                    gioitinhLayout.setError("Vui lòng nhập Password");
+//                }
+//                else{
+//                    gioitinhLayout.setErrorEnabled(false);
+//                }
+//            }
+//        });
+
         Picasso.get().load(url_noGender).into(anhDaiDien);
-
-
         BackgroundTask1 backgroundTask1 = new BackgroundTask1(context);
         backgroundTask1.execute("kt_thongtin",CheckLogin.User);
 
@@ -226,7 +281,6 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
             String method = params[0];
             //User=params[1];
             if (method.equals("Update")){
-
                 try {
                     URL url = new URL(url_update);
                     HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
@@ -245,17 +299,13 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
                     bufferedWriter.flush();
                     bufferedWriter.close();
                     OS.close();
-
                     InputStream inputStream = httpURLConnection.getInputStream();
                     BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
 
-
                     String response="",line="";
-
                     while((line=bufferedReader.readLine())!=null){
                         response+=line;
                     }
-
                     bufferedReader.close();
                     inputStream.close();
                     httpURLConnection.disconnect();
@@ -266,7 +316,6 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
                 } catch (IOException e) {
                     e.printStackTrace();
                 }
-
             }else if(method.equals("kt_thongtin")){
                 try {
                     URL url = new URL(url_kt);
@@ -323,7 +372,7 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
                 try {
                     JSONArray jsonArray = new JSONArray(result);
                     JSONObject jsonObject = (JSONObject) jsonArray.get(0);
-                    if(CheckLogin.Language.equals("en")){
+                    if(CheckLogin.Language.equals("en1")){
                         //hTen.setText(translate_language.Translate(jsonObject.getString("ten"),ctx));
                         //gTinh.setText(translate_language.Translate(jsonObject.getString("gioitinh"),ctx));
                         //ngSinh.setText(translate_language.Translate(jsonObject.getString("ngaysinh"),ctx));

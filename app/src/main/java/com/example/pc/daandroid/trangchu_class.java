@@ -142,45 +142,6 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
             }
         });
 
-
-
-
-     Button btnCaNhan = (Button) layout_trangchu.findViewById(R.id.btnCaNhan);
-     Button btnXuHuong = (Button) layout_trangchu.findViewById(R.id.btnXuHuong);
-     final Button btnMap = (Button) layout_trangchu.findViewById(R.id.btnMap);
-
-
-     btnXuHuong.setOnClickListener(new View.OnClickListener() {
-         @Override
-         public void onClick(View v) {
-             Toast.makeText(context,"Xu Huong",Toast.LENGTH_SHORT).show();
-             Intent intent = new Intent(getContext(), ActivityChiTiet.class);
-             intent.putExtra("LoaiDuLich","XuHuong");
-             startActivity(intent);
-         }
-     });
-
-        btnCaNhan.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                //Intent intent = new Intent(context,MainCaNhan.class);
-                //startActivity(intent);
-
-                // cách 2
-                main.onMsgFromFragToMain("TrangChu_CaNhan", "");
-            }
-        });
-
-
-        btnMap.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                Intent IIntent = new Intent(context, Map_api.class);
-                startActivity(IIntent);
-                //main.onMsgFromFragToMain("TrangChu_ChiTiet", "");
-            }
-        });
-
         main.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
         return layout_trangchu;
     }

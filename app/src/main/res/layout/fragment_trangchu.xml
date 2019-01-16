@@ -291,16 +291,22 @@
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
-    <Button
+    <TextView
         android:id="@+id/buttonXemThem"
         android:layout_width="wrap_content"
         android:layout_height="match_parent"
-        android:text="xem thêm."
+        android:textColor="@android:color/holo_red_dark"
+        android:text="Các địa điểm xu hướng"
+        android:textSize="22sp"
         android:layout_marginRight="15dp"
-        android:layout_alignParentRight="true"
-        android:background="@color/white"/>
+        android:layout_marginBottom="10dp"
+        android:layout_marginTop="5dp"
+        android:layout_centerHorizontal="true"
+        />
 
         <HorizontalScrollView
+            android:layout_marginLeft="20dp"
+            android:layout_marginRight="20dp"
             android:layout_below="@+id/buttonXemThem"
             android:layout_width="match_parent"
             android:layout_height="300dp">
@@ -315,37 +321,4 @@
 </RelativeLayout>
     </LinearLayout>
     </ScrollView>
-
-<TableLayout
-    android:layout_width="match_parent"
-    android:layout_height="wrap_content"
-    android:stretchColumns="0,1,2"
-    android:padding="3dp"
-    android:layout_alignParentBottom="true">
-    <TableRow>
-            <Button
-                android:id="@+id/btnMap"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="@string/map"
-                android:layout_marginLeft="10dp"
-            />
-
-            <Button
-                android:id="@+id/btnXuHuong"
-                android:text="@string/xuhuong"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                />
-
-            <Button
-                android:id="@+id/btnCaNhan"
-                android:text="@string/canhan"
-                android:layout_width="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:layout_height="wrap_content"
-                />
-   </TableRow>
-</TableLayout>
 </RelativeLayout>

@@ -194,8 +194,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                     Toast.makeText(MainActivity.this,"Đăng nhập trước khi sử dụng chức năng",Toast.LENGTH_SHORT).show();
                 }
                 break;
-            case R.id.menuvitrihientai:
-                Toast.makeText(MainActivity.this,"@string/vitrihientai",Toast.LENGTH_SHORT).show();
+            case R.id.Map:
+                Intent IIntent = new Intent(MainActivity.this, Map_api.class);
+                startActivity(IIntent);
                 break;
             case R.id.menungonngu:
                 Toast.makeText(MainActivity.this,"ngon ngu",Toast.LENGTH_SHORT).show();
@@ -223,6 +224,20 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 CheckLogin.User="NoName";
                 nameuser.setText("NoName");
                 Toast.makeText(MainActivity.this,"dang xuat",Toast.LENGTH_SHORT).show();
+                break;
+            case R.id.menucanhan:
+                if(CheckLogin.User.equals("NoName")){
+                    Toast.makeText(this,"Đăng nhập trước khi vào cá nhân",Toast.LENGTH_LONG).show();
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main,
+                            new dangnhap_class()).commit();
+
+                }else{
+                    MainCaNhan mainCaNhan = MainCaNhan.newInstance("main");
+                    mainCaNhan.onMsgFromMainToFragment(nameuser.getText().toString());
+
+                    getSupportFragmentManager().beginTransaction().replace(R.id.fragment_main,
+                            mainCaNhan).commit();
+                }
                 break;
         }
         mDraw.closeDrawer(GravityCompat.START);

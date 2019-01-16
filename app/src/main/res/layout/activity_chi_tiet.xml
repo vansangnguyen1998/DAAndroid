@@ -22,7 +22,7 @@
             android:layout_margin="20dp"
             android:padding="3dp"
             android:text="Ten dia diem"
-            android:textColor="#ef0909"
+            android:textColor="@color/white"
             android:textSize="22sp"
             android:textStyle="bold" />
     </LinearLayout>

@@ -603,9 +603,9 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
                     if(len>5){
                         len=5;
-                        lvNhanXet.setMinimumHeight(5*70);
+                        //lvNhanXet.set(5*70);
                     }else{
-                        lvNhanXet.setMinimumHeight(len*70);
+                        //lvNhanXet.setMinimumHeight(len*70);
                     }
                    for(int i=0;i<len;i++){
                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);

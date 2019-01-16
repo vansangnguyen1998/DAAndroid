@@ -310,7 +310,6 @@ public class ActivityChiTiet extends AppCompatActivity {
 
                 JSONObject jsonObject = (JSONObject) jsonArray.get(i);
 
-
                 String tentinh = jsonObject.getString("tentinh");
                 String tendiadanh=jsonObject.getString("tendiadanh");
 

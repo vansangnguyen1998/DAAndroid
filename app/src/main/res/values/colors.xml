@@ -8,10 +8,11 @@
     <color name="colortext">#212121</color>
     <color name="colorbackgroundtext">#c5d4d2</color>
     <color name="backgroundimageview">#7b717c</color>
-    <color name="colorstar">#ffe100</color>
-    <color name="colortextdialog">#0445f5</color>
+    <color name="colorstar">#FFDF00</color>
+    <color name="colortextdialog">#03A9F4</color>
     <color name="colorbackgroundbutton">#fc0298</color>
-
+    <color name="lightblue" >#3498db</color>
+    <color name="black">#00000000</color>
     <!-- color button -->
     <color name="background_buton">#4CAF50</color>
 

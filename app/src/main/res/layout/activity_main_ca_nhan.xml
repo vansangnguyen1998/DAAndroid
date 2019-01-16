@@ -5,12 +5,23 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical">
 
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:paddingTop="50dp"
+        android:text="@string/trangcanhan"
+        android:textSize="30sp"
+        android:layout_marginTop="0dp"
+        android:textColor="@color/lightblue"
+        android:textStyle="italic" />
+
     <ImageView
         android:id="@+id/anhDaiDien"
         android:layout_width="300px"
         android:layout_height="300px"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="120dp"
         />
 
     <android.support.design.widget.FloatingActionButton
@@ -19,8 +30,8 @@
         android:layout_height="wrap_content"
         android:layout_alignParentStart="true"
         android:layout_alignParentTop="true"
-        android:layout_marginStart="26dp"
-        android:layout_marginTop="22dp"
+        android:layout_marginStart="220dp"
+        android:layout_marginTop="200dp"
         android:src="@android:drawable/ic_menu_upload"/>
     <TableLayout
         android:id="@+id/Table"
@@ -41,12 +52,15 @@
                 android:layout_height="match_parent"
                 android:text="@string/Hoten"
                 android:textSize="25sp"
+                android:textColor="@color/lightblue"
                 android:textStyle="italic"/>
             <TextView
-
                 android:id="@+id/ViewHoTen"
                 android:layout_height="match_parent"
                 android:textSize="25sp"
+                android:layout_marginLeft="5dp"
+                android:paddingLeft="5dp"
+                android:background="@drawable/custom_edit_text"
                 android:textStyle="italic"/>
         </TableRow>
         <TableRow
@@ -57,9 +71,12 @@
                 android:layout_height="match_parent"
                 android:text="@string/NgaySinh"
                 android:textSize="25sp"
+                android:textColor="@color/lightblue"
                 android:textStyle="italic"/>
             <TextView android:id="@+id/ViewNgaySinh"
-
+                android:layout_marginLeft="5dp"
+                android:paddingLeft="5dp"
+                android:background="@drawable/custom_edit_text"
                 android:layout_height="match_parent"
                 android:textSize="25sp"/>
         </TableRow>
@@ -71,21 +88,15 @@
                 android:layout_height="match_parent"
                 android:text="@string/GioiTinh"
                 android:textSize="25sp"
+                android:textColor="@color/lightblue"
                 android:textStyle="italic"/>
             <TextView android:id="@+id/ViewGioiTinh"
                 android:textSize="25sp"
+                android:layout_marginLeft="5dp"
+                android:paddingLeft="5dp"
+                android:background="@drawable/custom_edit_text"
                 android:layout_height="match_parent"/>
         </TableRow>
     </TableLayout>
 
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_centerHorizontal="true"
-        android:paddingTop="50dp"
-        android:text="@string/trangcanhan"
-        android:textSize="30sp"
-        android:layout_marginBottom="30dp"
-        android:textStyle="italic" />
 </RelativeLayout>
