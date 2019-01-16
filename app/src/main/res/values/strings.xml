@@ -37,6 +37,7 @@
     <string name="nhapcode">Nhập mã code: </string>
     <string name="xacnhan">Đăng Nhập</string>
     <string name="dangki">Đăng Kí</string>
+    <string name="cacdiadiemxuhuong">Các Địa Điểm Xu Hướng</string>
     <!-- Map api-->
 
     <string name="map_api_key">AIzaSyCh3CmZEPelOnt4i_Ra4Rr3Ya2Bow1CgF8</string>
@@ -59,5 +60,6 @@
     <string name="nhaptentinh">Nhập Tên Tỉnh</string>
     <string name="timkiem">Tìm Kiếm</string>
     <string name="tendiadiem">Thông tin địa điểm chi tiết</string>
-
+    <string name="ATM">ATM</string>
+    <string name="nhahang">Nhà Hàng</string>
 </resources>

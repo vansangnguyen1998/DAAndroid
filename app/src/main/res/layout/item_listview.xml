@@ -33,7 +33,8 @@
                 android:layout_height="wrap_content"
                 android:text="ten tinh thanh"
                 android:layout_gravity="center"
-                android:textSize="22sp"/>
+                android:textSize="22sp"
+                android:textColor="#0A0101"/>
 
             <TextView
                 android:id="@+id/txtThongTin"
@@ -43,7 +44,8 @@
                 android:layout_gravity="center"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:textSize="16sp"/>
+                android:textSize="16sp"
+                android:textColor="#0A0101"/>
 
         </LinearLayout>
     </LinearLayout>

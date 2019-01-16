@@ -3,13 +3,13 @@
     android:layout_width="match_parent"
     android:orientation="vertical"
     android:padding="20dp"
-    android:background="@drawable/android3"
+    android:background="@drawable/logo"
     xmlns:android="http://schemas.android.com/apk/res/android" >
 
     <ImageView
         android:layout_width="80dp"
         android:layout_height="80dp"
-        android:src="@drawable/android1"/>
+        android:src="@drawable/logo"/>
 
     <TextView
         android:id="@+id/nameuser"

@@ -51,4 +51,8 @@
     <string name="xacnhan">Log In</string>
     <string name="xuhuong">Trends</string>
     <string name="tendiadiem">Thông tin địa điểm chi tiết</string>
+    <string name="cacdiadiemxuhuong">Các Địa Điểm Xu Hướng</string>
+    <string name="ATM">ATM</string>
+    <string name="nhahang">Nhà Hàng</string>
+    <string name="map_api_key">AIzaSyCh3CmZEPelOnt4i_Ra4Rr3Ya2Bow1CgF8</string>
 </resources>

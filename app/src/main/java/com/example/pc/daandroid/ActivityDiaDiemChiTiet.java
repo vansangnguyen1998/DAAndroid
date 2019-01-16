@@ -11,6 +11,7 @@ import android.net.Uri;
 import android.os.AsyncTask;
 import android.support.design.widget.FloatingActionButton;
 import android.support.design.widget.TextInputLayout;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.support.v7.widget.AppCompatEditText;
@@ -82,7 +83,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
     private GoogleMap myMap;
     private FloatingActionButton btnNhanXet;
     private FloatingActionMenu floatingActionMenu;
-    private com.github.clans.fab.FloatingActionButton floatingactionbuttonDangNhap,floatingactionbuttonMap;
+    private com.github.clans.fab.FloatingActionButton floatingactionbuttonDangNhap,floatingactionbuttonATM,floatingactionbuttonRestaurant;
     private ViewGroup viewGroup,viewWeather;
     private EditText editText;
     private RatingBar ratingBar;
@@ -94,6 +95,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
     private diadiemchitiet DiaDiem = new diadiemchitiet();
     private ProgressDialog progress;
     private RelativeLayout layoutMain;
+    private SwipeRefreshLayout swipeRefreshLayout;
 
 
     @Override
@@ -108,6 +110,37 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         progress.show();
         lvNX=new ArrayList<danhgia>();
         AnhXa();
+
+        // bắt xự kiện load page và load lại list view
+
+        swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                loadPage();
+                swipeRefreshLayout.setRefreshing(false);
+            }
+        });
+
+
+        floatingactionbuttonATM.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(ActivityDiaDiemChiTiet.this,DichVu.class);
+                i.putExtra("typePlace", "atm");
+                startActivity(i);
+            }
+        });
+
+        floatingactionbuttonRestaurant.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i=new Intent(ActivityDiaDiemChiTiet.this,DichVu.class);
+                i.putExtra("typePlace", "restaurant");
+                startActivity(i);
+            }
+        });
+
+
         floatingactionbuttonDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -404,8 +437,9 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         viewWeather = (ViewGroup) findViewById(R.id.viewWeather);
         floatingActionMenu = (FloatingActionMenu) findViewById(R.id.floattinhacctionMenu);
         floatingactionbuttonDangNhap = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.floatingactionbuttonDangNhap);
-        floatingactionbuttonMap = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.floatingactionbuttonMap);
-
+        floatingactionbuttonATM = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.floatingactionbuttonATM);
+        floatingactionbuttonRestaurant= (com.github.clans.fab.FloatingActionButton) findViewById(R.id.floatingactionbuttonRestaurant);
+        swipeRefreshLayout=(SwipeRefreshLayout)findViewById(R.id.SwipeRefresh);
     }
 
     @Override
@@ -439,6 +473,13 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
         requestQueue.add(stringRequest);
     }
+
+    private void loadPage()
+    {
+        BackgroundTask1 backgroundTask = new BackgroundTask1(ActivityDiaDiemChiTiet.this);
+        backgroundTask.execute("LVNhanXet",DiaDiem.getTenTinh(),DiaDiem.getTenDiaDanh());
+    }
+
 
     private class BackgroundTask1 extends AsyncTask<String,Void,String> {
         private Context ctx;
@@ -536,6 +577,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                     bufferedReader.close();
                     inputStream.close();
                     httpURLConnection.disconnect();
+
                     return response;
                 } catch (MalformedURLException e) {
                     e.printStackTrace();

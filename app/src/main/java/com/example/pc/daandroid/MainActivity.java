@@ -77,11 +77,11 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
         // set full mnag hinh
         this.getWindow().setFlags(WindowManager.LayoutParams.FLAG_FULLSCREEN,WindowManager.LayoutParams.FLAG_FULLSCREEN);
 
+
         //loai do tieu de
         this.requestWindowFeature(Window.FEATURE_NO_TITLE);
 
         setContentView(R.layout.activity_main);
-
 
 
         mDraw = (DrawerLayout) findViewById(R.id.drawer);
@@ -202,9 +202,9 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 Toast.makeText(MainActivity.this,"ngon ngu",Toast.LENGTH_SHORT).show();
                 Locale locale;
                 if(CheckLogin.Language.equals("en")) {
-                     locale = new Locale("en");
-                }else{
                      locale = new Locale("vi");
+                }else{
+                     locale = new Locale("en");
                 }
                 Configuration configuration=new Configuration();
                 configuration.locale=locale;

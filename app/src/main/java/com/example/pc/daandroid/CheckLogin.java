@@ -2,7 +2,7 @@ package com.example.pc.daandroid;
 
 public class CheckLogin {
     public static String User="NoName";
-    public static String Language="en";
+    public static String Language="vi";
     public String save_language;
 
     public String getSave_language() {

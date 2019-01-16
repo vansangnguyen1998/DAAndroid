@@ -5,9 +5,13 @@
     android:layout_marginLeft="4dp"
     android:id="@+id/layoutMain"
     android:layout_marginRight="4dp"
+    android:background="#F3F5F2"
     xmlns:android="http://schemas.android.com/apk/res/android">
 
-
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/SwipeRefresh"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
 
     <ScrollView android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -143,7 +147,8 @@
                 android:layout_marginRight="20dp"
                 android:layout_marginTop="3dp"
                 android:layout_below="@+id/btnNhanXet"
-                android:layout_height="wrap_content">
+                android:layout_height="wrap_content"
+                android:background="@drawable/boder_weather">
                 <LinearLayout
                     android:id="@+id/viewWeather"
                     android:layout_width="130dp"
@@ -184,6 +189,7 @@
         </RelativeLayout>
     </ScrollView>
 
+
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/floattinhacctionMenu"
         android:layout_width="wrap_content"
@@ -207,14 +213,26 @@
             app:fabSize="mini"
             app:fab_label="Đăng Nhập"
             />
+
         <com.github.clans.fab.FloatingActionButton
-            android:id="@+id/floatingactionbuttonMap"
+            android:id="@+id/floatingactionbuttonATM"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:src="@drawable/ic_map"
+            android:src="@drawable/ic_monetization_on_black_24dp"
             app:fabSize="mini"
-            app:fab_label="Map"
+            app:fab_label="@string/ATM"
+            />
+
+        <com.github.clans.fab.FloatingActionButton
+            android:id="@+id/floatingactionbuttonRestaurant"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:src="@drawable/ic_restaurant_black_24dp"
+            app:fabSize="mini"
+            app:fab_label="@string/nhahang"
             />
     </com.github.clans.fab.FloatingActionMenu>
+
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </RelativeLayout>

@@ -5,29 +5,17 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     >
-<!-- map -->
-    <fragment xmlns:android="http://schemas.android.com/apk/res/android"
+    <!-- map -->
+    <fragment
+        xmlns:android="http://schemas.android.com/apk/res/android"
         xmlns:tools="http://schemas.android.com/tools"
         android:id="@+id/myMap"
         android:name="com.google.android.gms.maps.MapFragment"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_alignParentStart="true"
-        android:layout_marginStart="0dp"
-        tools:context=".Map_api"></fragment>
-<!-- thanh menu ben duoi -->
-    <android.support.design.widget.BottomNavigationView
-        android:id="@+id/bottomNavigationViewNearby"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        app:menu="@menu/bottom_menu"
-        app:itemIconTint="@drawable/nav_selectorr"
-        app:itemTextColor="@drawable/nav_selectorr"
-        app:itemBackground="@color/colorPrimary"
-        >
-    </android.support.design.widget.BottomNavigationView>
-<!-- thanh search -->
+        tools:context=".Map_api"
+        android:layout_height="match_parent">
+    </fragment>
+    <!-- thanh search -->
     <RelativeLayout
         android:id="@+id/relative1"
         android:layout_width="match_parent"
@@ -58,9 +46,8 @@
             android:hint="Nhập địa điểm"
             android:imeOptions="actionSearch"/>
     </RelativeLayout>
-<!-- nut tim kiem vi tri hien tai -->
     <ImageView
-        android:id="@+id/imageviewGPS"
+        android:id="@+id/imageviewdirection"
         android:layout_width="40dp"
         android:layout_height="40dp"
         android:layout_below="@+id/relative1"
@@ -68,6 +55,6 @@
         android:layout_marginRight="10dp"
         android:layout_marginTop="10dp"
         android:scaleType="centerCrop"
-        android:src="@drawable/ic_gps"/>
+        android:src="@drawable/ic_directions_black_24dp"/>
 
 </RelativeLayout>

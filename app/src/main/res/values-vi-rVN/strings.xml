@@ -60,5 +60,8 @@
     <string name="nhaptentinh">Nhập Tên Tỉnh</string>
     <string name="timkiem">Tìm Kiếm</string>
     <string name="sinhthai">Sinh thái</string>
+    <string name="ATM">ATM</string>
+    <string name="cacdiadiemxuhuong">Các Địa Điểm Xu Hướng</string>
+    <string name="nhahang">Nhà Hàng</string>
 
 </resources>

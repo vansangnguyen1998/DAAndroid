@@ -8,7 +8,8 @@
         android:layout_width="match_parent"
         android:clickable="true"
         android:layout_margin="5dp"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:background="#E6F8D1">
         <RelativeLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
@@ -20,7 +21,8 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="user"
-                android:textSize="22sp"/>
+                android:textSize="22sp"
+                android:textColor="#111010"/>
             <RatingBar
                 android:id="@+id/ratingNX"
                 android:layout_width="wrap_content"
@@ -38,7 +40,8 @@
                 android:textSize="22sp"
                 android:layout_marginLeft="4dp"
                 android:layout_toRightOf="@id/ratingNX"
-                android:text="ngaythang"/>
+                android:text="ngaythang"
+                android:textColor="#111010"/>
             <TextView
                 android:id="@+id/txtNoiDung"
                 android:layout_marginLeft="3dp"
@@ -47,7 +50,8 @@
                 android:textSize="16sp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="noidung"/>
+                android:text="noidung"
+                android:textColor="#111010"/>
 
         </RelativeLayout>
     </android.support.v7.widget.CardView>
