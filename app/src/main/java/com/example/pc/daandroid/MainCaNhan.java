@@ -323,9 +323,16 @@ public class MainCaNhan extends Fragment implements FragmentCallBack {
                 try {
                     JSONArray jsonArray = new JSONArray(result);
                     JSONObject jsonObject = (JSONObject) jsonArray.get(0);
-                    hTen.setText(jsonObject.getString("ten"));
-                    gTinh.setText(jsonObject.getString("gioitinh"));
-                    ngSinh.setText(jsonObject.getString("ngaysinh"));
+                    if(CheckLogin.Language.equals("en")){
+                        //hTen.setText(translate_language.Translate(jsonObject.getString("ten"),ctx));
+                        //gTinh.setText(translate_language.Translate(jsonObject.getString("gioitinh"),ctx));
+                        //ngSinh.setText(translate_language.Translate(jsonObject.getString("ngaysinh"),ctx));
+                    }else{
+                        hTen.setText(jsonObject.getString("ten"));
+                        gTinh.setText(jsonObject.getString("gioitinh"));
+                        ngSinh.setText(jsonObject.getString("ngaysinh"));
+                    }
+
                     if(gTinh.getText().toString().equals("Nam")){
                         Picasso.get().load(url_male).into(anhDaiDien);
                     }else if(gTinh.getText().toString().equals("")){

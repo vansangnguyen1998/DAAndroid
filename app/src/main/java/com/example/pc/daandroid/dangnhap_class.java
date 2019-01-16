@@ -381,44 +381,6 @@ public class dangnhap_class extends Fragment implements FragmentCallBack {
             }
 
         }
-        public void GetValue(final String... param){
-            RequestQueue requestQueue = Volley.newRequestQueue(ctx);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, param[0],
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Toast.makeText(ctx,response,Toast.LENGTH_SHORT).show();
-
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                            Toast.makeText(ctx,""+error+"",Toast.LENGTH_SHORT).show();
-                        }
-                    }){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-
-                    Map<String,String> params = new HashMap<String, String>();
-                    if(param[1].equals("DangKi")){
-                        params.put("_User",param[2]);
-                        params.put("_Pass",param[3]);
-                        params.put("_Gmail",param[4]);
-                    }
-                    else if(param[1].equals("Login")){
-                        params.put("_User",param[2]);
-                        params.put("_Pass",param[3]);
-                    }
-
-
-                    return params;
-                }
-            };
-
-            requestQueue.add(stringRequest);
-        }
     }
 
 }

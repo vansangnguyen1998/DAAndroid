@@ -57,6 +57,8 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
     Context context=null;
     ViewGroup horizontalXuHuong;
     ArrayList<diadiemchitiet> diadiemXuHuong;
+    diadiemchitiet temp=new diadiemchitiet();
+
 
 
     @Nullable
@@ -65,12 +67,13 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
 
         RelativeLayout layout_trangchu = (RelativeLayout) inflater.inflate(R.layout.fragment_trangchu,null);
 
+
+
         diadiemXuHuong=new ArrayList<diadiemchitiet>();
 
         horizontalXuHuong = (ViewGroup) layout_trangchu.findViewById(R.id.horizontal_XuHuong);
 
         SetHorizontalXuHuong();
-
         // click Bien
         CardView btnBaiBien = (CardView) layout_trangchu.findViewById(R.id.btnBaiBien);
         btnBaiBien.setOnClickListener(new View.OnClickListener() {
@@ -217,33 +220,43 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
                                 for(int i=0;i<n;i++) {
 
                                     JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-
-
                                     String tentinh = jsonObject.getString("tentinh");
                                     String tendiadanh=jsonObject.getString("tendiadanh");
-
-                                    String mota=jsonObject.getString("mota");
-
+                                    final String mota=jsonObject.getString("mota");
                                     ArrayList<String> urlImage = new ArrayList<String>();
-
                                     JSONArray image = new JSONArray(jsonObject.getString("hinhanh"));
-
                                     for(int j=0;j<image.length();j++){
                                         urlImage.add((String) image.get(j));
                                     }
-
                                     String tentinhkd=jsonObject.getString("tentinh_KD");
-
                                     String star = jsonObject.getString("sosao");
+                                    if(CheckLogin.Language.equals("en1")) {
+                                        temp = new diadiemchitiet();
+                                        temp.setUrlImage(urlImage);
+                                        temp.setNumStar(star);
+                                        temp.setTenTinhKD(tentinhkd);
+                                        //BackgroundTask1 backgroundTask = new BackgroundTask1(context);
+                                        //backgroundTask.execute("mota",mota);
 
-                                    diadiemchitiet temp=new diadiemchitiet(urlImage,mota,tendiadanh,tentinh,tentinhkd);
-                                    temp.setNumStar(star);
+                                        BackgroundTask1 backgroundTask1 = new BackgroundTask1(context);
+                                        backgroundTask1.execute("tentinh",tentinh);
+                                        BackgroundTask1 backgroundTask2 = new BackgroundTask1(context);
+                                        backgroundTask2.execute("tendiadanh",tendiadanh);
+                                        diadiemXuHuong.add(temp);
+                                    }else {
+                                        temp = new diadiemchitiet(urlImage, mota, tendiadanh, tentinh, tentinhkd);
+                                        temp.setNumStar(star);
 
-                                    diadiemXuHuong.add(temp);
+                                        diadiemXuHuong.add(temp);
+                                    }
+
                                     //Toast.makeText(ctx, "" + jsonObject.getString("tentinh") + jsonArray.length(), Toast.LENGTH_SHORT).show();
                                 }
 
+                                // lay ve` xong r gio add va ne
                                 int lenXuHuong=diadiemXuHuong.size();
+
+
 
                                 for(int i=0;i<lenXuHuong;i++){
                                     final View singleFrame = getLayoutInflater().inflate(
@@ -292,6 +305,88 @@ public class trangchu_class extends Fragment implements FragmentCallBack {
 
             requestQueue.add(str);
 
+    }
+
+    private class BackgroundTask1 extends AsyncTask<String,Void,String> {
+        private Context ctx;
+        private String meth;
+
+        public BackgroundTask1(Context ctx) {
+            this.ctx = ctx;
+        }
+
+        @Override
+        protected void onPreExecute() {
+            super.onPreExecute();
+        }
+
+        @Override
+        protected String doInBackground(String... params) {
+
+            meth=params[0];
+            String loaidl_url = "https://translate.yandex.net/api/v1.5/tr.json/translate?key=trnsl.1.1.20190115T151627Z.84e88e1173010a4e.d275e747d1331490dafec1ee476318d0e18c7c75&text="+params[1]+"&lang=vi-en";
+
+                try {
+                    URL url = new URL(loaidl_url);
+                    HttpURLConnection httpURLConnection = (HttpURLConnection) url.openConnection();
+
+                    //httpURLConnection.setDoOutput(true);
+                    httpURLConnection.setDoInput(true);
+
+                    InputStream inputStream = httpURLConnection.getInputStream();
+                    BufferedReader bufferedReader = new BufferedReader(new InputStreamReader(inputStream,"iso-8859-1"));
+
+
+                    String response="",line="";
+
+                    while((line=bufferedReader.readLine())!=null){
+                        response+=line;
+                    }
+
+                    bufferedReader.close();
+                    inputStream.close();
+                    httpURLConnection.disconnect();
+
+                    return response;
+                } catch (MalformedURLException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
+
+            return "false...";
+        }
+
+
+        @Override
+        protected void onProgressUpdate(Void... values) {
+            super.onProgressUpdate(values);
+        }
+
+        @Override
+        protected void onPostExecute(String result) {
+            //JSONObject j = null;
+            try {
+                JSONObject j = new JSONObject(result);
+                JSONArray arrJson = j.getJSONArray("text");
+                String arr = new String();
+                arr=arrJson.getString(0);
+                if(meth.equals("mota")) {
+                    temp.setMoTa(arr);
+                }else if(meth.equals("tentinh")){
+                    temp.setTenTinh(arr);
+                }else{
+                    temp.setTenDiaDanh(arr);
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+
+
+
+//
+
+        }
     }
 
 }

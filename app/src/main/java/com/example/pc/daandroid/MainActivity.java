@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.graphics.drawable.GradientDrawable;
 import android.os.AsyncTask;
 import android.support.annotation.NonNull;
@@ -53,6 +54,7 @@ import java.net.MalformedURLException;
 import java.net.URL;
 import java.net.URLEncoder;
 import java.util.HashMap;
+import java.util.Locale;
 import java.util.Map;
 
 public class MainActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener,MainCallBack,TextWatcher {
@@ -197,6 +199,19 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 break;
             case R.id.menungonngu:
                 Toast.makeText(MainActivity.this,"ngon ngu",Toast.LENGTH_SHORT).show();
+                Locale locale;
+                if(CheckLogin.Language.equals("en")) {
+                     locale = new Locale("en");
+                }else{
+                     locale = new Locale("vi");
+                }
+                Configuration configuration=new Configuration();
+                configuration.locale=locale;
+                getBaseContext().getResources().updateConfiguration(configuration,
+                        getBaseContext().getResources().getDisplayMetrics());
+                Intent intent=new Intent(MainActivity.this,MainActivity.class);
+                startActivity(intent);
+
                 break;
             case R.id.menudiadiemyeuthich:
                 Toast.makeText(MainActivity.this,"dia diem yeu thich",Toast.LENGTH_SHORT).show();
@@ -334,52 +349,22 @@ public class MainActivity extends AppCompatActivity implements NavigationView.On
                 JSONArray jsonArray = new JSONArray(result);
                 int len =jsonArray.length();
                 TenTinh=new String[len];
-                for(int i=0;i<len;i++){
-                    JSONObject jsonObject = (JSONObject) jsonArray.get(i);
-                    TenTinh[i]=jsonObject.getString("tentinh");
+                if(CheckLogin.Language.equals("en1")) {
+                    for (int i = 0; i < len; i++) {
+                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                        //TenTinh[i] = translate_language.Translate(jsonObject.getString("tentinh"),ctx);
+                    }
+                }else {
+                    for (int i = 0; i < len; i++) {
+                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
+                        TenTinh[i] = jsonObject.getString("tentinh");
+                    }
                 }
             } catch (JSONException e) {
                 e.printStackTrace();
             }
 
         }
-        public void GetValue(final String... param){
-            RequestQueue requestQueue = Volley.newRequestQueue(ctx);
-            StringRequest stringRequest = new StringRequest(Request.Method.POST, param[0],
-                    new Response.Listener<String>() {
-                        @Override
-                        public void onResponse(String response) {
-                            Toast.makeText(ctx,response,Toast.LENGTH_SHORT).show();
 
-                        }
-                    },
-                    new Response.ErrorListener() {
-                        @Override
-                        public void onErrorResponse(VolleyError error) {
-
-                            Toast.makeText(ctx,""+error+"",Toast.LENGTH_SHORT).show();
-                        }
-                    }){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-
-                    Map<String,String> params = new HashMap<String, String>();
-                    if(param[1].equals("DangKi")){
-                        params.put("_User",param[2]);
-                        params.put("_Pass",param[3]);
-                        params.put("_Gmail",param[4]);
-                    }
-                    else if(param[1].equals("Login")){
-                        params.put("_User",param[2]);
-                        params.put("_Pass",param[3]);
-                    }
-
-
-                    return params;
-                }
-            };
-
-            requestQueue.add(stringRequest);
-        }
     }
 }

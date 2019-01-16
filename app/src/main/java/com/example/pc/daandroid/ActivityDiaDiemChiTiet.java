@@ -108,12 +108,10 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
         progress.show();
         lvNX=new ArrayList<danhgia>();
         AnhXa();
-
-
         floatingactionbuttonDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Toast.makeText(ActivityDiaDiemChiTiet.this,"vao ne`",Toast.LENGTH_SHORT).show();
+                //Toast.makeText(ActivityDiaDiemChiTiet.this,"vao ne`",Toast.LENGTH_SHORT).show();
                 AlertDialog.Builder builder = new AlertDialog.Builder(ActivityDiaDiemChiTiet.this);
                 View view = getLayoutInflater().inflate(R.layout.dialog_login,null);
 
@@ -128,15 +126,16 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
                 userLayout.setCounterEnabled(true);
                 userLayout.setCounterMaxLength(12);
-
                 passLayout.setCounterEnabled(true);
                 passLayout.setCounterMaxLength(12);
+                builder.setView(view);
+                final AlertDialog alertDialog = builder.create();
+                alertDialog.show();
 
                 edtUser.setOnFocusChangeListener(new View.OnFocusChangeListener() {
                     @Override
                     public void onFocusChange(View v, boolean hasFocus) {
-                        if(edtUser.getText().toString().isEmpty())
-                        {
+                        if(edtUser.getText().toString().isEmpty()){
                             userLayout.setErrorEnabled(true);
                             userLayout.setError("Vui lòng nhập User");
                         }
@@ -162,18 +161,14 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                 buttonDangNhap.setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View v) {
-
                         String User, Pass;
                         User=edtUser.getText().toString();
                         Pass=edtMK.getText().toString();
                         BackgroundTask1 backgroundTask = new  BackgroundTask1(ActivityDiaDiemChiTiet.this);
                         backgroundTask.execute("Login",User,Pass);
+                        alertDialog.cancel();
                     }
                 });
-
-                builder.setView(view);
-                final AlertDialog alertDialog = builder.create();
-                alertDialog.show();
             }
         });
 
@@ -190,9 +185,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                     R.layout.icon_trang_thong_tin, null);
 
             singleFrame.setId(i);
-
             ImageView image = (ImageView) singleFrame.findViewById(R.id.iconScoll);
-
             Picasso.get().load("http://android1998.000webhostapp.com/DiaDanh/"+
                     DiaDiem.getUrlImage().get(0)+"/"+
                     DiaDiem.getUrlImage().get(i)).into(image);
@@ -263,7 +256,6 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
     // ham moveCamera co chuc nang dua den dia diem da set LatLng
     private void moveCamera(LatLng latLng,float zoom,String title){
-
         myMap.moveCamera(CameraUpdateFactory.newLatLngZoom(latLng,zoom));
         if(!title.equals("My Location")) {
             MarkerOptions options = new MarkerOptions().
@@ -283,11 +275,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 // hàm set weather HorizontalScollView
     private void SetWeather(){
             // den ngay nay dang bí
-            String url_location="http://dataservice.accuweather.com/locations/v1/cities/search?apikey=epiju3Mnk6o7MNoT7b6ZAcY7AMgu6RyJ&q="+
-                    DiaDiem.getTenTinhKD();
-            String key="";
-            String url_weather_5day="http://dataservice.accuweather.com/forecasts/v1/daily/5day/"+key+"?apikey=epiju3Mnk6o7MNoT7b6ZAcY7AMgu6RyJ";
-
+            String url_location="http://dataservice.accuweather.com/locations/v1/cities/search?apikey=epiju3Mnk6o7MNoT7b6ZAcY7AMgu6RyJ&q="+DiaDiem.getTenTinhKD();
             RequestQueue requestQueue = Volley.newRequestQueue(ActivityDiaDiemChiTiet.this);
             StringRequest stringRequest = new StringRequest(Request.Method.GET, url_location,
                     new Response.Listener<String>() {
@@ -298,7 +286,6 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                                 JSONArray jsonArray = new JSONArray(response);
                                 JSONObject jsonObject = (JSONObject) jsonArray.get(0);
 
-
                                 String key=jsonObject.getString("Key");
                                 String url_weather_5day="http://dataservice.accuweather.com/forecasts/v1/daily/5day/"+key+"?apikey=epiju3Mnk6o7MNoT7b6ZAcY7AMgu6RyJ";
 
@@ -307,19 +294,11 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                                         new Response.Listener<String>() {
                                             @Override
                                             public void onResponse(String res) {
-
                                                 try {
-
-                                                    //String image_icon="https://developer.accuweather.com/sites/default/files/";//05-s.png
-                                                    // json array gom co 5 phan tu moi phan tu la mot ngay
                                                     JSONObject json=new JSONObject(res);
-                                                    // jcon array chua 5 ngay
                                                     JSONArray arrJson = json.getJSONArray("DailyForecasts");
-
                                                     final ArrayList<weather> data = new ArrayList<weather>();
-
                                                     int len=arrJson.length();
-
                                                     for(int i=0; i<len;i++){
                                                         String date, url;
                                                         int minValue;
@@ -331,26 +310,17 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                                                         JSONObject jsonTemperature=jsonobj.getJSONObject("Temperature");
                                                         JSONObject jsonDay=jsonobj.getJSONObject("Day");
                                                         JSONObject jsonNight=jsonobj.getJSONObject("Night");
-
                                                         JSONObject jsonMin = jsonTemperature.getJSONObject("Minimum");
                                                         JSONObject jsonMax = jsonTemperature.getJSONObject("Maximum");
-
                                                         minValue = jsonMin.getInt("Value");
                                                         maxValue = jsonMax.getInt("Value");
-
                                                         iconNgay=jsonDay.getInt("Icon");
                                                         iconDem=jsonNight.getInt("Icon");
-
                                                         url=jsonobj.getString("MobileLink");
-
                                                         weather wea=new weather(date,minValue,maxValue,iconNgay,iconDem,url);
                                                         data.add(wea);
                                                     }
-                                                    // den cho nay la data da có dữ liệu weather. công việc tiếp theo là set data vào
-                                                    // horizontalScollView.
-
-                                                    // thực hiện add dữ liệu vào horizontalScollView
-                                                    String image_icon="http://android1998.000webhostapp.com/Image/"; // link ảnh
+                                                    String image_icon="http://android1998.000webhostapp.com/Image/";
                                                     if(data!=null) {
                                                         for (int i = 0; i < 5; i++){
                                                             final View singleFrame = getLayoutInflater().inflate(
@@ -363,7 +333,6 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                                                             ImageView iconDay = (ImageView) singleFrame.findViewById(R.id.iconDay_weather);
                                                             ImageView iconNight = (ImageView) singleFrame.findViewById(R.id.iconNight_weather);
 
-                                                            // set data cho từng cái nhớ.
                                                             date.setText(data.get(i).getDate().substring(0,10));
                                                             nhietdo.setText(String.valueOf((int)((data.get(i).getMaxValue()-32)/1.8))+"~"+
                                                                     String.valueOf((int)((data.get(i).getMinValue()-32)/1.8)));
@@ -428,16 +397,11 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
         btnNhanXet = (FloatingActionButton) findViewById(R.id.btnNhanXet);
         thongTin = (TextView) findViewById(R.id.ThongTin);
-
         editText = (EditText) findViewById(R.id.NhanXet);
         ratingBar = (RatingBar) findViewById(R.id.ratingBar1);
-        //spinner = (Spinner) findViewById(R.id.DichVu);
-
         lvNhanXet = (ListView) findViewById(R.id.lvNhanXet);
-
         viewGroup = (ViewGroup) findViewById(R.id.viewgroup);
         viewWeather = (ViewGroup) findViewById(R.id.viewWeather);
-
         floatingActionMenu = (FloatingActionMenu) findViewById(R.id.floattinhacctionMenu);
         floatingactionbuttonDangNhap = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.floatingactionbuttonDangNhap);
         floatingactionbuttonMap = (com.github.clans.fab.FloatingActionButton) findViewById(R.id.floatingactionbuttonMap);
@@ -487,7 +451,7 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
             super.onPreExecute();
         }
         @Override
-        protected String doInBackground(String... params) {
+        protected String doInBackground(String... params){
             String insertNV_url = "http://android1998.000webhostapp.com/php/insertNhanXet.php";
             String lvNV_url = "http://android1998.000webhostapp.com/php/getNhanXet.php";
             String login_url ="http://android1998.000webhostapp.com/php/kt_login.php";
@@ -505,6 +469,9 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                     OutputStream OS = httpURLConnection.getOutputStream();
                     BufferedWriter bufferedWriter = new BufferedWriter(new OutputStreamWriter(OS,"UTF-8"));
 
+                    if(CheckLogin.Language.equals("en")){
+                        // tieng anh chuyen sang tieng vit de add len database
+                    }
                     String data = URLEncoder.encode("_SoSao", "UTF-8")  + "=" + URLEncoder.encode(params[1], "UTF-8")+"&"+
                             URLEncoder.encode("_NhanXet", "UTF-8")  + "=" + URLEncoder.encode(params[2], "UTF-8")+"&"+
                             URLEncoder.encode("_TenTinh", "UTF-8")  + "=" + URLEncoder.encode(params[3], "UTF-8")+"&"+
@@ -566,11 +533,9 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                     while((line=bufferedReader.readLine())!=null){
                         response+=line;
                     }
-
                     bufferedReader.close();
                     inputStream.close();
                     httpURLConnection.disconnect();
-
                     return response;
                 } catch (MalformedURLException e) {
                     e.printStackTrace();
@@ -589,7 +554,6 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
                     String data = URLEncoder.encode("_User", "UTF-8")  + "=" + URLEncoder.encode(params[1], "UTF-8")+"&"+
                             URLEncoder.encode("_Pass", "UTF-8")  + "=" + URLEncoder.encode(params[2], "UTF-8");
-
                     bufferedWriter.write(data);
                     bufferedWriter.flush();
                     bufferedWriter.close();
@@ -627,6 +591,10 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
         @Override
         protected void onPostExecute(String result) {
+            if(method.equals("Login")){
+                 Toast.makeText(ctx,result,Toast.LENGTH_SHORT).show();
+            }
+
            if(method.equals("LVNhanXet")){
                try {
                    JSONArray jsonArray = new JSONArray(result);
@@ -635,6 +603,9 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
 
                     if(len>5){
                         len=5;
+                        lvNhanXet.setMinimumHeight(5*70);
+                    }else{
+                        lvNhanXet.setMinimumHeight(len*70);
                     }
                    for(int i=0;i<len;i++){
                        JSONObject jsonObject = (JSONObject) jsonArray.get(i);
@@ -643,6 +614,10 @@ public class ActivityDiaDiemChiTiet extends Activity implements AdapterView.OnIt
                        int sosao=Integer.parseInt(jsonObject.getString("sosao"));
                        String user= jsonObject.getString("user");
                        String ngaythang=jsonObject.getString("ngaythang");
+                        if(CheckLogin.Language.equals("en1")) {
+                           // noidung = translate_language.Translate(noidung, ctx);
+                           // user = translate_language.Translate(user, ctx);
+                        }
                        danhgia DanhGia = new danhgia(noidung,sosao,user,ngaythang);
                        lvNX.add(DanhGia);
                    }

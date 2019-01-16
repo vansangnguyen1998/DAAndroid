@@ -9,192 +9,186 @@
 
 
 
-<ScrollView android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:layout_marginLeft="4dp"
-    android:layout_marginRight="4dp"
-    xmlns:tools="http://schemas.android.com/tools"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    >
-    <RelativeLayout
+    <ScrollView android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_width="match_parent">
+        android:layout_marginLeft="4dp"
+        android:layout_marginRight="4dp"
+        xmlns:tools="http://schemas.android.com/tools"
+        xmlns:app="http://schemas.android.com/apk/res-auto"
+        >
+        <RelativeLayout
+            android:layout_height="match_parent"
+            android:layout_width="match_parent">
 
-        <TextView
-            android:id="@+id/ttvHinhanh"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:text="@string/Hinhanh"
-            android:textStyle="italic"
-            android:textSize="20dp"/>
-
-        <HorizontalScrollView
-            android:id="@+id/Scroll"
-            android:layout_below="@+id/ttvHinhanh"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:background="@color/backgroundimageview">
-            <LinearLayout
-                android:id="@+id/viewgroup"
+            <TextView
+                android:id="@+id/tenDiaDiem"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:padding="10dp" >
-            </LinearLayout>
-
-
-        </HorizontalScrollView>
-
-        <TextView
-            android:id="@+id/ttvThongTin"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/Scroll"
-            android:textStyle="italic"
-            android:text="@string/Thongtin"
-            android:textSize="20dp"/>
-
-        <TextView
-            android:id="@+id/ThongTin"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ttvThongTin"
-            android:layout_alignParentStart="true"
-            android:textStyle="italic"
-            android:layout_marginStart="0dp"
-            android:layout_marginTop="0dp"
-            android:text=""
-            />
-
-        <TextView
-            android:id="@+id/DanhGiaSao"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ThongTin"
-            android:layout_centerHorizontal="true"
-            android:text="@string/Danhgia"
-            android:textStyle="italic"
-            android:textSize="20dp"/>
-
-        <RatingBar
-            android:id="@+id/ratingBar1"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/DanhGiaSao"
-            android:theme="@style/RatingBar"
-            android:numStars="5"
-            android:stepSize="1.0"
-            android:rating="1.0"
-            android:layout_centerHorizontal="true" />
-
-        <TextView
-            android:id="@+id/ttvNhanXet"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ratingBar1"
-            android:text="@string/Nhanxet"
-            android:textStyle="italic"
-            android:textSize="20sp" />
-
-        <EditText
-            android:id="@+id/NhanXet"
-            android:layout_width="match_parent"
-            android:layout_height="33dp"
-            android:layout_toRightOf="@+id/ttvNhanXet"
-            android:layout_below="@+id/ratingBar1"
-            android:layout_marginLeft="5dp"
-            android:layout_marginRight="10dp"
-            android:ems="10" />
-
-
-        <android.support.design.widget.FloatingActionButton
-            android:id="@+id/btnNhanXet"
-            android:layout_centerHorizontal="true"
-            android:layout_width="wrap_content"
-            android:layout_marginTop="5dp"
-            android:clickable="true"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ttvNhanXet"
-            android:src="@android:drawable/ic_menu_upload"/>
-
-        <ListView
-            android:id="@+id/lvNhanXet"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_marginTop="5dp"
-            android:layout_marginLeft="40dp"
-            android:layout_marginRight="30dp"
-            android:layout_below="@+id/btnNhanXet">
-        </ListView>
-
-        <!-- map tai dia diem do -->
-        <RelativeLayout
-            android:id="@+id/relativeMap"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"
-            android:layout_marginLeft="30dp"
-            android:layout_marginRight="30dp"
-            android:layout_below="@+id/lvNhanXet">
-        <fragment
-            android:id="@+id/myMap_DiaDiem"
-            android:name="com.google.android.gms.maps.MapFragment"
-            android:layout_width="match_parent"
-            android:layout_marginTop="4dp"
-            android:layout_height="200dp">
-        </fragment>
+                android:layout_centerHorizontal="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:text="@string/tendiadiem"
+                android:textStyle="italic"
+                android:textColor="#010F02"
+                android:textSize="25dp"/>
             <TextView
-                android:id="@+id/txt"
+                android:id="@+id/ttvHinhanh"
+                android:layout_below="@+id/tenDiaDiem"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentStart="true"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:text="@string/Hinhanh"
+                android:textStyle="italic"
+                android:textColor="#011601"
+                android:textSize="20dp"/>
+
+            <HorizontalScrollView
+                android:id="@+id/Scroll"
+                android:layout_below="@+id/ttvHinhanh"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_alignParentBottom="true"
-                android:text="Thong tin ve dia diem."/>
-        </RelativeLayout>
-        <!-- danh sach thoi tiet cho nguoi dung -->
-        <HorizontalScrollView
-            android:id="@+id/horizontal_weather"
-            android:layout_width="match_parent"
-            android:layout_marginLeft="20dp"
-            android:layout_marginRight="20dp"
-            android:layout_marginTop="3dp"
-            android:layout_below="@+id/relativeMap"
-            android:layout_height="wrap_content">
-            <LinearLayout
-                android:id="@+id/viewWeather"
-                android:layout_width="130dp"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal">
-
-            </LinearLayout>
-        </HorizontalScrollView>
-
-
-        <TableLayout
-            android:id="@+id/table"
-            android:layout_alignParentBottom="true"
-            android:layout_below="@+id/horizontal_weather"
-            android:layout_marginBottom="30dp"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:gravity="center"
-            android:stretchColumns="0,1,2">
-            <TableRow>
-                <Spinner
-                    android:id="@+id/DichVu"
-                    android:layout_toLeftOf="@id/ThoiTiet"
-                    android:layout_margin="10dp"
+                android:background="@color/white">
+                <LinearLayout
+                    android:id="@+id/viewgroup"
                     android:layout_width="wrap_content"
-                    android:layout_height="42dp"
-                    android:layout_alignTop="@+id/ThoiTiet"
-                    android:layout_alignParentEnd="true"
-                    android:text="@string/Dichvu" />
-            </TableRow>
-        </TableLayout>
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:padding="5dp" >
+                </LinearLayout>
+            </HorizontalScrollView>
 
-    </RelativeLayout>
-</ScrollView>
+            <TextView
+                android:id="@+id/ttvThongTin"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/relativeMap"
+                android:textStyle="italic"
+                android:text="@string/Thongtin"
+                android:textColor="#011601"
+                android:textSize="20dp"/>
+
+            <TextView
+                android:id="@+id/ThongTin"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ttvThongTin"
+                android:layout_alignParentStart="true"
+                android:textStyle="italic"
+                android:layout_marginStart="0dp"
+                android:layout_marginTop="0dp"
+                android:text=""
+                />
+
+            <TextView
+                android:id="@+id/DanhGiaSao"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ThongTin"
+                android:layout_centerHorizontal="true"
+                android:text="@string/Danhgia"
+                android:textStyle="italic"
+                android:textColor="#011601"
+                android:textSize="20dp"/>
+
+            <RatingBar
+                android:id="@+id/ratingBar1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/DanhGiaSao"
+                android:theme="@style/RatingBar"
+                android:numStars="5"
+                android:stepSize="1.0"
+                android:rating="1.0"
+
+                android:layout_centerHorizontal="true" />
+
+            <TextView
+                android:id="@+id/ttvNhanXet"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="15dp"
+                android:layout_below="@+id/ratingBar1"
+                android:text="@string/Nhanxet"
+                android:textStyle="italic"
+                android:textColor="#011601"
+                android:textSize="20sp" />
+
+            <EditText
+                android:id="@+id/NhanXet"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+
+                android:layout_marginTop="15dp"
+                android:layout_toRightOf="@+id/ttvNhanXet"
+                android:layout_below="@+id/ratingBar1"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="10dp"
+                android:ems="10" />
+
+
+            <android.support.design.widget.FloatingActionButton
+                android:id="@+id/btnNhanXet"
+                android:layout_centerHorizontal="true"
+                android:layout_width="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clickable="true"
+                android:layout_height="wrap_content"
+                android:layout_below="@+id/ttvNhanXet"
+                android:src="@android:drawable/ic_menu_upload"/>
+
+
+
+            <!-- thoi tiet-->
+            <HorizontalScrollView
+                android:id="@+id/horizontal_weather"
+                android:layout_width="match_parent"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:layout_marginTop="3dp"
+                android:layout_below="@+id/btnNhanXet"
+                android:layout_height="wrap_content">
+                <LinearLayout
+                    android:id="@+id/viewWeather"
+                    android:layout_width="130dp"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal">
+
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <RelativeLayout
+                android:id="@+id/relativeMap"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="30dp"
+                android:layout_marginRight="30dp"
+                android:layout_below="@+id/Scroll">
+                <fragment
+                    android:id="@+id/myMap_DiaDiem"
+                    android:name="com.google.android.gms.maps.MapFragment"
+                    android:layout_width="match_parent"
+                    android:layout_marginTop="4dp"
+                    android:layout_height="200dp">
+                </fragment>
+            </RelativeLayout>
+
+            <ListView
+                android:id="@+id/lvNhanXet"
+                android:layout_width="match_parent"
+                android:layout_height="70dp"
+                android:layout_marginTop="7dp"
+                android:layout_marginLeft="40dp"
+                android:layout_marginRight="30dp"
+                android:layout_marginBottom="20dp"
+                android:layout_below="@+id/horizontal_weather">
+            </ListView>
+            <!-- danh sach thoi tiet cho nguoi dung -->
+
+        </RelativeLayout>
+    </ScrollView>
+
     <com.github.clans.fab.FloatingActionMenu
         android:id="@+id/floattinhacctionMenu"
         android:layout_width="wrap_content"
@@ -229,4 +223,3 @@
     </com.github.clans.fab.FloatingActionMenu>
 
 </RelativeLayout>
-

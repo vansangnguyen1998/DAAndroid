@@ -326,8 +326,11 @@ public class ActivityChiTiet extends AppCompatActivity {
                 //String urlImage=jsonObject.getString("hinhanh");
                 String tentinhkd=jsonObject.getString("tentinh_KD");
 
+                String Mota="";
+                if(CheckLogin.Language.equals("en1")) {
+                    // den nay chua add
+                }
                 diadiemchitiet temp=new diadiemchitiet(urlImage,mota,tendiadanh,tentinh,tentinhkd);
-
                 data.add(temp);
 
                 //Toast.makeText(ctx, "" + jsonObject.getString("tentinh") + jsonArray.length(), Toast.LENGTH_SHORT).show();

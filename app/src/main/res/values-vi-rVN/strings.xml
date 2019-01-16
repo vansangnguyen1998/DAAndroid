@@ -1,7 +1,7 @@
 <resources>
     <!-- sang-->
     <string name="app_name">DoAn</string>
-    <string name="open">Open</string>
+    <string name="open">Mở</string>
     <string name="close">Close</string>
     <string name="dangnhap">Đăng Nhập</string>
     <string name="timkiemtheotinh">Tìm Kiếm Theo Tỉnh</string>
@@ -16,10 +16,10 @@
     <string name="baibien">Bãi Biển</string>
     <string name="rungnui">Rừng Núi</string>
     <string name="lichsu">Lịch Sử</string>
-    <string name="sinhthai">Sinh Thái</string>
+    <!--<string name="sinhthai">Sinh Thái</string>-->
     <string name="mientay">Miền Tây</string>
     <string name="taybac">Tây Bắc</string>
-    <string name="map">Map</string>
+    <string name="map">Bản Đồ</string>
     <string name="xuhuong">Xu Hướng</string>
     <string name="canhan">Cá Nhân</string>
     <string name="dulichbien">Du Lịch Biển</string>
@@ -55,9 +55,10 @@
     <string name="Hienthidiadiem">|Hiển thị địa điểm</string>
     <string name="Thoitiet">Thời tiết</string>
     <string name="Dichvu">Dịch vụ</string>
+    <string name="tendiadiem">Thông tin địa điểm chi tiết</string>
     <!-- layout tim kiem -->
     <string name="nhaptentinh">Nhập Tên Tỉnh</string>
     <string name="timkiem">Tìm Kiếm</string>
-    <string name="tendiadiem">Thông tin địa điểm chi tiết</string>
+    <string name="sinhthai">Sinh thái</string>
 
 </resources>
